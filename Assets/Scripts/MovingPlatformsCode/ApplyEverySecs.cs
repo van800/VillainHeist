@@ -8,11 +8,11 @@ public class ApplyEverySecs : MonoBehaviour
 {
     [SerializeField]
     private float seconds = 0;
-    private ApplyEverySecsFunc func;
+    private ApplyEverySecsFunc _func;
     [SerializeField]
     private bool startOn = true;
-    private bool isOn;
-    private bool isOff;
+    private bool _isOn;
+    private bool _isOff;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,15 +20,15 @@ public class ApplyEverySecs : MonoBehaviour
     }
 
     // Applies and unapplies a method every given seconds sec
-    private IEnumerator applyEverySeconds()
+    private IEnumerator ApplyEverySeconds()
     {
-        while (isOn)
+        while (_isOn)
         {
-            func.Apply();
-            yield return new WaitUntil(() => func.FinishedApplying());
+            _func.Apply();
+            yield return new WaitUntil(() => _func.FinishedApplying());
             yield return new WaitForSeconds(seconds);
         }
-        if (!isOff)
+        if (!_isOff)
         {
             TurnOff();
         }
@@ -37,29 +37,29 @@ public class ApplyEverySecs : MonoBehaviour
     // Returns the state before running apply or the state after running unapply
     public void TurnOff()
     {
-        isOn = false;
-        isOff = true;
-        func.TurnOff();
+        _isOn = false;
+        _isOff = true;
+        _func.TurnOff();
     }
 
     // Restarts this script
     public void TurnOn()
     {
-        isOff = false;
-        isOn = true;
-        func = GetComponent<ApplyEverySecsFunc>();
-        StartCoroutine(applyEverySeconds());
+        _isOff = false;
+        _isOn = true;
+        _func = GetComponent<ApplyEverySecsFunc>();
+        StartCoroutine(ApplyEverySeconds());
     }
 
     // Sets if this script is running or not
     // If this script is no longer running, this will return to the unapply state or the state before apply
     public void SetActive(bool active)
     {
-        if (active && !isOn)
+        if (active && !_isOn)
         {
             TurnOn();
         }
-        else if (!isOff)
+        else if (!_isOff)
         {
             TurnOff();
         }
@@ -69,31 +69,31 @@ public class ApplyEverySecs : MonoBehaviour
 // A class that will apply and unapply itself every couple of seconds
 public abstract class ApplyUnapplyEverySecsFunc : ApplyEverySecsFunc
 {
-    private float seconds;
+    private float _seconds;
     //private bool applyIsDone = false;
     //private bool unapplyIsDone = false;
-    private bool runApply;
+    private bool _runApply;
     // If true, run Apply
     // If false, run Unapply
 
     private void Start()
     {
-        runApply = true;
+        _runApply = true;
     }
 
     public void SetSeconds(float seconds)
     {
-        this.seconds = seconds;
+        this._seconds = seconds;
     }
 
     public float GetSeconds()
     {
-        return seconds;
+        return _seconds;
     }
 
     sealed public override void Apply()
     {
-        if (runApply)
+        if (_runApply)
         {
             StartApply();
         }
@@ -109,16 +109,16 @@ public abstract class ApplyUnapplyEverySecsFunc : ApplyEverySecsFunc
 // A class that will apply itself every couple of seconds with a ApplyEverySecs
 public abstract class ApplyEverySecsFunc : MonoBehaviour
 {
-    private float seconds;
-    private bool applyIsDone = false;
+    private float _seconds;
+    private bool _applyIsDone = false;
     public void SetSeconds(float seconds)
     {
-        this.seconds = seconds;
+        this._seconds = seconds;
     }
 
     public float GetSeconds()
     {
-        return seconds;
+        return _seconds;
     }
 
     public virtual void Apply()
@@ -135,9 +135,9 @@ public abstract class ApplyEverySecsFunc : MonoBehaviour
     // Returns true when apply is finished and resets apply
     public bool FinishedApplying()
     {
-        if (applyIsDone)
+        if (_applyIsDone)
         {
-            applyIsDone = false;
+            _applyIsDone = false;
             return true;
         }
         return false;
@@ -146,6 +146,6 @@ public abstract class ApplyEverySecsFunc : MonoBehaviour
     // Sets apply to be done for this frame
     protected void SetApplyDone()
     {
-        applyIsDone = true;
+        _applyIsDone = true;
     }
 }

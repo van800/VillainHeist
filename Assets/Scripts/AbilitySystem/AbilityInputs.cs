@@ -15,7 +15,8 @@ public class AbilityInputs : MonoBehaviour
     private string buttonToSelect = "Fire1";
     [Header("Abilities")]
     private Ability[] abilities;
-    public enum AbilityType { Clickable, Immediate };
+    public enum AbilityType { Clickable, Immediate, Shootable };
+    public enum AbilityTarget { Position, Object}
     [Header("Ability Selection")]
     [SerializeField]
     private GameObject activeCanvas;
@@ -26,6 +27,7 @@ public class AbilityInputs : MonoBehaviour
     private IEnumerator curAbilitySelRoutine;
     // This is the current ability selection routine
     private AbilityType curType = AbilityType.Clickable;
+    private AbilityTarget curTarget = AbilityTarget.Position;
     private int abilityIndexUsed = 0;
     [Header("Clickable Selection")]
     private bool movingSelection;
@@ -50,6 +52,14 @@ public class AbilityInputs : MonoBehaviour
     private string immediateCanvasQuestion = "Use [Ability]?";
     [SerializeField]
     private Text immediateCanvasText;
+    [Header("Shootable Selection")]
+    private bool selectedShootInput;
+    private bool useShootable;
+    private GameObject curSelectedObj;
+    private GameObject hitLocation;
+    [SerializeField] private string selectableTag = "Selectable";
+    [SerializeField]
+    private GameObject shootableCanvas;
 
     // Start is called before the first frame update
     void Start()
@@ -58,12 +68,14 @@ public class AbilityInputs : MonoBehaviour
         running = false;
         movingSelection = false;
         ResetAbilityComponents();
+        hitLocation = new GameObject();
     }
 
     // Update is called once per frame
     void Update()
     {
         CheckStart();
+        ShootableUpdate();
     }
 
     private void CheckStart()
@@ -83,7 +95,15 @@ public class AbilityInputs : MonoBehaviour
     private void AbilitySystemStart()
     {
         AbilityType prevType = curType;
-        curType = abilities[abilityIndexUsed].abilityType();
+        curTarget = abilities[abilityIndexUsed].abilityTarget();
+        if (false) // in third person
+        {
+            curType = abilities[abilityIndexUsed].abilityType3rdPerson();
+        }
+        else
+        {
+            curType = abilities[abilityIndexUsed].abilityType1stPerson();
+        }
         if (!running || prevType != curType)
         {
             running = true;
@@ -95,6 +115,10 @@ public class AbilityInputs : MonoBehaviour
             {
                 ImmediateStop();
             }
+            else if (prevType == AbilityType.Shootable)
+            {
+                ShootableStop();
+            }
 
             if (curType == AbilityType.Clickable)
             {
@@ -104,8 +128,71 @@ public class AbilityInputs : MonoBehaviour
             {
                 curAbilitySelRoutine = ImmediateRoutine();
             }
+            else if (curType == AbilityType.Shootable)
+            {
+                curAbilitySelRoutine = ShootableRoutine();
+            }
             StartCoroutine(curAbilitySelRoutine);
         }
+    }
+
+    private IEnumerator ShootableRoutine()
+    {
+        ShowShootableCanvas(true);
+        yield return new WaitUntil(() => selectedShootInput);
+        ShowShootableCanvas(false);
+        if (useShootable)
+        {
+            abilities[abilityIndexUsed].ApplyTo(curSelectedObj.gameObject);
+        }
+    }
+
+    private void ShootableUpdate()
+    {
+        if (curType == AbilityType.Shootable)
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (curTarget == AbilityTarget.Object)
+                {
+                    var selection = hit.transform;
+                    if (selection.CompareTag(selectableTag))
+                    {
+                        // Make Selection
+                        ShootableSelectObject(selection.gameObject);
+                    }
+                }
+                else if (curTarget == AbilityTarget.Position)
+                {
+                    hitLocation.transform.position = hit.point;
+                }
+            }
+        }
+    }
+
+    private void ShootableSelectObject(GameObject selection)
+    {
+        DeselectPrevShootObject();
+        curSelectedObj = selection;
+        curSelectedObj.BroadcastMessage("select");
+    }
+
+    private void DeselectPrevShootObject()
+    {
+        curSelectedObj.BroadcastMessage("deselect");
+    }
+
+    private void ShowShootableCanvas(bool showIt)
+    {
+        shootableCanvas.SetActive(showIt);
+    }
+
+    private void ShootableStop()
+    {
+        selectedShootInput = true;
+        useShootable = false;
     }
 
     private IEnumerator ImmediateRoutine()
@@ -115,7 +202,7 @@ public class AbilityInputs : MonoBehaviour
         immediateCanvas.SetActive(false);
         if (useImmediate)
         {
-            abilities[abilityIndexUsed].ApplyTo(curSelectionLoc);
+            abilities[abilityIndexUsed].ApplyTo(null);
         }
         AbilitySystemEnd();
     }
@@ -188,7 +275,9 @@ public class AbilityInputs : MonoBehaviour
         if (curType == AbilityType.Clickable)
         {
             RemoveSelectionObj();
-            abilities[abilityIndexUsed].ApplyTo(curSelectionLoc);
+            GameObject applyLocation = new GameObject();
+            applyLocation.transform.position = curSelectionLoc;
+            abilities[abilityIndexUsed].ApplyTo(applyLocation);
             //AbilitySystemEnd();
         }
     }
@@ -289,9 +378,13 @@ public interface Ability
     /**
      * Where this Ability is to be used.
      */
-    public void ApplyTo(Vector3 position);
+    public void ApplyTo(GameObject spot);
 
-    public AbilityInputs.AbilityType abilityType();
+    public AbilityInputs.AbilityType abilityType3rdPerson();
+
+    public AbilityInputs.AbilityType abilityType1stPerson();
+
+    public AbilityInputs.AbilityTarget abilityTarget();
 
     public string GetName();
 

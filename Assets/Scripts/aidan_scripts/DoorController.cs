@@ -14,8 +14,8 @@ namespace aidan_scripts
         [SerializeField][Tooltip("Spawn Point")]
         private Transform spawnPoint;
 
-        //[SerializeField][Tooltip("Room Door Leaves FROM")]
-        //private RoomController roomController;
+        [SerializeField][Tooltip("Room Door Leaves FROM")]
+        private GameObject room;
 
         
         private void OnTriggerEnter(Collider other)
@@ -26,7 +26,7 @@ namespace aidan_scripts
         private void Teleport()
         {
             playerController.transform.position = spawnPoint.position;
-            //playerController.SetRoom(roomController);
+            playerController.SetRoom(room);
         }
     }
 }

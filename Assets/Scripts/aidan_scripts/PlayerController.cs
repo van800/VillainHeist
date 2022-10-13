@@ -11,9 +11,6 @@ namespace aidan_scripts
         private CameraController cameraController;
         [SerializeField][Tooltip("Is First Person Mode")]
         public bool isFirstPov = false;
-        
-        //[SerializeField][Tooltip("Starting Room")]
-        //public RoomController roomController;
 
         [SerializeField][Tooltip("Speed")]
         public float speed = 5f;
@@ -90,15 +87,21 @@ namespace aidan_scripts
                     _hasJumped = false;
                 }
             }
+            
+            // DEBUG change perspective
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                isFirstPov = !isFirstPov;
+                cameraController.SwitchPerspective();
+            }
 
             characterController.Move(_velocity * Time.deltaTime);
         }
         
         // Set the player and camera's room
-        public void SetRoom(RoomController room)
+        public void SetRoom(GameObject room)
         {
-            //roomController = room;
-            cameraController.SetRoom();
+            cameraController.SetRoom(room);
         }
 
         // Hide mouse

@@ -244,7 +244,7 @@ public class AbilityInputs : MonoBehaviour
 
     private void ClearActiveCanvasButtons()
     {
-        for (int index = 0; index < activeCanvasContent.GetChildCount(); index++)
+        for (int index = 0; index < activeCanvasContent.childCount; index++)
         {
             Destroy(activeCanvasContent.GetChild(index).gameObject);
         }

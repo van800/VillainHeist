@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class LightSourceController : MonoBehaviour
 {
-    private Light lightComponent;
+    private Light _lightComponent;
     
     // Start is called before the first frame update
     void Start()
     {
-        lightComponent = this.GetComponent<Light>();
+        _lightComponent = this.GetComponent<Light>();
     }
 
     // Update is called once per frame
@@ -20,6 +20,6 @@ public class LightSourceController : MonoBehaviour
     
     void Toggle()
     {
-        lightComponent.enabled = !lightComponent.enabled;
+        _lightComponent.enabled = !_lightComponent.enabled;
     }
 }

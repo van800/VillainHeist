@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OvalLightController : MonoBehaviour
 {
-    private Transform lightSource;
+    private Transform _lightSource;
     
     // Start is called before the first frame update
     void Start()
@@ -21,6 +21,6 @@ public class OvalLightController : MonoBehaviour
     // Toggle the associated LightSource
     private void ToggleLight()
     {
-        lightSource.BroadcastMessage("Toggle");
+        _lightSource.BroadcastMessage("Toggle");
     }
 }

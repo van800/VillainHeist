@@ -17,6 +17,12 @@ public class AbilityInputs : MonoBehaviour
     private Ability[] abilities;
     public enum AbilityType { Clickable, Immediate };
     [Header("Ability Selection")]
+    [SerializeField]
+    private GameObject activeCanvas;
+    [SerializeField]
+    private Transform activeCanvasContent;
+    [SerializeField]
+    private Button abilityButtonPreFab;
     private IEnumerator curAbilitySelRoutine;
     // This is the current ability selection routine
     private AbilityType curType = AbilityType.Clickable;
@@ -36,10 +42,6 @@ public class AbilityInputs : MonoBehaviour
     private GameObject selectionPrefab;
     private GameObject curSelectionObj;
     [Header("Immediate Selection")]
-    [SerializeField]
-    private string activateAbility = "Fire1";
-    [SerializeField]
-    private string dontActivate = "Fire3";
     [SerializeField]
     private GameObject immediateCanvas;
     private bool selectedImmediateOption;
@@ -70,6 +72,7 @@ public class AbilityInputs : MonoBehaviour
         {
             ResetAbilityComponents();
             AbilitySystemStart();
+            activeCanvas.SetActive(true);
         }
         if (running)
         {
@@ -84,16 +87,22 @@ public class AbilityInputs : MonoBehaviour
         if (!running || prevType != curType)
         {
             running = true;
+            if (prevType == AbilityType.Clickable)
+            {
+                ClickableStop();
+            }
+            else if (prevType == AbilityType.Immediate)
+            {
+                ImmediateStop();
+            }
 
             if (curType == AbilityType.Clickable)
             {
                 curAbilitySelRoutine = ClickableRoutine();
-                immediateCanvas.SetActive(false);
             }
             else if (curType == AbilityType.Immediate)
             {
                 curAbilitySelRoutine = ImmediateRoutine();
-                movingSelection = false;
             }
             StartCoroutine(curAbilitySelRoutine);
         }
@@ -109,6 +118,13 @@ public class AbilityInputs : MonoBehaviour
             abilities[abilityIndexUsed].ApplyTo(curSelectionLoc);
         }
         AbilitySystemEnd();
+    }
+
+    private void ImmediateStop()
+    {
+        selectedImmediateOption = true;
+        useImmediate = false;
+        //immediateCanvas.SetActive(false);
     }
 
     private void ShowImmediateCanvas()
@@ -139,8 +155,8 @@ public class AbilityInputs : MonoBehaviour
         curSelectionLoc = abilitySelectionStartTransform.position;
         StartCoroutine(MoveSelection());
         yield return new WaitUntil(() => !movingSelection);
-        abilities[abilityIndexUsed].ApplyTo(curSelectionLoc);
         Time.timeScale = oldTimeScale;
+        AbilitySystemEnd();
     }
 
     private IEnumerator MoveSelection()
@@ -164,7 +180,6 @@ public class AbilityInputs : MonoBehaviour
             ShowSelectionWithObj();
             if (Input.GetButton(buttonToSelect))
             {
-                Debug.Log(buttonToSelect + " up");
                 movingSelection = false;
             }
 
@@ -172,10 +187,16 @@ public class AbilityInputs : MonoBehaviour
         }
         if (curType == AbilityType.Clickable)
         {
-            Debug.Log("VisualizeSelection Complete");
             RemoveSelectionObj();
-            AbilitySystemEnd();
+            abilities[abilityIndexUsed].ApplyTo(curSelectionLoc);
+            //AbilitySystemEnd();
         }
+    }
+
+    private void ClickableStop()
+    {
+        RemoveSelectionObj();
+        movingSelection = false;
     }
 
     private void ShowSelectionWithObj()
@@ -201,6 +222,32 @@ public class AbilityInputs : MonoBehaviour
     {
         abilities = GetComponents<Ability>();
         abilityIndexUsed = 0;
+        ResetActiveCanvasButtons();
+    }
+
+    private void ResetActiveCanvasButtons()
+    {
+        ClearActiveCanvasButtons();
+        for (int i = 0; i < abilities.Length; i++)
+        {
+            GameObject abilityButtonObj = Instantiate(abilityButtonPreFab.gameObject, activeCanvasContent);
+            Button abilityButton = abilityButtonObj.GetComponent<Button>();
+            int abilityNum = i;
+            abilityButton.onClick.AddListener(() => { SwitchAbilityTo(abilityNum); });
+            // Adds the function to this button to change the current ability to
+            // this button's ability
+            abilityButtonObj.transform.GetChild(0).GetComponent<Image>().sprite = abilities[i].GetIcon();
+            abilityButtonObj.GetComponentInChildren<Text>().text = "" + (abilityNum + 1);
+            // This will work as long as the only child object of the ability button is its sprite
+        }
+    }
+
+    private void ClearActiveCanvasButtons()
+    {
+        for (int index = 0; index < activeCanvasContent.GetChildCount(); index++)
+        {
+            Destroy(activeCanvasContent.GetChild(index).gameObject);
+        }
     }
 
     private void SwitchAbilities()
@@ -210,16 +257,31 @@ public class AbilityInputs : MonoBehaviour
         {
             if (input != null && input.Equals("" + (i + 1)))
             {
-                abilityIndexUsed = i;
-                AbilitySystemStart();
+                SwitchAbilityTo(i);
             }
         }
+    }
+
+    private void SwitchAbilityTo(int i)
+    {
+        if (i < 0 || i >= abilities.Length)
+        {
+            throw new AbilityIndexOutOfBoundsException();
+        }
+        abilityIndexUsed = i;
+        AbilitySystemStart();
     }
 
     private void AbilitySystemEnd()
     {
         running = false;
+        activeCanvas.SetActive(false);
     }
+}
+
+// Thrown when you try changing the ability index to an index that does not exist
+class AbilityIndexOutOfBoundsException : System.Exception {
+
 }
 
 public interface Ability

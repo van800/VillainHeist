@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlaceABoxAbility : MonoBehaviour, Ability
 {
+    [SerializeField] private string name;
+    [SerializeField] private Sprite icon;
     [SerializeField] private GameObject obj;
     [SerializeField] private float yRaycastPositionInc = 2f;
 
@@ -30,13 +32,12 @@ public class PlaceABoxAbility : MonoBehaviour, Ability
 
     public string GetName()
     {
-        return "PlaceABoxAbility";
+        return name;
     }
 
     public Sprite GetIcon()
     {
-        return null;
-        // Replace with debug sprite
+        return icon;
     }
 
     // Start is called before the first frame update

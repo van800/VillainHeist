@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ClearTaggedObjsAbility : MonoBehaviour, Ability
 {
+    [SerializeField] private string name = "ClearTaggedObjsAbility";
+    [SerializeField] private Sprite icon;
     [SerializeField] private string tag;
 
     public AbilityInputs.AbilityType abilityType()
@@ -22,13 +24,12 @@ public class ClearTaggedObjsAbility : MonoBehaviour, Ability
 
     public string GetName()
     {
-        return "ClearTaggedObjsAbility";
+        return name;
     }
 
     public Sprite GetIcon()
     {
-        return null;
-        // Replace with debug sprite
+        return icon;
     }
 
     // Start is called before the first frame update

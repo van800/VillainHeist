@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterController: {fileID: 4119801919210531910}
   cameraController: {fileID: 0}
-  isFirstPov: 1
+  isFirstPov: 0
   speed: 5
   runMultiplier: 2
   gravity: -9.8

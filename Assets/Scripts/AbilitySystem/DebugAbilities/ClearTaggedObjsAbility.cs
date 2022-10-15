@@ -8,12 +8,22 @@ public class ClearTaggedObjsAbility : MonoBehaviour, Ability
     [SerializeField] private Sprite icon;
     [SerializeField] private string tag;
 
-    public AbilityInputs.AbilityType abilityType()
+    public AbilityInputs.AbilityType abilityType3rdPerson()
     {
         return AbilityInputs.AbilityType.Immediate;
     }
 
-    public void ApplyTo(Vector3 position)
+    public AbilityInputs.AbilityType abilityType1stPerson()
+    {
+        return AbilityInputs.AbilityType.Immediate;
+    }
+
+    public AbilityInputs.AbilityTarget abilityTarget()
+    {
+        return AbilityInputs.AbilityTarget.Position;
+    }
+
+    public void ApplyTo(GameObject spot)
     {
         GameObject[] taggedObjs = GameObject.FindGameObjectsWithTag(tag);
         foreach (GameObject obj in taggedObjs)

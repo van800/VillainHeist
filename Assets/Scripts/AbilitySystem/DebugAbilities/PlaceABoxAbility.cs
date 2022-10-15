@@ -9,9 +9,10 @@ public class PlaceABoxAbility : MonoBehaviour, Ability
     [SerializeField] private GameObject obj;
     [SerializeField] private float yRaycastPositionInc = 2f;
 
-    public void ApplyTo(Vector3 position)
+    public void ApplyTo(GameObject spot)
     {
         RaycastHit hit;
+        Vector3 position = spot.transform.position;
         Vector3 raycastStartPos = position;
         raycastStartPos.y += yRaycastPositionInc;
         bool hitFloor = Physics.Raycast(raycastStartPos, Vector3.down, out hit);
@@ -25,9 +26,14 @@ public class PlaceABoxAbility : MonoBehaviour, Ability
         newObj.transform.tag = "Respawn";
     }
 
-    public AbilityInputs.AbilityType abilityType()
+    public AbilityInputs.AbilityType abilityType3rdPerson()
     {
         return AbilityInputs.AbilityType.Clickable;
+    }
+
+    public AbilityInputs.AbilityType abilityType1stPerson()
+    {
+        return AbilityInputs.AbilityType.Shootable;
     }
 
     public string GetName()
@@ -50,5 +56,10 @@ public class PlaceABoxAbility : MonoBehaviour, Ability
     void Update()
     {
         
+    }
+
+    public AbilityInputs.AbilityTarget abilityTarget()
+    {
+        return AbilityInputs.AbilityTarget.Position;
     }
 }

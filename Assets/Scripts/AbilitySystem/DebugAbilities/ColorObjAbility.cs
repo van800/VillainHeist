@@ -2,10 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightsOffAbility : MonoBehaviour, Ability
+public class ColorObjAbility : MonoBehaviour, Ability
 {
-    [SerializeField] private string name = "Lights Off Ability";
+    [SerializeField] private string name = "Color Object";
     [SerializeField] private Sprite icon;
+    [SerializeField] private Material newMat;
+
+    public AbilityInputs.AbilityTarget abilityTarget()
+    {
+        return AbilityInputs.AbilityTarget.Object;
+    }
 
     public AbilityInputs.AbilityType abilityType1stPerson()
     {
@@ -17,18 +23,9 @@ public class LightsOffAbility : MonoBehaviour, Ability
         return AbilityInputs.AbilityType.Clickable;
     }
 
-    public AbilityInputs.AbilityTarget abilityTarget()
-    {
-        return AbilityInputs.AbilityTarget.SelectableObject;
-    }
-
     public void ApplyTo(GameObject spot)
     {
-        OvalLightController spotsLight;
-        if (spot.TryGetComponent(out spotsLight))
-        {
-            //spotsLight.
-        }
+        spot.GetComponent<Renderer>().material = newMat;
     }
 
     public Sprite GetIcon()

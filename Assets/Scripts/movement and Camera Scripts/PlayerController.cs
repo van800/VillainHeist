@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace aidan_scripts
+namespace movement_and_Camera_Scripts
 {
     public class PlayerController : MonoBehaviour
     { 

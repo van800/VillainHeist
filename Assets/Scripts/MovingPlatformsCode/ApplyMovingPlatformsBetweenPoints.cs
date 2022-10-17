@@ -11,7 +11,7 @@ public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
     private int _nextPos;
     private Vector3[] _endPos;
     private Vector3 _startPos;
-    private static readonly string[] MovableTags = { "Untagged"};
+    private static readonly string[] MovableTags = { "Untagged", "Respawn"  };
 
     [Header("Current Movement")]
     [SerializeField]

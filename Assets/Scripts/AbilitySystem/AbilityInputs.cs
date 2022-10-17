@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using aidan_scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AbilityInputs : MonoBehaviour
 {
+    [SerializeField] private PlayerController player;
     private bool running;
     [Header("Ability Start")]
     [SerializeField] [Tooltip("Probably the player transform")]
@@ -18,6 +20,8 @@ public class AbilityInputs : MonoBehaviour
     public enum AbilityType { Clickable, Immediate, Shootable };
     public enum AbilityTarget { Position, SelectableObject, Object}
     [Header("Ability Selection")]
+    [SerializeField] private LayerMask abilityLayers;
+    [SerializeField] private float abilityRaycastDistance = 300f;
     [SerializeField]
     private GameObject activeCanvas;
     [SerializeField]
@@ -103,7 +107,7 @@ public class AbilityInputs : MonoBehaviour
     {
         AbilityType prevType = curType;
         curTarget = abilities[abilityIndexUsed].abilityTarget();
-        if (false) // in third person
+        if (!player.isFirstPov) // in third person
         {
             curType = abilities[abilityIndexUsed].abilityType3rdPerson();
         }
@@ -202,7 +206,7 @@ public class AbilityInputs : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                if (curTarget == AbilityTarget.Object)
+                if (curTarget == AbilityTarget.Object || curTarget == AbilityTarget.SelectableObject)
                 {
                     var selection = hit.transform;
                     ShootableSelectObject(selection.gameObject);
@@ -319,8 +323,12 @@ public class AbilityInputs : MonoBehaviour
             
             // This will find the gameobject associated with this location
             RaycastHit findObjHere;
-            Physics.Raycast(new Vector3(curSelectionLoc.x, curSelectionLoc.y + selectObjYOffest, curSelectionLoc.z), Vector3.down, out findObjHere);
-            curSelectedObj = findObjHere.collider.gameObject;
+            Physics.Raycast(new Vector3(curSelectionLoc.x, curSelectionLoc.y + selectObjYOffest, curSelectionLoc.z),
+                Vector3.down, out findObjHere);
+            if (findObjHere.collider != null)
+            {
+                curSelectedObj = findObjHere.collider.gameObject;
+            }
             ShowSelectionWithObj();
             if (Input.GetButton(buttonToSelect))
             {

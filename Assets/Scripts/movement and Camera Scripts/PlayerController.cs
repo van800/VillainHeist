@@ -68,15 +68,18 @@ namespace movement_and_Camera_Scripts
             {
                 Debug.DrawRay(position, Vector3.down, Color.blue);
             }
-
+            
+            // Gravity
+            _velocity.y += gravity * Time.deltaTime;
+            
             // First Person only
             if (isFirstPov)
             {
                 // Rotation movement
                 playerTransform.rotation = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up);
                 
-                // Gravity and Jumping
-                _velocity.y += gravity * Time.deltaTime;
+                // Jumping
+                
                 if (Input.GetButtonDown("Jump") && _grounded)
                 {
                     _velocity.y = Mathf.Sqrt(jumpHeight);

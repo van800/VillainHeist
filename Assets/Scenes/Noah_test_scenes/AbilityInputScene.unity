@@ -5954,6 +5954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbcb4ac073be24333827e9bfe416fb51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   abilitySelectionStartTransform: {fileID: 941837734}
   buttonToActivate: Fire3
   buttonToSelect: Fire3
@@ -5969,7 +5970,6 @@ MonoBehaviour:
   immediateCanvas: {fileID: 1930509137}
   immediateCanvasQuestion: Use [Ability]?
   immediateCanvasText: {fileID: 1599884400}
-  selectableTag: Selectable
   shootableCanvas: {fileID: 1808111943}
   selectionMissedPopupObj: {fileID: 68594058}
   popupShowTime: 0.5
@@ -5989,6 +5989,7 @@ Transform:
   - {fileID: 1930509138}
   - {fileID: 1808111944}
   - {fileID: 68594059}
+  - {fileID: 1645816100}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6053,6 +6054,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Lights Off Ability
   icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  tag: Selectable
 --- !u!114 &941837739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6219,6 +6221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1193862849}
   - component: {fileID: 1193862848}
+  - component: {fileID: 1193862850}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -6303,6 +6306,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1193862850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1193862847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &1331283091
 GameObject:
   m_ObjectHideFlags: 0
@@ -7043,13 +7066,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1645816097}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_Father: {fileID: 941837734}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1792640940
 GameObject:

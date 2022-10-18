@@ -24,10 +24,10 @@ public class OvalLightController : MonoBehaviour
         if (selected)
         {
             _materialComponent.material = highlightMaterial;
-            if (Input.GetKeyUp("e"))
+            /*if (Input.GetKeyUp("e"))
             {
                 ToggleLight();
-            }
+            }*/
         }
         else
         {
@@ -39,7 +39,7 @@ public class OvalLightController : MonoBehaviour
     }
 
     // Toggle the associated LightSource
-    private void ToggleLight()
+    public void ToggleLight()
     {
         _lightComponent.enabled = !_lightComponent.enabled;
     }

@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using movement_and_Camera_Scripts;
 using UnityEngine;
 
 public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
 {
+    //private Rigidbody myRigidbody;
+    //private CharacterController controller;
     [Header("Movement Prep")]
     [SerializeField]
     [Tooltip("Insert the empty gameobject that stores the end position of this moving platform here")]
@@ -11,24 +14,29 @@ public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
     private int _nextPos;
     private Vector3[] _endPos;
     private Vector3 _startPos;
-    private static readonly string[] MovableTags = { "Untagged"};
+    private static readonly string[] MovableTags = { "Player", "Respawn"  };
 
     [Header("Current Movement")]
     [SerializeField]
     private float speed = .5f;
+    private Vector3 direction;
     private bool _running;
     private Vector3 _targetLoc;
     private Vector3 _prevTargetLoc;
+    private List<PlayerController> players;
 
     private void Start()
     {
+        players = new List<PlayerController>();
+        //controller = GetComponent<CharacterController>();
+        //myRigidbody = GetComponent<Rigidbody>();
         _nextPos = 0;
         _endPos = new Vector3[goToTransform.Length];
         for (int i = 0; i < goToTransform.Length; i++)
         {
-            _endPos[i] = goToTransform[i].position;
+            _endPos[i] = goToTransform[i].localPosition;
         }
-        _startPos = transform.position;
+        _startPos = transform.localPosition;
     }
 
     private void Update()
@@ -38,12 +46,16 @@ public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
             Move();
             CheckEnd();
         }
+        /*else
+        {
+            myRigidbody.velocity = new Vector3(0,0,0);
+        }*/
     }
 
     public override void StartApply()
     {
         _running = true;
-        _prevTargetLoc = transform.position;
+        _prevTargetLoc = transform.localPosition;
         if (_nextPos < _endPos.Length)
         {
             _targetLoc = _endPos[_nextPos];
@@ -54,6 +66,7 @@ public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
             _targetLoc = _startPos;
             _nextPos = 0;
         }
+        //direction = (_targetLoc - transform.position).normalized;
     }
 
     public override void TurnOff()
@@ -70,7 +83,19 @@ public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
     // Moves this platform to the current target pos
     private void Move()
     {
-        transform.Translate((_targetLoc - transform.position).normalized * speed * Time.deltaTime);
+        Vector3 localMovement = (_targetLoc - transform.localPosition).normalized/*direction.normalized*/ * speed * Time.deltaTime;
+        transform.Translate(localMovement);
+        foreach (PlayerController player in players)
+        {
+            player.GetComponent<CharacterController>().Move(transform.TransformVector(localMovement).normalized * speed * Time.deltaTime);
+        }
+        /*if (CollidingWithWall())
+        {
+            transform.Translate(/*(_targetLoc - transform.position).normalized*-direction.normalized * speed * Time.deltaTime);
+            // Undo the translation
+        }*/
+        //myRigidbody.velocity = direction.normalized * speed;
+        //controller.Move(direction.normalized * speed * Time.deltaTime);
     }
 
     // Ends the current method (whether Apply or UnApply) if the platform has reached its destination
@@ -104,7 +129,7 @@ public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
         //Vector3 origPos = prevTargetLoc;
         // If this platform is farther from the non-target position than the
         // target location is, then it has passed the target
-        return ((transform.position - _prevTargetLoc).magnitude > (_targetLoc - _prevTargetLoc).magnitude);
+        return ((transform.localPosition - _prevTargetLoc).magnitude > (_targetLoc - _prevTargetLoc).magnitude);
     }
 
     // Runs when an object is placed on this
@@ -112,12 +137,17 @@ public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
     {
         // Adds all objects with certain tags on top of this object as a child
         // This way, all objects on top of this one will move with this object
-        foreach (string tag in MovableTags)
+        /*foreach (string tag in MovableTags)
         {
             if (other.CompareTag(tag))
             {
                 other.transform.SetParent(transform);
             }
+        }*/
+        if (other.CompareTag("Player"))
+        {
+            players.Add(other.GetComponent<PlayerController>());
+            Debug.Log("Got Player");
         }
     }
 
@@ -125,7 +155,7 @@ public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
     private void OnTriggerExit(Collider other)
     {
         // Removes all objects that were added as children when they leave this platform
-        foreach (string tag in MovableTags)
+        /*foreach (string tag in MovableTags)
         {
             // The object on this one only stops being a child of this object if it is
             // still a child of this object and has not been snatched by another object
@@ -133,6 +163,15 @@ public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
             if (other.CompareTag(tag) && other.transform.parent.Equals(transform))
             {
                 other.transform.SetParent(null);
+            }
+        }*/
+        if (other.CompareTag("Player"))
+        {
+            PlayerController otherController = other.GetComponent<PlayerController>();
+            if (players.Contains(otherController))
+            {
+                players.Remove(otherController);
+                Debug.Log("Left Player");
             }
         }
     }

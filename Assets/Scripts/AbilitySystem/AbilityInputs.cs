@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using movement_and_Camera_Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class AbilityInputs : MonoBehaviour
 {
+    [SerializeField] private PlayerController player;
     private bool running;
     [Header("Ability Start")]
     [SerializeField] [Tooltip("Probably the player transform")]
@@ -16,8 +18,12 @@ public class AbilityInputs : MonoBehaviour
     [Header("Abilities")]
     private Ability[] abilities;
     public enum AbilityType { Clickable, Immediate, Shootable };
-    public enum AbilityTarget { Position, SelectableObject, Object}
+    public enum AbilityTarget { Position, Object}
     [Header("Ability Selection")]
+    private GameObject curSelectedObj;
+    private GameObject hitLocation;
+    [SerializeField] private LayerMask abilityLayers;
+    [SerializeField] private float abilityRaycastDistance = 300f;
     [SerializeField]
     private GameObject activeCanvas;
     [SerializeField]
@@ -44,7 +50,7 @@ public class AbilityInputs : MonoBehaviour
     private GameObject selectionPrefab;
     [SerializeField]
     private float selectObjYOffest = 20f;
-    private GameObject curSelectionObj;
+    private GameObject clickableSelectionObj;
     [Header("Immediate Selection")]
     [SerializeField]
     private GameObject immediateCanvas;
@@ -57,9 +63,8 @@ public class AbilityInputs : MonoBehaviour
     [Header("Shootable Selection")]
     private bool selectedShootInput;
     private bool useShootable;
-    private GameObject curSelectedObj;
-    private GameObject hitLocation;
-    [SerializeField] private string selectableTag = "Selectable";
+    
+    //[SerializeField] private string selectableTag = "Selectable";
     [SerializeField]
     private GameObject shootableCanvas;
     [Header("Popups")]
@@ -103,7 +108,7 @@ public class AbilityInputs : MonoBehaviour
     {
         AbilityType prevType = curType;
         curTarget = abilities[abilityIndexUsed].abilityTarget();
-        if (false) // in third person
+        if (!player.isFirstPov) // in third person
         {
             curType = abilities[abilityIndexUsed].abilityType3rdPerson();
         }
@@ -163,18 +168,19 @@ public class AbilityInputs : MonoBehaviour
 
     private void ApplyAbility()
     {
-        if (curTarget == AbilityTarget.Object)
+        if (curTarget == AbilityTarget.Object && !(abilities[abilityIndexUsed] is SelectableObjectAbility))
         {
             if (curSelectedObj != null)
             {
                 abilities[abilityIndexUsed].ApplyTo(curSelectedObj);
             }
         }
-        else if (curTarget == AbilityTarget.SelectableObject)
+        else if (abilities[abilityIndexUsed] is SelectableObjectAbility)
         {
-            if (curSelectedObj != null && curSelectedObj.CompareTag(selectableTag))
+            SelectableObjectAbility curSelectableAbility = (SelectableObjectAbility)abilities[abilityIndexUsed];
+            if (curSelectedObj != null && curSelectedObj.CompareTag(curSelectableAbility.selectableTag()))
             {
-                abilities[abilityIndexUsed].ApplyTo(curSelectedObj);
+                curSelectableAbility.ApplyTo(curSelectedObj);
             }
             else
             {
@@ -196,41 +202,53 @@ public class AbilityInputs : MonoBehaviour
 
     private void ShootableUpdate()
     {
-        if (curType == AbilityType.Shootable)
+        if (running)
         {
-            var ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);//Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            if (curType == AbilityType.Shootable)
             {
-                if (curTarget == AbilityTarget.Object)
+                var ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);//Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit))
                 {
-                    var selection = hit.transform;
-                    ShootableSelectObject(selection.gameObject);
-                }
-                else if (curTarget == AbilityTarget.Position)
-                {
-                    hitLocation.transform.position = hit.point;
+                    if (curTarget == AbilityTarget.Object || abilities[abilityIndexUsed] is SelectableObjectAbility)
+                    {
+                        var selection = hit.transform;
+                        SelectObject(selection.gameObject);
+                    }
+                    else if (curTarget == AbilityTarget.Position)
+                    {
+                        hitLocation.transform.position = hit.point;
+                    }
                 }
             }
         }
     }
 
-    private void ShootableSelectObject(GameObject selection)
+    private void SelectObject(GameObject selection)
     {
-        DeselectPrevShootObject();
+        DeselectPrevObject();
         curSelectedObj = selection;
-        if (curTarget == AbilityTarget.SelectableObject && curSelectedObj.CompareTag(selectableTag))
+        if (abilities[abilityIndexUsed] is SelectableObjectAbility)
         {
-            curSelectedObj.BroadcastMessage("select");
+            SelectableObjectAbility curSelectableAbility = (SelectableObjectAbility)abilities[abilityIndexUsed];
+            if (curSelectedObj.CompareTag(curSelectableAbility.selectableTag()))
+            {
+                curSelectedObj.BroadcastMessage("select");
+            }
         }
     }
 
-    private void DeselectPrevShootObject()
+    private void DeselectPrevObject()
     {
-        if (curTarget == AbilityTarget.SelectableObject && curSelectedObj != null && curSelectedObj.CompareTag(selectableTag))
-        { 
-            curSelectedObj.BroadcastMessage("deselect");
+        if (abilities[abilityIndexUsed] is SelectableObjectAbility && curSelectedObj != null)
+        {
+            SelectableObjectAbility curSelectableAbility = (SelectableObjectAbility)abilities[abilityIndexUsed];
+            if (curSelectedObj.CompareTag(curSelectableAbility.selectableTag()))
+            {
+                curSelectedObj.BroadcastMessage("deselect");
+            }
         }
+        curSelectedObj = null;
     }
 
     private void ShowShootableCanvas(bool showIt)
@@ -240,6 +258,7 @@ public class AbilityInputs : MonoBehaviour
 
     private void ShootableStop()
     {
+        DeselectPrevObject();
         selectedShootInput = true;
         useShootable = false;
     }
@@ -292,7 +311,7 @@ public class AbilityInputs : MonoBehaviour
         StartCoroutine(MoveSelection());
         yield return new WaitUntil(() => !movingSelection);
         Time.timeScale = oldTimeScale;
-        AbilitySystemEnd();
+        /*AbilitySystemEnd();*/
     }
 
     private IEnumerator MoveSelection()
@@ -319,8 +338,13 @@ public class AbilityInputs : MonoBehaviour
             
             // This will find the gameobject associated with this location
             RaycastHit findObjHere;
-            Physics.Raycast(new Vector3(curSelectionLoc.x, curSelectionLoc.y + selectObjYOffest, curSelectionLoc.z), Vector3.down, out findObjHere);
-            curSelectedObj = findObjHere.collider.gameObject;
+            Physics.Raycast(new Vector3(curSelectionLoc.x, curSelectionLoc.y + selectObjYOffest, curSelectionLoc.z),
+                Vector3.down, out findObjHere);
+            if (findObjHere.collider != null)
+            {
+                SelectObject(findObjHere.collider.gameObject);
+                //curSelectedObj = findObjHere.collider.gameObject;
+            }
             ShowSelectionWithObj();
             if (Input.GetButton(buttonToSelect))
             {
@@ -336,7 +360,7 @@ public class AbilityInputs : MonoBehaviour
             //applyLocation.transform.position = curSelectionLoc;
             hitLocation.transform.position = curSelectionLoc;
             ApplyAbility();
-            //AbilitySystemEnd();
+            AbilitySystemEnd();
         }
     }
 
@@ -348,16 +372,16 @@ public class AbilityInputs : MonoBehaviour
 
     private void ShowSelectionWithObj()
     {
-        if (curSelectionObj == null)
+        if (clickableSelectionObj == null)
         {
-            curSelectionObj = Instantiate(selectionPrefab);
+            clickableSelectionObj = Instantiate(selectionPrefab);
         }
-        curSelectionObj.transform.position = curSelectionLoc;
+        clickableSelectionObj.transform.position = curSelectionLoc;
     }
 
     private void RemoveSelectionObj()
     {
-        Destroy(curSelectionObj);
+        Destroy(clickableSelectionObj);
     }
 
     private bool MouseHasMoved()
@@ -423,6 +447,7 @@ public class AbilityInputs : MonoBehaviour
     {
         running = false;
         activeCanvas.SetActive(false);
+        DeselectPrevObject();
     }
 }
 
@@ -449,3 +474,22 @@ public interface Ability
     public Sprite GetIcon();
 }
 
+public abstract class SelectableObjectAbility : MonoBehaviour, Ability
+{
+    public AbilityInputs.AbilityTarget abilityTarget()
+    {
+        return AbilityInputs.AbilityTarget.Object;
+    }
+
+    public abstract string selectableTag();
+
+    public abstract AbilityInputs.AbilityType abilityType1stPerson();
+
+    public abstract AbilityInputs.AbilityType abilityType3rdPerson();
+
+    public abstract void ApplyTo(GameObject spot);
+
+    public abstract Sprite GetIcon();
+
+    public abstract string GetName();
+}

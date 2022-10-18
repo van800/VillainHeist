@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4119801919210531929}
   m_Layer: 0
   m_Name: capsule_player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterController: {fileID: 4119801919210531910}
   cameraController: {fileID: 0}
-  isFirstPov: 1
+  isFirstPov: 0
   speed: 5
   runMultiplier: 2
   gravity: -9.8

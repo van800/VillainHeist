@@ -104,6 +104,7 @@ namespace movement_and_Camera_Scripts
             cameraController.SetRoom(room);
         }
 
+        /*
         // Hide mouse
         private void OnApplicationFocus(bool hasFocus)
         {
@@ -115,6 +116,6 @@ namespace movement_and_Camera_Scripts
             {
                 Cursor.lockState = CursorLockMode.None;
             }
-        }
+        }*/
     }
 }

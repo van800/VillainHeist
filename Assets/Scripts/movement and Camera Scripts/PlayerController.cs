@@ -24,7 +24,7 @@ namespace movement_and_Camera_Scripts
         public float jumpHeight = 5f;
         private bool _grounded;
         private bool _hasJumped = false;
-        private const float GroundCastDist = 0.05f;
+        private const float GroundCastDist = 0.15f;
 
         
         // Start is called before the first frame update
@@ -79,7 +79,10 @@ namespace movement_and_Camera_Scripts
                 playerTransform.rotation = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up);
                 
                 // Jumping
-                
+                if (Input.GetButtonDown("Jump"))
+                {
+                    Debug.Log(_grounded);
+                }
                 if (Input.GetButtonDown("Jump") && _grounded)
                 {
                     _velocity.y = Mathf.Sqrt(jumpHeight);

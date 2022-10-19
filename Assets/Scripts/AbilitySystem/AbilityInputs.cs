@@ -22,8 +22,8 @@ public class AbilityInputs : MonoBehaviour
     [Header("Ability Selection")]
     private GameObject curSelectedObj;
     private GameObject hitLocation;
-    [SerializeField] private LayerMask abilityLayers;
-    [SerializeField] private float abilityRaycastDistance = 300f;
+    //[SerializeField] private LayerMask abilityLayers;
+    //[SerializeField] private float abilityRaycastDistance = 300f;
     [SerializeField]
     private GameObject activeCanvas;
     [SerializeField]
@@ -325,7 +325,10 @@ public class AbilityInputs : MonoBehaviour
                 Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hitMouseLoc;
                 Physics.Raycast(mouseRay, out hitMouseLoc);
-                curSelectionLoc = hitMouseLoc.point;
+                if (hitMouseLoc.collider != null)
+                {
+                    curSelectionLoc = hitMouseLoc.point;
+                }
                 //input = new Vector3(Input.GetAxisRaw("Mouse X"), 0, Input.GetAxisRaw("Mouse Y"));
                 //input *= mouseSelectionMoveSpeed;
             }

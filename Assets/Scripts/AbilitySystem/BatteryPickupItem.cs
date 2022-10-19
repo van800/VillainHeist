@@ -9,11 +9,12 @@ public class BatteryPickupItem : MonoBehaviour
     [Tooltip("Insert Battery Storage Object")]
     public Battery bat;
 
-    [SerializeField]
-    [Tooltip("Add Box Collider")]
-    public bool colliding = false;
-
+    [Tooltip("The Player")]
     public GameObject killGuy;
+
+    [SerializeField]
+    [Tooltip("Distance Until the item is picked up")]
+    private float killDistance;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +30,7 @@ public class BatteryPickupItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ( Vector3.Distance(killGuy.transform.position, this.transform.position) < 1.0f)
+        if ( Vector3.Distance(killGuy.transform.position, this.transform.position) < this.killDistance)
         {
             Destroy(this.gameObject);
         }

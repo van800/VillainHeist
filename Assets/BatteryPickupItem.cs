@@ -6,8 +6,16 @@ using UnityEngine;
 public class BatteryPickupItem : MonoBehaviour
 {
 
+    /*
     [Tooltip("Insert Battery Storage Object")]
     public Battery bat;
+    */
+    
+    [SerializeField]
+    [Tooltip("Add AbilityInputSystem")]
+    public AbilityInputs abilityInputSystem;
+
+    
 
     [SerializeField]
     [Tooltip("Add Box Collider")]
@@ -15,10 +23,12 @@ public class BatteryPickupItem : MonoBehaviour
 
     public GameObject killGuy;
 
+    private Battery bat;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        bat = abilityInputSystem.bat;
     }
 
     private void OnDestroy()

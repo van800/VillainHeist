@@ -12,7 +12,7 @@ public class Battery : MonoBehaviour
     [Tooltip("Maximum Battery Amount")]
     public int maxBat;
 
-    Battery(int max)
+    public Battery(int max)
     {
         this.currentBat = max;
         this.maxBat = max;
@@ -43,7 +43,7 @@ public class Battery : MonoBehaviour
 
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame

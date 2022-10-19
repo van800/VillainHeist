@@ -68,6 +68,7 @@ public class AbilityInputs : MonoBehaviour
     [SerializeField]
     private float popupShowTime;
 
+    [Tooltip("Insert Battery Storage Object")]
     public Battery bat;
     public int cost = 1;
 

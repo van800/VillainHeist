@@ -85,6 +85,7 @@ public class AbilityInputs : MonoBehaviour
         movingSelection = false;
         ResetAbilityComponents();
         hitLocation = new GameObject("Hit Location");
+		bat = new Battery(6);
     }
 
     // Update is called once per frame

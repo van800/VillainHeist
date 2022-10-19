@@ -2,43 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightsOffAbility : MonoBehaviour, Ability
+public class LightsOffAbility : SelectableObjectAbility
 {
     [SerializeField] private string name = "Lights Off Ability";
     [SerializeField] private Sprite icon;
+    [SerializeField] private string tag = "Selectable";
 
-    public AbilityInputs.AbilityType abilityType1stPerson()
+    public override AbilityInputs.AbilityType abilityType1stPerson()
     {
         return AbilityInputs.AbilityType.Shootable;
     }
 
-    public AbilityInputs.AbilityType abilityType3rdPerson()
+    public override AbilityInputs.AbilityType abilityType3rdPerson()
     {
         return AbilityInputs.AbilityType.Clickable;
     }
 
-    public AbilityInputs.AbilityTarget abilityTarget()
-    {
-        return AbilityInputs.AbilityTarget.SelectableObject;
-    }
-
-    public void ApplyTo(GameObject spot)
+    public override void ApplyTo(GameObject spot)
     {
         OvalLightController spotsLight;
         if (spot.TryGetComponent(out spotsLight))
         {
-            //spotsLight.
+            spotsLight.ToggleLight();
         }
     }
 
-    public Sprite GetIcon()
+    public override Sprite GetIcon()
     {
         return icon;
     }
 
-    public string GetName()
+    public override string GetName()
     {
         return name;
+    }
+
+    public override string selectableTag()
+    {
+        return tag;
     }
 
     // Start is called before the first frame update

@@ -25,7 +25,7 @@ namespace movement_and_Camera_Scripts
         public float jumpHeight = 5f;
         private bool _grounded;
         private bool _hasJumped = false;
-        private const float GroundCastDist = 0.05f;
+        private const float GroundCastDist = 0.15f;
 
         
         // Start is called before the first frame update
@@ -70,15 +70,21 @@ namespace movement_and_Camera_Scripts
             {
                 Debug.DrawRay(position, Vector3.down, Color.blue);
             }
-
+            
+            // Gravity
+            _velocity.y += gravity * Time.deltaTime;
+            
             // First Person only
             if (isFirstPov)
             {
                 // Rotation movement
                 playerTransform.rotation = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up);
                 
-                // Gravity and Jumping
-                _velocity.y += gravity * Time.deltaTime;
+                // Jumping
+                if (Input.GetButtonDown("Jump"))
+                {
+                    Debug.Log(_grounded);
+                }
                 if (Input.GetButtonDown("Jump") && _grounded)
                 {
                     _velocity.y = Mathf.Sqrt(jumpHeight);
@@ -106,6 +112,7 @@ namespace movement_and_Camera_Scripts
             cameraController.SetRoom(room);
         }
 
+        /*
         // Hide mouse
         private void OnApplicationFocus(bool hasFocus)
         {
@@ -117,6 +124,6 @@ namespace movement_and_Camera_Scripts
             {
                 Cursor.lockState = CursorLockMode.None;
             }
-        }
+        }*/
     }
 }

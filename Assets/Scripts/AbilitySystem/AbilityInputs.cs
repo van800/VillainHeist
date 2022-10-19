@@ -68,6 +68,9 @@ public class AbilityInputs : MonoBehaviour
     [SerializeField]
     private float popupShowTime;
 
+    public Battery bat;
+    public int cost = 1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,10 +90,11 @@ public class AbilityInputs : MonoBehaviour
 
     private void CheckStart()
     {
-        if (!running && Input.GetButtonDown(buttonToActivate))
+        if (!running && Input.GetButtonDown(buttonToActivate) && bat.hasLeft(this.cost))
         {
             ResetAbilityComponents();
             AbilitySystemStart();
+            bat.subFromCurrent(this.cost);
             activeCanvas.SetActive(true);
         }
         if (running)

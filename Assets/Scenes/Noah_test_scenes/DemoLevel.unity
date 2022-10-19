@@ -1797,12 +1797,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4119801919210531929, guid: 1a5c83c51ef63429491a99ed11690351, type: 3}
       propertyPath: isFirstPov
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4119801919210531929, guid: 1a5c83c51ef63429491a99ed11690351, type: 3}
       propertyPath: cameraController
       value: 
-      objectReference: {fileID: 2047703676}
+      objectReference: {fileID: 1128413313}
     - target: {fileID: 4119801919210531933, guid: 1a5c83c51ef63429491a99ed11690351, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2952,6 +2952,17 @@ Transform:
   m_Father: {fileID: 832907036}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1128413313 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4532288265168958336, guid: f292ca55accae4d529f5c0b05995577f, type: 3}
+  m_PrefabInstance: {fileID: 1756786294}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372807093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bb051985555c46f286e23c728bb8190, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1159283940
 GameObject:
   m_ObjectHideFlags: 0
@@ -3688,7 +3699,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4568609586692450618, guid: b9a0425d4fd79466e92c53627727cef0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7292942380631071594, guid: b9a0425d4fd79466e92c53627727cef0, type: 3}
       propertyPath: playerController
@@ -3696,31 +3707,31 @@ PrefabInstance:
       objectReference: {fileID: 603347005}
     - target: {fileID: 7292942380631071596, guid: b9a0425d4fd79466e92c53627727cef0, type: 3}
       propertyPath: field of view
-      value: 75
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7292942380631071596, guid: b9a0425d4fd79466e92c53627727cef0, type: 3}
       propertyPath: orthographic size
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7292942380631071597, guid: b9a0425d4fd79466e92c53627727cef0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.36
+      value: -14.247589
       objectReference: {fileID: 0}
     - target: {fileID: 7292942380631071597, guid: b9a0425d4fd79466e92c53627727cef0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.20300007
+      value: 4.0624905
       objectReference: {fileID: 0}
     - target: {fileID: 7292942380631071597, guid: b9a0425d4fd79466e92c53627727cef0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.95
+      value: -15.848654
       objectReference: {fileID: 0}
     - target: {fileID: 7292942380631071597, guid: b9a0425d4fd79466e92c53627727cef0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.8433915
       objectReference: {fileID: 0}
     - target: {fileID: 7292942380631071597, guid: b9a0425d4fd79466e92c53627727cef0, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.53729963
       objectReference: {fileID: 0}
     - target: {fileID: 7292942381741253558, guid: b9a0425d4fd79466e92c53627727cef0, type: 3}
       propertyPath: m_Follow
@@ -4048,7 +4059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4532288265168958340, guid: f292ca55accae4d529f5c0b05995577f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4532288265168958342, guid: f292ca55accae4d529f5c0b05995577f, type: 3}
       propertyPath: m_Enabled
@@ -4557,17 +4568,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &2047703676 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7292942380631071594, guid: b9a0425d4fd79466e92c53627727cef0, type: 3}
-  m_PrefabInstance: {fileID: 1516912845}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2047703667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bb051985555c46f286e23c728bb8190, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2054429177
 GameObject:
   m_ObjectHideFlags: 0

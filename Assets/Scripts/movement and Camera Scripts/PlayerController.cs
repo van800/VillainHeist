@@ -27,6 +27,8 @@ namespace movement_and_Camera_Scripts
         private bool _hasJumped = false;
         private const float GroundCastDist = 0.15f;
 
+        public GameObject pickedUpItem;
+
         
         // Start is called before the first frame update
         void Start()

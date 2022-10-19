@@ -154,6 +154,7 @@ public class AbilityInputs : MonoBehaviour
         }
     }
 
+
     private IEnumerator ShootableRoutine()
     {
         yield return new WaitUntil(() => Input.GetButtonUp(buttonToSelect));
@@ -171,6 +172,10 @@ public class AbilityInputs : MonoBehaviour
             AbilitySystemEnd();
         }
     }
+
+	public void refill() {
+		this.bat.currentBat = this.bat.maxBat;
+	}
 
     private void ApplyAbility()
     {

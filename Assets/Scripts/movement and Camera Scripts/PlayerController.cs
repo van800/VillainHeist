@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace movement_and_Camera_Scripts
@@ -31,6 +32,7 @@ namespace movement_and_Camera_Scripts
         void Start()
         {
         }
+        
 
         // Update is called once per frame
         void Update()

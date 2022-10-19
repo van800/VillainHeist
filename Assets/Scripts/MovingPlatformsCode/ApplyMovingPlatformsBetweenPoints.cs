@@ -25,7 +25,7 @@ public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
     private Vector3 _prevTargetLoc;
     private List<PlayerController> players;
 
-    private void Start()
+    private void Awake()
     {
         players = new List<PlayerController>();
         //controller = GetComponent<CharacterController>();

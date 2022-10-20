@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BarUI : MonoBehaviour
 {
+    public AbilityInputs AIS;
     public Battery bat;
     public RawImage theImage;
     public RectTransform pos;
@@ -13,6 +14,7 @@ public class BarUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bat = AIS.bat;
         posx = theImage.transform.position.x;
     }
 

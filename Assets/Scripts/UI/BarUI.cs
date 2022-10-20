@@ -6,9 +6,6 @@ using UnityEngine.UI;
 public class BarUI : MonoBehaviour
 {
 
-    public AbilityInputs AIS;
-    public Battery bat;
-
     [SerializeField]
     public Battery batt;
 
@@ -27,8 +24,6 @@ public class BarUI : MonoBehaviour
     void Start()
 
     {
-        fraction = 4;
-        bat = AIS.bat;
         posx = theImage.transform.position.x;
         
     }

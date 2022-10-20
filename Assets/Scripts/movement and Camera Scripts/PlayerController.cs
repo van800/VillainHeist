@@ -50,6 +50,7 @@ namespace movement_and_Camera_Scripts
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
             Vector3 movement = ((playerTransform.right * x) + (playerTransform.forward * z)).normalized;
+            
            
             // Walk and run movement
             if (Input.GetKey(KeyCode.LeftShift))

@@ -26,7 +26,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5182886115109906136}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -36,9 +36,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 322, y: 126.5}
+  m_AnchoredPosition: {x: 278.50003, y: 126.50003}
   m_SizeDelta: {x: 87, y: 45}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.000000039115548, y: 0.5}
 --- !u!222 &5182886115109906139
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -86,9 +86,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a45d186ee5f4740b5b336ba308595b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bat: {fileID: 5508681288357247127}
+  batt: {fileID: 5508681288357247127}
   theImage: {fileID: 5182886115109906138}
-  pos: {fileID: 5182886115109906137}
 --- !u!1 &5182886115375932322
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,8 +113,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5182886115375932322}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5.4}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -124,7 +123,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 327.2, y: 126.4}
+  m_AnchoredPosition: {x: 327.20007, y: 126.39996}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5182886115375932325
@@ -310,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29670c77360b95c4880d0e9259f66740, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bat: {fileID: 5508681288357247127}
+  abilityInputSystem: {fileID: 0}
   theText: {fileID: 5182886115553370448}
 --- !u!1 &5182886115631711666
 GameObject:

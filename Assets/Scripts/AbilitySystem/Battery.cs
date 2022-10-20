@@ -43,7 +43,7 @@ public class Battery : MonoBehaviour
 
     void Start()
     {
-        
+        this.currentBat = maxBat;
     }
 
     // Update is called once per frame

@@ -9,7 +9,7 @@ namespace movement_and_Camera_Scripts
         
         private void OnTriggerEnter(Collider other)
         {
-            player.SwitchPov();
+            player.ToPov();
         }
     }
 }

@@ -111,7 +111,7 @@ namespace movement_and_Camera_Scripts
             // DEBUG change perspective
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                SwitchPov();
+                ToPov();
             }
         }
         
@@ -122,9 +122,9 @@ namespace movement_and_Camera_Scripts
         }
         
         // Switch Pov of game
-        public void SwitchPov()
+        public void ToPov(bool toFirst = true)
         {
-            isFirstPov = !isFirstPov;
+            isFirstPov = toFirst;
             cameraController.SwitchPerspective();
         }
 

@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class RechargeStation : MonoBehaviour
 {
+    /*
     [SerializeField]
     [Tooltip("Add AbilityInputSystem")]
     public AbilityInputs abilityInputSystem;
+    */
+    
+    [SerializeField]
+    [Tooltip("Add Battery")]
+    public Battery bat;
     
     [SerializeField]
     [Tooltip("Add Box Collider")]
@@ -24,7 +30,7 @@ public class RechargeStation : MonoBehaviour
     {
         if ( Vector3.Distance(killGuy.transform.position, this.transform.position) < 1.0f)
         {
-            abilityInputSystem.refill();
+            bat.refill();
         }
     }
 }

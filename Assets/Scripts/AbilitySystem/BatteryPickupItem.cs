@@ -6,15 +6,15 @@ using UnityEngine;
 public class BatteryPickupItem : MonoBehaviour
 {
 
-    /*
+    
     [Tooltip("Insert Battery Storage Object")]
     public Battery bat;
-    */
     
+    /*
     [SerializeField]
     [Tooltip("Add AbilityInputSystem")]
     public AbilityInputs abilityInputSystem;
-
+*/
     
 
     [Tooltip("The Player")]
@@ -24,13 +24,15 @@ public class BatteryPickupItem : MonoBehaviour
     [Tooltip("Distance Until the item is picked up")]
     private float killDistance;
 
-    private Battery bat;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        /*
         bat = abilityInputSystem.bat;
+        */
     }
 
     private void OnDestroy()

@@ -184,7 +184,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5147844020805137063}
-  - component: {fileID: 3754135652910133738}
+  - component: {fileID: 5727409665965135702}
   m_Layer: 0
   m_Name: Room 3
   m_TagString: Untagged
@@ -210,22 +210,23 @@ Transform:
   - {fileID: 2422116874219027111}
   - {fileID: 7923419568166140834}
   - {fileID: 4386925434298350250}
+  - {fileID: 1150220171670696409}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3754135652910133738
-BoxCollider:
+--- !u!114 &5727409665965135702
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2474461855466140449}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 15.288244, y: 7.3476796, z: 11.842767}
-  m_Center: {x: 7.6051855, y: 3.768741, z: 4.6111894}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e9086b65f5c5424e8d83d6ecaf5c328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boundary: {fileID: 3162023587590066820}
 --- !u!1 &5879395086640232070
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,6 +324,51 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &6097526668576982398
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1150220171670696409}
+  - component: {fileID: 3162023587590066820}
+  m_Layer: 0
+  m_Name: Top Down Boundary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1150220171670696409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6097526668576982398}
+  m_LocalRotation: {x: 0.53729963, y: 0, z: 0, w: 0.8433915}
+  m_LocalPosition: {x: 0, y: 4.6, z: -2.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5147844020805137063}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 65, y: 0, z: 0}
+--- !u!65 &3162023587590066820
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6097526668576982398}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 15.240002, y: 10.047854, z: 10.081979}
+  m_Center: {x: 7.7695665, y: 5.1188145, z: 5.1905794}
 --- !u!1 &6716070982481011925
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,7 +573,7 @@ PrefabInstance:
     - target: {fileID: 4191013637318273371, guid: 71f9d07b52fd44af590e87ddeb076e8e, type: 3}
       propertyPath: room
       value: 
-      objectReference: {fileID: 2474461855466140449}
+      objectReference: {fileID: 5727409665965135702}
     - target: {fileID: 4191013637318273372, guid: 71f9d07b52fd44af590e87ddeb076e8e, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -550,7 +596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191013637318273372, guid: 71f9d07b52fd44af590e87ddeb076e8e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 4191013637318273372, guid: 71f9d07b52fd44af590e87ddeb076e8e, type: 3}
       propertyPath: m_LocalRotation.x
@@ -558,7 +604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4191013637318273372, guid: 71f9d07b52fd44af590e87ddeb076e8e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071068
+      value: -0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 4191013637318273372, guid: 71f9d07b52fd44af590e87ddeb076e8e, type: 3}
       propertyPath: m_LocalRotation.z

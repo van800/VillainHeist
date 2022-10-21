@@ -11,7 +11,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Noah_test_scenes/DemoLevel.unity
     guid: 9ead55c1aa95646fca0c471649a58ca3
-  - enabled: 1
-    path: Assets/Scenes/luke_test_scenes/AssetShowcase.unity
-    guid: fbc7e177a158a2c428a7690ca2917829
   m_configObjects: {}

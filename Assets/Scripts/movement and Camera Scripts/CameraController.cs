@@ -7,21 +7,15 @@ namespace movement_and_Camera_Scripts
     {
         [SerializeField] [Tooltip("Player")]
         private PlayerController playerController;
-
-        [SerializeField] [Tooltip("First Person Camera")]
-        private CinemachineVirtualCamera povCam;
-        
-        [SerializeField] [Tooltip("Top Down Camera")]
-        private CinemachineVirtualCamera TDCam;
         
         private Vector3 _roomTransform;
+        private float[] _dims;
         private Camera _camera;
 
         // Start is called before the first frame update
         void Start()
         {
             _camera = GetComponent<Camera>();
-            SwitchPerspective();
         }
 
         // Update is called once per frame
@@ -31,26 +25,15 @@ namespace movement_and_Camera_Scripts
         }
 
         //Set the current room to the player's current room
-        public void SetRoom(RoomController room)
+        public void SetRoom(GameObject room)
         {
             CinemachineConfiner roomBoundary = GetComponentInChildren<CinemachineConfiner>();
-            roomBoundary.m_BoundingVolume = room.boundary;
+            roomBoundary.m_BoundingVolume = room.GetComponent<Collider>();
         }
 
         public void SwitchPerspective()
         {
-            bool isFirstPov = playerController.isFirstPov; // True if switching TO first person
-            _camera.orthographic = !isFirstPov;
-            if (isFirstPov)
-            {
-                povCam.Priority = 1;
-                TDCam.Priority = 0;
-            }
-            else
-            {
-                povCam.Priority = 0;
-                TDCam.Priority = 1;
-            }
+            _camera.orthographic = !playerController.isFirstPov;
         }
     }
 }

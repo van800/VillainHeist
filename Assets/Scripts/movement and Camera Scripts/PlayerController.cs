@@ -43,12 +43,12 @@ namespace movement_and_Camera_Scripts
             Transform playerTransform = transform;
             Transform cameraTransform = cameraController.transform;
             
+            // Grounded
             Vector3 position = playerTransform.position + Vector3.up * 0.01f;
 
-            // Movement Inputs
+            // Ground movement
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
-
             Vector3 movement = ((playerTransform.right * x) + (playerTransform.forward * z)).normalized;
             
            
@@ -64,23 +64,30 @@ namespace movement_and_Camera_Scripts
             
             _grounded = Physics.Raycast(position, Vector3.down, GroundCastDist);
 
-            // Gravity
-            _grounded = Physics.Raycast(position, Vector3.down, GroundCastDist);
-            if (!_grounded)
+            // DEBUG - Grounded
+            if (_grounded)
             {
-                _velocity.y += gravity * Time.deltaTime;
+                Debug.DrawRay(position, Vector3.down, Color.magenta);  
             }
+            else
+            {
+                Debug.DrawRay(position, Vector3.down, Color.blue);
+            }
+            
+            // Gravity
+            _velocity.y += gravity * Time.deltaTime;
             
             // First Person only
             if (isFirstPov)
             {
-                // Position movement
-                movement = ((playerTransform.forward * z) + (playerTransform.right * x)).normalized;
-
                 // Rotation movement
                 playerTransform.rotation = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up);
                 
                 // Jumping
+                if (Input.GetButtonDown("Jump"))
+                {
+                    Debug.Log(_grounded);
+                }
                 if (Input.GetButtonDown("Jump") && _grounded)
                 {
                     _velocity.y = Mathf.Sqrt(jumpHeight);
@@ -91,55 +98,21 @@ namespace movement_and_Camera_Scripts
                     _hasJumped = false;
                 }
             }
-            else
-            {
-                // Position movement
-                movement = ((Vector3.forward * z) + (Vector3.right * x)).normalized;
-
-                if (movement.magnitude > 0)
-                {
-                    playerTransform.rotation = Quaternion.AngleAxis(
-                        Vector3.SignedAngle(Vector3.forward, movement, Vector3.up), Vector3.up);
-                }
-                else
-                {
-                    playerTransform.rotation = Quaternion.AngleAxis(180, Vector3.up);
-                }
-
-                // Rotation movement
-            }
-
-            characterController.Move(_velocity * Time.deltaTime);
-
-            
-            // Walk and run movement
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                characterController.Move(movement * (speed * runMultiplier * Time.deltaTime));
-            }
-            else
-            {
-                characterController.Move(movement * (speed * Time.deltaTime));
-            }
             
             // DEBUG change perspective
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                ToPov();
+                isFirstPov = !isFirstPov;
+                cameraController.SwitchPerspective();
             }
+
+            characterController.Move(_velocity * Time.deltaTime);
         }
         
         // Set the player and camera's room
-        public void SetRoom(RoomController room)
+        public void SetRoom(GameObject room)
         {
             cameraController.SetRoom(room);
-        }
-        
-        // Switch Pov of game
-        public void ToPov(bool toFirst = true)
-        {
-            isFirstPov = toFirst;
-            cameraController.SwitchPerspective();
         }
 
         /*

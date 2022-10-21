@@ -4,6 +4,9 @@ namespace movement_and_Camera_Scripts
 {
     public class DoorController : MonoBehaviour
     {
+        [SerializeField] [Tooltip("Player")]
+        public PlayerController playerController;
+
         [SerializeField] [Tooltip("Other Side Of the Door")]
         private DoorController otherDoor;
 
@@ -11,7 +14,7 @@ namespace movement_and_Camera_Scripts
         private Transform spawnPoint;
 
         [SerializeField][Tooltip("Room Door Leaves FROM")]
-        private RoomController room;
+        private GameObject room;
 
         
         private void OnTriggerEnter(Collider other)
@@ -21,11 +24,8 @@ namespace movement_and_Camera_Scripts
 
         private void Teleport()
         {
-            PlayerController player = GameObject.FindObjectOfType<PlayerController>();
-            // if (player.isFirstPov) return; // Turn off teleporting for 1st person
-            player.transform.position = spawnPoint.position;
-            player.SetRoom(room);
-
+            playerController.transform.position = spawnPoint.position;
+            playerController.SetRoom(room);
         }
     }
 }

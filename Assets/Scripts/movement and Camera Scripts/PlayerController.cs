@@ -5,13 +5,11 @@ namespace movement_and_Camera_Scripts
 {
     public class PlayerController : MonoBehaviour
     { 
-        [SerializeField][Tooltip("Character Controller")]
-        private CharacterController characterController;
+        private CharacterController _characterController;
 
-        [SerializeField][Tooltip("Main Camera")]
-        private CameraController cameraController;
+        private CameraController _cameraController;
         [SerializeField][Tooltip("Is First Person Mode")]
-        public bool isFirstPov = false;
+        public bool isFirstPov;
 
         [SerializeField][Tooltip("Speed")]
         public float speed = 5f;
@@ -24,15 +22,20 @@ namespace movement_and_Camera_Scripts
         [SerializeField][Tooltip("Jump height")]
         public float jumpHeight = 5f;
         private bool _grounded;
-        private bool _hasJumped = false;
+        private bool _hasJumped;
         private const float GroundCastDist = 0.15f;
 
         public GameObject pickedUpItem;
+        [SerializeField][Tooltip("Distance to interact with items")]
+        private float pickupDistance = 2f;
+        public CheckPointController checkpoint;
 
         
         // Start is called before the first frame update
         void Start()
         {
+            _characterController = GetComponent<CharacterController>();
+            _cameraController = FindObjectOfType<CameraController>();
         }
         
 
@@ -41,7 +44,7 @@ namespace movement_and_Camera_Scripts
         {
             // Transform Fields
             Transform playerTransform = transform;
-            Transform cameraTransform = cameraController.transform;
+            Transform cameraTransform = _cameraController.transform;
             
             Vector3 position = playerTransform.position + Vector3.up * 0.01f;
 
@@ -91,21 +94,32 @@ namespace movement_and_Camera_Scripts
                 {
                     playerTransform.rotation = Quaternion.AngleAxis(180, Vector3.up);
                 }
-
-                // Rotation movement
             }
 
-            characterController.Move(_velocity * Time.deltaTime);
+            _characterController.Move(_velocity * Time.deltaTime);
 
             
             // Walk and run movement
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                characterController.Move(movement * (speed * runMultiplier * Time.deltaTime));
+                _characterController.Move(movement * (speed * runMultiplier * Time.deltaTime));
             }
             else
             {
-                characterController.Move(movement * (speed * Time.deltaTime));
+                _characterController.Move(movement * (speed * Time.deltaTime));
+            }
+            
+            // Pickup Item
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                //TODO: @Joseph add interactable object code here
+                //use pickupDistance field
+            }
+            
+            // Respawn on R key press
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Respawn();
             }
             
             // DEBUG change perspective
@@ -114,21 +128,25 @@ namespace movement_and_Camera_Scripts
                 ToPov();
             }
         }
-        
-        // Set the player and camera's room
-        public void SetRoom(RoomController room)
+
+        public void Respawn()
         {
-            cameraController.SetRoom(room);
+            checkpoint.Respawn(this);
+        }
+
+        // Set the player and camera's room
+        public void SetRoom(AreaController area)
+        {
+            _cameraController.SetRoom(area);
         }
         
         // Switch Pov of game
         public void ToPov(bool toFirst = true)
         {
             isFirstPov = toFirst;
-            cameraController.SwitchPerspective();
+            _cameraController.SetPerspective(toFirst);
         }
-
-        /*
+        
         // Hide mouse
         private void OnApplicationFocus(bool hasFocus)
         {
@@ -140,6 +158,6 @@ namespace movement_and_Camera_Scripts
             {
                 Cursor.lockState = CursorLockMode.None;
             }
-        }*/
+        }
     }
 }

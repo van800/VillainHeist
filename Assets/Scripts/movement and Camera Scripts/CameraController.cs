@@ -5,23 +5,20 @@ namespace movement_and_Camera_Scripts
 {
     public class CameraController : MonoBehaviour
     {
-        [SerializeField] [Tooltip("Player")]
-        private PlayerController playerController;
+        private CinemachineVirtualCamera _povCam;
+        
+        private CinemachineVirtualCamera _tdCam;
 
-        [SerializeField] [Tooltip("First Person Camera")]
-        private CinemachineVirtualCamera povCam;
-        
-        [SerializeField] [Tooltip("Top Down Camera")]
-        private CinemachineVirtualCamera TDCam;
-        
-        private Vector3 _roomTransform;
-        private Camera _camera;
+        private Camera _mainCamera;
 
         // Start is called before the first frame update
         void Start()
         {
-            _camera = GetComponent<Camera>();
-            SwitchPerspective();
+            _mainCamera = GetComponentInChildren<Camera>();
+            CinemachineVirtualCamera[] cmCameras = FindObjectsOfType<CinemachineVirtualCamera>();
+            _povCam = cmCameras[1];
+            _tdCam = cmCameras[0];
+            SetPerspective(FindObjectOfType<PlayerController>().isFirstPov);
         }
 
         // Update is called once per frame
@@ -31,25 +28,24 @@ namespace movement_and_Camera_Scripts
         }
 
         //Set the current room to the player's current room
-        public void SetRoom(RoomController room)
+        public void SetRoom(AreaController area)
         {
             CinemachineConfiner roomBoundary = GetComponentInChildren<CinemachineConfiner>();
-            roomBoundary.m_BoundingVolume = room.boundary;
+            roomBoundary.m_BoundingVolume = area.boundary;
         }
 
-        public void SwitchPerspective()
+        public void SetPerspective(bool isFirstPov)
         {
-            bool isFirstPov = playerController.isFirstPov; // True if switching TO first person
-            _camera.orthographic = !isFirstPov;
+            _mainCamera.orthographic = !isFirstPov;
             if (isFirstPov)
             {
-                povCam.Priority = 1;
-                TDCam.Priority = 0;
+                _povCam.Priority = 1;
+                _tdCam.Priority = 0;
             }
             else
             {
-                povCam.Priority = 0;
-                TDCam.Priority = 1;
+                _povCam.Priority = 0;
+                _tdCam.Priority = 1;
             }
         }
     }

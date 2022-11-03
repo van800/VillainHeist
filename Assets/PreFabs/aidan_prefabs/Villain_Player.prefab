@@ -151,9 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a62ca014dc947fcb411118b13f741a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 937778211762505095}
-  cameraController: {fileID: 0}
-  isFirstPov: 1
+  isFirstPov: 0
   speed: 5
   runMultiplier: 2
   gravity: -7

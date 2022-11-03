@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace movement_and_Camera_Scripts
@@ -7,13 +9,16 @@ namespace movement_and_Camera_Scripts
         [SerializeField] [Tooltip("Other Side Of the Door")]
         private DoorController otherDoor;
 
-        [SerializeField][Tooltip("Spawn Point")]
-        private Transform spawnPoint;
+        private Transform _enterPosition;
 
-        [SerializeField][Tooltip("Room Door Leaves FROM")]
-        private RoomController room;
+        private AreaController _area;
 
-        
+        private void Start()
+        {
+            _enterPosition = GetComponentsInChildren<Transform>()[1];
+            _area = GetComponentInParent<AreaController>();
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             otherDoor.Teleport();
@@ -21,10 +26,10 @@ namespace movement_and_Camera_Scripts
 
         private void Teleport()
         {
-            PlayerController player = GameObject.FindObjectOfType<PlayerController>();
-            // if (player.isFirstPov) return; // Turn off teleporting for 1st person
-            player.transform.position = spawnPoint.position;
-            player.SetRoom(room);
+            PlayerController player = FindObjectOfType<PlayerController>();
+            if (player.isFirstPov) return; // Turn off teleporting for 1st person
+            player.transform.position = _enterPosition.position;
+            player.SetRoom(_area);
 
         }
     }

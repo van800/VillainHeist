@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 937778211282714070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.774, z: 0.184}
+  m_LocalPosition: {x: 0, y: 1.774, z: 0.108}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 937778211762504824}
   m_Layer: 0
   m_Name: Villain_Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136,7 +136,7 @@ CharacterController:
   m_Radius: 0.2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.01
+  m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &937778211762504824
@@ -154,6 +154,5 @@ MonoBehaviour:
   isFirstPov: 0
   speed: 5
   runMultiplier: 2
-  gravity: -7
-  jumpHeight: 7
-  pickedUpItem: {fileID: 0}
+  gravity: -9.8
+  jumpHeight: 5

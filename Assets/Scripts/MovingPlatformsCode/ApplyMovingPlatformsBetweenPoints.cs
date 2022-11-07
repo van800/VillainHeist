@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using movement_and_Camera_Scripts;
+using MovingPlatformsCode;
 using UnityEngine;
 
 public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc

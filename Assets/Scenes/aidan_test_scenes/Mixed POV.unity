@@ -246,9 +246,7 @@ MonoBehaviour:
   points:
   - {fileID: 354517750}
   - {fileID: 1138048131}
-  temp:
-  - {x: 0, y: 0, z: 0}
-  speed: 5
+  speed: 0.5
   viewAngle: 0
   range: 0
   pauseTime: 1
@@ -486,6 +484,11 @@ Transform:
   m_Father: {fileID: 1544505709}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1328138268 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 3162023587590066820, guid: 24b4280c1d54f4357843ff61af0172e0, type: 3}
+  m_PrefabInstance: {fileID: 518329343164568625}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1508069233
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -633,35 +636,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8455659022391646344, guid: f73d501620b0d4f74835f5368b2f3ca4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.080999374
+      value: 0.13800049
       objectReference: {fileID: 0}
     - target: {fileID: 8455659022590768235, guid: f73d501620b0d4f74835f5368b2f3ca4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.84477615
+      value: 0.6803951
       objectReference: {fileID: 0}
     - target: {fileID: 8455659022590768235, guid: f73d501620b0d4f74835f5368b2f3ca4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.1361899
+      value: 1.2151527
       objectReference: {fileID: 0}
     - target: {fileID: 8455659022590768235, guid: f73d501620b0d4f74835f5368b2f3ca4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.62694
+      value: -7.146512
       objectReference: {fileID: 0}
     - target: {fileID: 8455659022590768236, guid: f73d501620b0d4f74835f5368b2f3ca4, type: 3}
       propertyPath: m_BoundingVolume
       value: 
-      objectReference: {fileID: 1904046722}
+      objectReference: {fileID: 1328138268}
     - target: {fileID: 8455659023447166085, guid: f73d501620b0d4f74835f5368b2f3ca4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.84477615
+      value: -0.6803951
       objectReference: {fileID: 0}
     - target: {fileID: 8455659023447166085, guid: f73d501620b0d4f74835f5368b2f3ca4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.4094896
+      value: 6.717841
       objectReference: {fileID: 0}
     - target: {fileID: 8455659023447166085, guid: f73d501620b0d4f74835f5368b2f3ca4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.9567032
+      value: -3.653923
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f73d501620b0d4f74835f5368b2f3ca4, type: 3}
@@ -676,11 +679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1438bcc41e94e4cbba2ab457125c4f54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &1904046722 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 3754135652910133738, guid: 24b4280c1d54f4357843ff61af0172e0, type: 3}
-  m_PrefabInstance: {fileID: 518329343164568625}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &518329343164568625
 PrefabInstance:
   m_ObjectHideFlags: 0

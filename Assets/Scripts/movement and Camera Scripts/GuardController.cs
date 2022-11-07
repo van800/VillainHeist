@@ -6,11 +6,11 @@ namespace movement_and_Camera_Scripts
     public class GuardController : MonoBehaviour
     {
         public Transform[] points;
-        private Transform _start;
-        private Transform _end;
-        private Transform _current;
-        private Transform _prev;
+        private Vector3[] _vertices;
+        private Vector3 _current;
+        private Vector3 _prev;
         private int _index;
+        private float _timer;
         private bool _forwards = true;
         [SerializeField] private float speed;
         [SerializeField] private float viewAngle;
@@ -23,54 +23,59 @@ namespace movement_and_Camera_Scripts
         // Start is called before the first frame update
         void Start()
         {
+            _vertices = new [] { transform.position };
+            foreach (Transform t in points)
+            {
+                _vertices = _vertices.Concat(new [] {t.position}).ToArray();
+            }
             // add the robot's initial transform to the list
-            _start = transform;
-            _end = points[^1];
-            _current = points[0];
-            _prev = _start;
-            points = new [] { transform }.Concat(points).ToArray();
             _index = 1;
+            _current = _vertices[_index];
+            _prev = transform.position;
+            _timer = 0;
         }
 
         // Update is called once per frame
         void Update()
         {
-            transform.position = Vector3.Lerp(_prev.position, _current.position, Time.deltaTime * speed);
-            if (_forwards)
+            _timer += Time.deltaTime * speed;
+            if (transform.position != _current)
             {
-                if (transform.position == _current.position)
-                {
-                    
-                    if (_current == _end)
-                    {
-                        _forwards = false;
-                        _current = points[^2];
-                        _prev = _end;
-                    }
-                    else
-                    {
-                        _index += 1;
-                        _prev = _current;
-                        _current = points[_index];
-                    }
-                }
+                transform.position = Vector3.Lerp(_prev, _current, _timer);
             }
             else
             {
-                if (transform.position == _current.position)
+                _timer = 0;
+                if (_forwards)
                 {
-                    
-                    if (_current == _start)
+                    if (_index < points.Length - 1)
                     {
-                        _forwards = true;
-                        _current = points[1];
-                        _prev = _start;
+                        _index++;
+                        _prev = _current;
+                        _current = _vertices[_index];
                     }
                     else
                     {
-                        _index -= 1;
+                        _forwards = false;
                         _prev = _current;
-                        _current = points[_index];
+                        _index--;
+                        _current = _vertices[_index];
+                    }
+                }
+                else
+                {
+                    if (_index > 0)
+                    {
+                        _index--;
+                        _prev = _current;
+                        _current = _vertices[_index];
+                    }
+                    else
+                    {
+                        _forwards = true;
+                        _prev = _current;
+                        _index++;
+                        _current = _vertices[_index];
                     }
                 }
             }

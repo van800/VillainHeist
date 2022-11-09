@@ -13,7 +13,6 @@ namespace movement_and_Camera_Scripts
 
         public void Reset()
         {
-            throw new NotImplementedException();
             //TODO: add room reset
         }
     }

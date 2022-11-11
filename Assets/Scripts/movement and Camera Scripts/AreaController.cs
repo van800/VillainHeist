@@ -14,6 +14,10 @@ namespace movement_and_Camera_Scripts
         public void Reset()
         {
             //TODO: add room reset
+            /*
+             * subarea keeps track of the objects that need to be saved/reset
+             * 
+             */
         }
     }
 }

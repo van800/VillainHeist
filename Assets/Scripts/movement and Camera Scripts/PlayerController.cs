@@ -1,4 +1,5 @@
 using System;
+using areas_and_respawn;
 using UnityEngine;
 
 namespace movement_and_Camera_Scripts
@@ -26,8 +27,8 @@ namespace movement_and_Camera_Scripts
         private const float GroundCastDist = 0.15f;
 
         public GameObject pickedUpItem;
-        [SerializeField][Tooltip("Distance to interact with items")]
-        private float pickupDistance = 2f;
+        [Tooltip("Distance to interact with items")]
+        public float interactDistance = 2f;
         public CheckPointController checkpoint;
 
         
@@ -112,8 +113,10 @@ namespace movement_and_Camera_Scripts
             // Pickup Item
             if (Input.GetKeyDown(KeyCode.E))
             {
-                //TODO: @Joseph add interactable object code here
-                //use pickupDistance field
+                /*
+                 * TODO: all abilities should go through this using the "Interactable" tag
+                 * "Interactable might be combined with "Selectable" if possible, unsure what selectable is used for
+                */
             }
             
             // Respawn on R key press
@@ -137,7 +140,14 @@ namespace movement_and_Camera_Scripts
         // Set the player and camera's room
         public void SetRoom(AreaController area)
         {
-            _cameraController.SetRoom(area);
+            _cameraController.SetRoom(area); 
+            checkpoint = area.spawnPoint;
+        }
+        
+        // Set the player's checkpoint
+        public void SetCheckpoint(CheckPointController cp)
+        {
+            checkpoint = cp;
         }
         
         // Switch Pov of game

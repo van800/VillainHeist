@@ -1,3 +1,4 @@
+using areas_and_respawn;
 using Cinemachine;
 using UnityEngine;
 
@@ -19,6 +20,16 @@ namespace movement_and_Camera_Scripts
             _povCam = cmCameras[1];
             _tdCam = cmCameras[0];
             SetPerspective(FindObjectOfType<PlayerController>().isFirstPov);
+
+            foreach (AreaController area in FindObjectsOfType<AreaController>())
+            {
+                if (area.CompareTag($"Start Room"))
+                {
+                    SetRoom(area);
+                    FindObjectOfType<PlayerController>().checkpoint = area.spawnPoint;
+                    break;
+                }
+            }
         }
 
         // Update is called once per frame
@@ -30,8 +41,9 @@ namespace movement_and_Camera_Scripts
         //Set the current room to the player's current room
         public void SetRoom(AreaController area)
         {
+            
             CinemachineConfiner roomBoundary = GetComponentInChildren<CinemachineConfiner>();
-            roomBoundary.m_BoundingVolume = area.boundary;
+            roomBoundary.m_BoundingVolume = area.GetCameraBoundary();
         }
 
         public void SetPerspective(bool isFirstPov)

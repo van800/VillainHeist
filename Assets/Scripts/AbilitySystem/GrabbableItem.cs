@@ -6,13 +6,11 @@ using Unity.Mathematics;
 
 public class GrabbableItem : MonoBehaviour
 {
-    public PlayerController player;
+    private PlayerController _player;
 
     [SerializeField]
     private bool isPickedUp;
-
-    public float pickUpDistance;
-
+    
     private float originalY;
 
     [SerializeField]
@@ -33,22 +31,24 @@ public class GrabbableItem : MonoBehaviour
         rend.material = regular;
         isPickedUp = false;
         this.originalY = this.transform.position.y;
+        _player = FindObjectOfType<PlayerController>();
     }
 
     void PickedUp()
     {
-        this.transform.position = this.player.transform.position + new Vector3(0.0f, 20.0f, 0.0f);
+        this.transform.position = this._player.transform.position + new Vector3(0.0f, 20.0f, 0.0f);
         rend.enabled = false;
         this.isPickedUp = true;
     }
 
     void PutDown()
     {
-        float rot = player.transform.rotation.eulerAngles.y * math.PI / 180;
+        float pickUpDistance = _player.interactDistance;
+        float rot = _player.transform.rotation.eulerAngles.y * math.PI / 180;
         rend.enabled = true;
-        this.transform.position = this.player.transform.position +
+        this.transform.position = this._player.transform.position +
                                   new Vector3(math.sin((rot)) * (pickUpDistance + .05f),
-                                      -player.transform.position.y + originalY,
+                                      -_player.transform.position.y + originalY,
                                       math.cos(rot) * (pickUpDistance + .05f));
         this.isPickedUp = false;
     }
@@ -61,9 +61,9 @@ public class GrabbableItem : MonoBehaviour
             this.PutDown();
         }
 
-        playerYRot = player.transform.rotation.eulerAngles.y;
+        playerYRot = _player.transform.rotation.eulerAngles.y;
 
-        if ( Vector3.Distance(player.transform.position, this.transform.position) < this.pickUpDistance
+        if ( Vector3.Distance(_player.transform.position, this.transform.position) < _player.interactDistance
              && !isPickedUp)
         {
             rend.material = selectable;

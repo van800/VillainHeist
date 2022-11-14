@@ -84,6 +84,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 937778211762505095, guid: c764e2ced147846acb33b597d46ac84d, type: 3}
+      propertyPath: m_StepOffset
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 975890371279020729, guid: c764e2ced147846acb33b597d46ac84d, type: 3}
       propertyPath: m_Name
       value: Villain_Player
@@ -109,15 +113,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8049182945256807300, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 13.9
       objectReference: {fileID: 0}
     - target: {fileID: 8049182945256807300, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.708326
+      value: 12.000003
       objectReference: {fileID: 0}
     - target: {fileID: 8049182945256807300, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.5728664
+      value: 87.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049182946041779351, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
+      propertyPath: m_BindingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049182946041779351, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
+      propertyPath: m_FollowOffset.y
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8049182946041779351, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
+      propertyPath: m_FollowOffset.z
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 8049182946278925162, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_LocalPosition.x

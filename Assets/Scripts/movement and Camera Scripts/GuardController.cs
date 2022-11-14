@@ -32,15 +32,15 @@ namespace movement_and_Camera_Scripts
             {
                 _vertices = _vertices.Concat(new [] {t.position}).ToArray();
             }
-            // add the robot's initial transform to the list
-            _index = 1;
-            _next = _vertices[_index];
-            _prev = _vertices[0];
             if (_vertices.Length > 1)
             {
+                _index = 1;
+                _next = _vertices[_index];
+                _prev = _vertices[0];
                 _moving = true;
+                Rotate();
             }
-            Rotate();
+            
         }
 
         // Update is called once per frame

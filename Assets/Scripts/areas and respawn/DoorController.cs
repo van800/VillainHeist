@@ -1,8 +1,7 @@
-using System;
-using Unity.VisualScripting;
+using movement_and_Camera_Scripts;
 using UnityEngine;
 
-namespace movement_and_Camera_Scripts
+namespace areas_and_respawn
 {
     public class DoorController : MonoBehaviour
     {
@@ -21,7 +20,11 @@ namespace movement_and_Camera_Scripts
 
         private void OnTriggerEnter(Collider other)
         {
-            otherDoor.Teleport();
+            if (other.CompareTag("Player"))
+            {
+                _area.Save();
+                otherDoor.Teleport();
+            }
         }
 
         private void Teleport()

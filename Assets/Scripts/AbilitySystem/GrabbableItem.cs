@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using areas_and_respawn;
 using movement_and_Camera_Scripts;
 using UnityEngine;
 using Unity.Mathematics;
@@ -24,6 +25,9 @@ public class GrabbableItem : MonoBehaviour
     public float playerYRot;
 
     [SerializeField] private Renderer rend;
+
+    private InteractableData _data;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +36,7 @@ public class GrabbableItem : MonoBehaviour
         isPickedUp = false;
         this.originalY = this.transform.position.y;
         _player = FindObjectOfType<PlayerController>();
+        _data = gameObject.AddComponent<InteractableData>();
     }
 
     void PickedUp()
@@ -39,6 +44,7 @@ public class GrabbableItem : MonoBehaviour
         this.transform.position = this._player.transform.position + new Vector3(0.0f, 20.0f, 0.0f);
         rend.enabled = false;
         this.isPickedUp = true;
+        _data.SetState(true);  // set the stored state
     }
 
     void PutDown()
@@ -51,11 +57,13 @@ public class GrabbableItem : MonoBehaviour
                                       -_player.transform.position.y + originalY,
                                       math.cos(rot) * (pickUpDistance + .05f));
         this.isPickedUp = false;
+        _data.SetState(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        isPickedUp = _data.GetState();
         if (Input.GetKeyDown("y") && isPickedUp)
         {
             this.PutDown();

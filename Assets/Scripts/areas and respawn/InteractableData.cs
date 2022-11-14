@@ -6,7 +6,7 @@ namespace areas_and_respawn
     {
         private Vector3 _savedPosition;
         private Quaternion _savedRotation;
-        public bool currentState;  // for toggleable object like lights, gates, or moving platforms
+        private bool _currentState;  // for toggleable object like lights, gates, or moving platforms
         private bool _savedState;  // currentState should be updated from other scripts
         
         // Start is called before the first frame update
@@ -20,7 +20,7 @@ namespace areas_and_respawn
             Transform t = transform;
             _savedPosition = t.position;
             _savedRotation = t.rotation;
-            _savedState = currentState;
+            _savedState = _currentState;
         }
 
         public void Reset()
@@ -28,7 +28,17 @@ namespace areas_and_respawn
             Transform t = transform;
             t.position = _savedPosition;
             t.rotation = _savedRotation;
-            //TODO: figure out how to reset toggleable interactables
+            _currentState = _savedState;
+        }
+
+        public bool GetState()
+        {
+            return _currentState;
+        }
+        
+        public void SetState(bool state)
+        {
+            _currentState = state;
         }
     }
 }

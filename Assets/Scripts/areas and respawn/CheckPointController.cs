@@ -6,7 +6,7 @@ namespace areas_and_respawn
 {
     public class CheckPointController : MonoBehaviour
     {
-        public Transform _spawnPoint;
+        private Transform _spawnPoint;
         
         private SubAreaController _subArea;
 
@@ -17,7 +17,7 @@ namespace areas_and_respawn
         // Start is called before the first frame update
         void Start()
         {
-            _spawnPoint = GetComponentInChildren<Transform>();
+            _spawnPoint = transform;
             _subArea = GetComponentInParent<SubAreaController>();
             _area = GetComponentInParent<AreaController>();
             _isSpawn = _subArea is null;

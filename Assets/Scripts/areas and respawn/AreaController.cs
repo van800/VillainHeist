@@ -47,7 +47,7 @@ namespace areas_and_respawn
             if (_cameraBoundary is null)
             {
                 _cameraBoundary = gameObject.AddComponent<BoxCollider>();
-                _cameraBoundary.center = _boundary.center - new Vector3(0, 0, 5);
+                _cameraBoundary.center = _boundary.center - new Vector3(0, 0, 4.5f);
                 _cameraBoundary.size = _boundary.size;
                 _cameraBoundary.isTrigger = true;
             }

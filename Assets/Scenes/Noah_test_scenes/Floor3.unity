@@ -3056,7 +3056,7 @@ GameObject:
   - component: {fileID: 263824966}
   - component: {fileID: 263824965}
   - component: {fileID: 263824964}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FloorTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3627,7 +3627,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 305907335}
   m_LocalRotation: {x: -0.21263108, y: -0.67437977, z: -0.21263108, w: 0.67437977}
-  m_LocalPosition: {x: 71, y: 0.072, z: 0.046}
+  m_LocalPosition: {x: 71, y: 0.072, z: 0}
   m_LocalScale: {x: 1, y: 1.753048, z: 1.0358659}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4417,7 +4417,7 @@ GameObject:
   - component: {fileID: 387478121}
   - component: {fileID: 387478120}
   - component: {fileID: 387478119}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FloorTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5666,7 +5666,7 @@ GameObject:
   - component: {fileID: 447197191}
   - component: {fileID: 447197190}
   - component: {fileID: 447197189}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FloorTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8140,7 +8140,7 @@ GameObject:
   - component: {fileID: 645421737}
   - component: {fileID: 645421736}
   - component: {fileID: 645421735}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FloorTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10068,7 +10068,7 @@ GameObject:
   - component: {fileID: 844520919}
   - component: {fileID: 844520918}
   - component: {fileID: 844520917}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FloorTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11745,7 +11745,7 @@ GameObject:
   - component: {fileID: 973613975}
   - component: {fileID: 973613974}
   - component: {fileID: 973613973}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FloorTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15622,7 +15622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1295467466
 Transform:
   m_ObjectHideFlags: 0
@@ -18669,7 +18669,7 @@ GameObject:
   - component: {fileID: 1518012519}
   - component: {fileID: 1518012518}
   - component: {fileID: 1518012517}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FloorTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19438,7 +19438,7 @@ GameObject:
   - component: {fileID: 1577668343}
   - component: {fileID: 1577668342}
   - component: {fileID: 1577668341}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FloorTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21128,7 +21128,7 @@ GameObject:
   - component: {fileID: 1661750307}
   - component: {fileID: 1661750306}
   - component: {fileID: 1661750305}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FloorTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22184,6 +22184,7 @@ GameObject:
   - component: {fileID: 1764600594}
   - component: {fileID: 1764600593}
   - component: {fileID: 1764600592}
+  - component: {fileID: 1764600596}
   m_Layer: 7
   m_Name: Mirror
   m_TagString: Untagged
@@ -22271,6 +22272,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &1764600596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764600591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98960c34f111a41cd9fb4ae2e5d61d51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  topDownCam: {fileID: 305907335}
+  fpCam: {fileID: 1295467465}
 --- !u!1 &1770434348
 GameObject:
   m_ObjectHideFlags: 0

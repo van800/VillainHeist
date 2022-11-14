@@ -60,5 +60,10 @@ namespace movement_and_Camera_Scripts
                 _tdCam.Priority = 1;
             }
         }
+
+        public Transform GetCameraTransform()
+        {
+            return _mainCamera.transform;
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace movement_and_Camera_Scripts
         public float interactDistance = 2f;
         public CheckPointController checkpoint;
 
-        
+
         // Start is called before the first frame update
         void Start()
         {
@@ -45,7 +45,6 @@ namespace movement_and_Camera_Scripts
         {
             // Transform Fields
             Transform playerTransform = transform;
-            Transform cameraTransform = _cameraController.transform;
             
             Vector3 position = playerTransform.position + Vector3.up * 0.01f;
 
@@ -64,6 +63,8 @@ namespace movement_and_Camera_Scripts
             // First Person only
             if (isFirstPov)
             {
+                Transform cameraTransform = _cameraController.GetCameraTransform();
+
                 // Position movement
                 movement = ((playerTransform.forward * z) + (playerTransform.right * x)).normalized;
 
@@ -93,7 +94,9 @@ namespace movement_and_Camera_Scripts
                 }
                 else
                 {
-                    playerTransform.rotation = Quaternion.AngleAxis(180, Vector3.up);
+                    float angle = Vector3.SignedAngle(Vector3.forward, playerTransform.forward, Vector3.up);
+                    angle = (int)(angle % 360 / 90) * 90;
+                    playerTransform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
                 }
             }
 

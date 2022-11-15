@@ -1,5 +1,6 @@
 using System;
 using areas_and_respawn;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace movement_and_Camera_Scripts
@@ -31,12 +32,29 @@ namespace movement_and_Camera_Scripts
         public float interactDistance = 2f;
         public CheckPointController checkpoint;
 
+        // If false, player is frozen
+        private bool canMove;
+
+        // AS1 is for Taze sound
+        [SerializeField] private AudioClip tazedSound;
+        private AudioSource playerAS1;
+        
+        [SerializeField]
+        private ParticleSystem tazeFlash;
+        private Transform playerTransform;
+        private Vector3 position;
+
 
         // Start is called before the first frame update
         void Start()
         {
             _characterController = GetComponent<CharacterController>();
             _cameraController = FindObjectOfType<CameraController>();
+            canMove = true;
+            playerAS1 = GetComponents<AudioSource>()[0];
+            playerAS1.volume = 1f;
+            playerAS1.spatialBlend = 0f;
+            playerAS1.maxDistance = 5f;
         }
         
 
@@ -44,9 +62,9 @@ namespace movement_and_Camera_Scripts
         void Update()
         {
             // Transform Fields
-            Transform playerTransform = transform;
+            playerTransform = transform;
             
-            Vector3 position = playerTransform.position + Vector3.up * 0.01f;
+            position = playerTransform.position + Vector3.up * 0.01f;
 
             // Movement Inputs
             float x = Input.GetAxis("Horizontal");
@@ -65,8 +83,15 @@ namespace movement_and_Camera_Scripts
             {
                 Transform cameraTransform = _cameraController.GetCameraTransform();
 
-                // Position movement
-                movement = ((playerTransform.forward * z) + (playerTransform.right * x)).normalized;
+                if (canMove)
+                {
+                    // Position movement
+                    movement = ((playerTransform.forward * z) + (playerTransform.right * x)).normalized;
+                }
+                else
+                {
+                    movement = Vector3.zero;
+                }
 
                 // Rotation movement
                 playerTransform.rotation = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up);
@@ -171,6 +196,26 @@ namespace movement_and_Camera_Scripts
             {
                 Cursor.lockState = CursorLockMode.None;
             }
+        }
+
+        // Freeze player
+        public void Tazed()
+        {
+            canMove = false;
+            PlayTazeSound();
+            Instantiate(tazeFlash, position, Quaternion.identity);
+            Invoke("Unfreeze", 2f);
+        }
+
+        private void Unfreeze()
+        {
+            canMove = true;
+        }
+
+        void PlayTazeSound()
+        {
+            playerAS1.clip = tazedSound;
+            playerAS1.Play();
         }
     }
 }

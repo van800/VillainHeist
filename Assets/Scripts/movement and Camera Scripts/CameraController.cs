@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace movement_and_Camera_Scripts
 {
+    enum CameraMode{TopDown, First}
     public class CameraController : MonoBehaviour
     {
         private CinemachineVirtualCamera _povCam;
@@ -11,17 +12,17 @@ namespace movement_and_Camera_Scripts
         private CinemachineVirtualCamera _tdCam;
 
         private Camera _mainCamera;
-        private CinemachineConfiner _roomBoundary;
+        private CameraMode _cameraMode;
 
         // Start is called before the first frame update
         void Start()
         {
-            _roomBoundary = GetComponentInChildren<CinemachineConfiner>();
             _mainCamera = GetComponentInChildren<Camera>();
             CinemachineVirtualCamera[] cmCameras = FindObjectsOfType<CinemachineVirtualCamera>();
             _povCam = cmCameras[1];
             _tdCam = cmCameras[0];
             SetPerspective(FindObjectOfType<PlayerController>().isFirstPov);
+            
 
             foreach (AreaController area in FindObjectsOfType<AreaController>())
             {
@@ -43,7 +44,9 @@ namespace movement_and_Camera_Scripts
         //Set the current room to the player's current room
         public void SetRoom(AreaController area)
         {
-            _roomBoundary.m_BoundingVolume = area.GetCameraBoundary();
+            
+            CinemachineConfiner roomBoundary = GetComponentInChildren<CinemachineConfiner>();
+            roomBoundary.m_BoundingVolume = area.GetCameraBoundary();
         }
 
         public void SetPerspective(bool isFirstPov)
@@ -53,11 +56,13 @@ namespace movement_and_Camera_Scripts
             {
                 _povCam.Priority = 1;
                 _tdCam.Priority = 0;
+                _cameraMode = CameraMode.First;
             }
             else
             {
                 _povCam.Priority = 0;
                 _tdCam.Priority = 1;
+                _cameraMode = CameraMode.TopDown;
             }
         }
 

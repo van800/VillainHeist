@@ -1,4 +1,5 @@
 using System;
+using AbilitySystem;
 using areas_and_respawn;
 using UnityEngine;
 
@@ -26,9 +27,9 @@ namespace movement_and_Camera_Scripts
         private bool _hasJumped;
         private const float GroundCastDist = 0.15f;
 
-        public GameObject pickedUpItem;
+        public Interactable pickedUpItem;
         [Tooltip("Distance to interact with items")]
-        public float interactDistance = 2f;
+        public float interactDistance = 1f;
         public CheckPointController checkpoint;
 
 
@@ -51,6 +52,14 @@ namespace movement_and_Camera_Scripts
             // Movement Inputs
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
+            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            {
+                x = 0;
+            }
+            if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
+            {
+                z = 0;
+            }
             Vector3 movement;
 
             // Gravity
@@ -113,13 +122,21 @@ namespace movement_and_Camera_Scripts
                 _characterController.Move(movement * (speed * Time.deltaTime));
             }
             
-            // Pickup Item
+            // Interact with objects
             if (Input.GetKeyDown(KeyCode.E))
             {
-                /*
-                 * TODO: all abilities should go through this using the "Interactable" tag
-                 * "Interactable might be combined with "Selectable" if possible, unsure what selectable is used for
-                */
+                if (Physics.Raycast(transform.position + Vector3.up / 2, transform.forward, 
+                        out RaycastHit hit, interactDistance))
+                {
+                    if (hit.transform.TryGetComponent(out Interactable interactable))
+                    {
+                        interactable.Interact();
+                    }
+                }
+                else if (pickedUpItem is not null)
+                {
+                    pickedUpItem.Interact();
+                }
             }
             
             // Respawn on R key press

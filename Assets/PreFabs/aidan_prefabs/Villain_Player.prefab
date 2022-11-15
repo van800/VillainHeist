@@ -157,5 +157,5 @@ MonoBehaviour:
   gravity: -7
   jumpHeight: 7
   pickedUpItem: {fileID: 0}
-  interactDistance: 2
+  interactDistance: 1
   checkpoint: {fileID: 0}

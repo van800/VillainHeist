@@ -1,3 +1,4 @@
+using System;
 using movement_and_Camera_Scripts;
 using UnityEngine;
 
@@ -12,10 +13,16 @@ namespace areas_and_respawn
 
         private AreaController _area;
 
+        private PlayerController _player;
+
+        private BoxCollider _collider;
+
         private void Start()
         {
             _enterPosition = GetComponentsInChildren<Transform>()[1];
             _area = GetComponentInParent<AreaController>();
+            _player = FindObjectOfType<PlayerController>();
+            _collider = GetComponent<BoxCollider>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -27,13 +34,22 @@ namespace areas_and_respawn
             }
         }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            //TODO update to match in game message system
+            Debug.Log("You cannot leave while carrying a block");
+        }
+
         private void Teleport()
         {
-            PlayerController player = FindObjectOfType<PlayerController>();
-            if (player.isFirstPov) return; // Turn off teleporting for 1st person
-            player.transform.position = _enterPosition.position;
-            player.SetRoom(_area);
+            if (_player.isFirstPov) return; // Turn off teleporting for 1st person
+            _player.transform.position = _enterPosition.position;
+            _player.SetRoom(_area);
+        }
 
+        private void Update()
+        {
+            _collider.isTrigger = _player.pickedUpItem is null;
         }
     }
 }

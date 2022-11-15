@@ -11,10 +11,12 @@ namespace movement_and_Camera_Scripts
         private CinemachineVirtualCamera _tdCam;
 
         private Camera _mainCamera;
+        private CinemachineConfiner _roomBoundary;
 
         // Start is called before the first frame update
         void Start()
         {
+            _roomBoundary = GetComponentInChildren<CinemachineConfiner>();
             _mainCamera = GetComponentInChildren<Camera>();
             CinemachineVirtualCamera[] cmCameras = FindObjectsOfType<CinemachineVirtualCamera>();
             _povCam = cmCameras[1];
@@ -41,9 +43,7 @@ namespace movement_and_Camera_Scripts
         //Set the current room to the player's current room
         public void SetRoom(AreaController area)
         {
-            
-            CinemachineConfiner roomBoundary = GetComponentInChildren<CinemachineConfiner>();
-            roomBoundary.m_BoundingVolume = area.GetCameraBoundary();
+            _roomBoundary.m_BoundingVolume = area.GetCameraBoundary();
         }
 
         public void SetPerspective(bool isFirstPov)

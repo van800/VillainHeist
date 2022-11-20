@@ -120,6 +120,7 @@ namespace movement_and_Camera_Scripts
             {
                 // Position movement
                 movement = ((Vector3.forward * z) + (Vector3.right * x)).normalized;
+                
 
                 if (movement.magnitude > 0)
                 {

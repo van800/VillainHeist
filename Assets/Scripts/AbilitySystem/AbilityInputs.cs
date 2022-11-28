@@ -97,8 +97,10 @@ public class AbilityInputs : MonoBehaviour
 
     private void CheckStart()
     {
+        Debug.Log("Running ability system, running = " + running + ", button = " + Input.GetButtonDown(buttonToActivate) + ", bat has left = " + bat.hasLeft(this.cost));
         if (!running && Input.GetButtonDown(buttonToActivate) && bat.hasLeft(this.cost))
         {
+            Debug.Log("Using ability");
             ResetAbilityComponents();
             AbilitySystemStart();
             bat.subFromCurrent(this.cost);

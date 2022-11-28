@@ -19,6 +19,11 @@ public class FloorBuilder : EditorWindow
     private bool usingWalls = false;
     private Color wallColor;
     private GameObject wallObj;
+    [Header("No Image")]
+    private bool usingImage = true;
+    private int noImageWidth = 0;
+    private int noImageHeight = 0;
+    private GameObject noImageFloorObj;
     
 
     [MenuItem("Window/Floor Builder")]
@@ -31,16 +36,40 @@ public class FloorBuilder : EditorWindow
     {
         //Window Code
         GUILayout.Label("Welcome to the Floor Builder!", EditorStyles.largeLabel);
-        DisplayColorToObj();
+        usingImage = GUILayout.Toggle(usingImage, "Using image?");
+
         objSizeX = EditorGUILayout.FloatField("Object Size X", objSizeX);
         objSizeZ = EditorGUILayout.FloatField("Object Size Z", objSizeZ);
-        image = (Texture2D)EditorGUILayout.ObjectField(image, typeof(Texture2D));
-        buildPosition = EditorGUILayout.Vector3Field("Floor Position", buildPosition);
 
-
-        if (GUILayout.Button("Build Floor"))
+        if (usingImage)
         {
-            BuildFloorAndWalls(colorToObj, usingWalls, wallColor, wallObj, buildPosition, image);
+            DisplayColorToObj();
+            image = (Texture2D)EditorGUILayout.ObjectField(image, typeof(Texture2D));
+            buildPosition = EditorGUILayout.Vector3Field("Floor Position", buildPosition);
+
+
+            if (GUILayout.Button("Build Floor"))
+            {
+                BuildFloorAndWalls(colorToObj, usingWalls, wallColor, wallObj, buildPosition, image);
+            }
+        }
+        else
+        {
+            usingWalls = GUILayout.Toggle(usingWalls, "Using walls?");
+            if (usingWalls)
+            {
+                wallObj = (GameObject)EditorGUILayout.ObjectField("Wall Facing North", wallObj, typeof(GameObject));
+            }
+
+            noImageFloorObj = (GameObject)EditorGUILayout.ObjectField("Floor Obj", noImageFloorObj, typeof(GameObject));
+
+            noImageWidth = EditorGUILayout.IntField("width", noImageWidth);
+            noImageHeight = EditorGUILayout.IntField("height", noImageHeight);
+
+            if (GUILayout.Button("Build Floor"))
+            {
+                BuildFloorAndWalls(noImageFloorObj, usingWalls, wallColor, wallObj, buildPosition, noImageWidth, noImageHeight);
+            }
         }
     }
 
@@ -120,8 +149,8 @@ public class FloorBuilder : EditorWindow
         {
             for (int y = 0; y < height; y++)
             {
-                Debug.Log("color = " + image.GetPixel(x, y).b + " = " + new List<Color>(colorToObj.Keys)[0].b);
-                Debug.Log("color = " + image.GetPixel(x, y).g + " = " + new List<Color>(colorToObj.Keys)[0].g);
+                //Debug.Log("color = " + image.GetPixel(x, y).b + " = " + new List<Color>(colorToObj.Keys)[0].b);
+                //Debug.Log("color = " + image.GetPixel(x, y).g + " = " + new List<Color>(colorToObj.Keys)[0].g);
                 if (colorToObj.ContainsKey(image.GetPixel(x, y)))
                 {
                     GameObject newFloorPreFab = colorToObj[image.GetPixel(x, y)];
@@ -135,6 +164,40 @@ public class FloorBuilder : EditorWindow
                 else
                 {
                     //throw new IllegalColorToFloorException();
+                }
+            }
+        }
+    }
+
+    private void BuildFloorAndWalls(GameObject floorPrefab, bool usingWalls, Color wallColor, GameObject wallObj, Vector3 floorPos, int width, int height)
+    {
+        GameObject floorWrapper = new GameObject("Floor");
+        floorWrapper.transform.position = floorPos;
+        float halfWidth = width / 2f;
+        float halfHeight = height / 2f;
+
+        for (int x = 0; x < width; x++)
+        {
+            if (usingWalls)
+            {
+                BuildWall(floorWrapper, x, -1, halfWidth, halfHeight, 180);
+            }
+            for (int y = 0; y < height; y++)
+            {
+                if (usingWalls && x == 0)
+                {
+                    BuildWall(floorWrapper, -1, y, halfWidth, halfHeight, 270);
+                }
+                else if (usingWalls && x == width - 1)
+                {
+                    BuildWall(floorWrapper, x + 1, y, halfWidth, halfHeight, 90);
+                }
+                GameObject newFloorPreFab = floorPrefab;
+                GameObject newFloorObj = Instantiate(newFloorPreFab, floorWrapper.transform, false);
+                newFloorObj.transform.localPosition = new Vector3(objSizeX * (x - halfWidth), 0, objSizeZ * (y - halfHeight));
+                if (usingWalls && y == height - 1)
+                {
+                    BuildWall(floorWrapper, x, y + 1, halfWidth, halfHeight, 0);
                 }
             }
         }
@@ -158,11 +221,19 @@ public class FloorBuilder : EditorWindow
         {
             if (image.GetPixel(x, y).Equals(wallColor))
             {
-                GameObject newWallObj = Instantiate(wallObj, floorWrapper.transform, false);
+                /*GameObject newWallObj = Instantiate(wallObj, floorWrapper.transform, false);
                 newWallObj.transform.localPosition = new Vector3(objSizeX * (x - halfWidth), 0, objSizeZ * (y - halfHeight));
-                newWallObj.transform.rotation = Quaternion.Euler(new Vector3(0, eulerAngle, 0));
+                newWallObj.transform.rotation = Quaternion.Euler(new Vector3(0, eulerAngle, 0));*/
+                BuildWall(floorWrapper, x, y, halfWidth, halfHeight, eulerAngle);
             }
         }
+    }
+
+    private void BuildWall(GameObject floorWrapper, int x, int y, float halfWidth, float halfHeight, float eulerAngle)
+    {
+        GameObject newWallObj = Instantiate(wallObj, floorWrapper.transform, false);
+        newWallObj.transform.localPosition = new Vector3(objSizeX * (x - halfWidth), 0, objSizeZ * (y - halfHeight));
+        newWallObj.transform.rotation = Quaternion.Euler(new Vector3(0, eulerAngle, 0));
     }
 }
 

@@ -109,7 +109,7 @@ namespace MovingPlatformsCode
     }
 
 // A class that will apply itself every couple of seconds with a ApplyEverySecs
-    public abstract class ApplyEverySecsFunc : MonoBehaviour
+    public abstract class ApplyEverySecsFunc : FreezableObject
     {
         private float _seconds;
         private bool _applyIsDone = false;

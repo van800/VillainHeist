@@ -26,6 +26,10 @@ public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
     private Vector3 _prevTargetLoc;
     private List<PlayerController> players;
 
+    [Header("Frozen")]
+    private float prevSpeed;
+    private bool isFrozen = false;
+
     private void Awake()
     {
         players = new List<PlayerController>();
@@ -174,6 +178,20 @@ public class ApplyMovingPlatformsBetweenPoints : ApplyEverySecsFunc
                 players.Remove(otherController);
                 Debug.Log("Left Player");
             }
+        }
+    }
+
+    public override void ToggleFreeze()
+    {
+        isFrozen = !isFrozen;
+        if (isFrozen)
+        {
+            prevSpeed = speed;
+            speed = 0;
+        }
+        else
+        {
+            speed = prevSpeed;
         }
     }
 }

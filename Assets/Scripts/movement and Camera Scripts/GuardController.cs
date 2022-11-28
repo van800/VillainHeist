@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace movement_and_Camera_Scripts
 {
-    public class GuardController : MonoBehaviour
+    public class GuardController : FreezableObject
     {
         public Transform[] points;
         private Vector3[] _vertices;
@@ -26,6 +26,8 @@ namespace movement_and_Camera_Scripts
         [SerializeField] [Tooltip("If true guard will freeze for pauseTime Seconds" +
                                   "at each point in points[], if False, guard will pause only at the ends")] 
         private bool pauseOnAll;
+        [Header("Freezing")]
+        private bool isFrozen = false;
 
         // Guard can taze player if true. Set to false after tazing player, then true after a cooldown.
         private bool canTaze;
@@ -181,6 +183,24 @@ namespace movement_and_Camera_Scripts
         private void StartMoving()
         {
             _moving = true;
+        }
+
+        /**
+         * Toggles if this guard is frozen. If they are, they stop moving and no longer are waiting to move.
+         * If they are not, they start moving as normal.
+         */
+        public override void ToggleFreeze()
+        {
+            isFrozen = !isFrozen;
+            if (isFrozen)
+            {
+                CancelInvoke(nameof(StartMoving));
+                _moving = false;
+            }
+            else
+            {
+                _moving = true;
+            }
         }
     }
 }

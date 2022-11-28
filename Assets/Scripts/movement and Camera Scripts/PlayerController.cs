@@ -16,8 +16,6 @@ namespace movement_and_Camera_Scripts
 
         [SerializeField][Tooltip("Speed")]
         public float speed = 5f;
-        [SerializeField][Tooltip("Run Speed Multiplier")]
-        public float runMultiplier = 2f;
         private Vector3 _velocity;
         
         [SerializeField][Tooltip("Gravity")]
@@ -139,14 +137,8 @@ namespace movement_and_Camera_Scripts
 
             
             // Walk and run movement
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                _characterController.Move(movement * (speed * runMultiplier * Time.deltaTime));
-            }
-            else
-            {
-                _characterController.Move(movement * (speed * Time.deltaTime));
-            }
+            _characterController.Move(movement * (speed * Time.deltaTime));
+            
             
             // Interact with objects
             if (Input.GetKeyDown(KeyCode.E))

@@ -21,7 +21,7 @@ namespace areas_and_respawn
             _boundary.isTrigger = true;
             
             _cameraBoundary = gameObject.AddComponent<BoxCollider>();
-            _cameraBoundary.center = _boundary.center - new Vector3(0, 0, 4.5f);
+            _cameraBoundary.center = _boundary.center - new Vector3(0, 0, 4.67f);
             _cameraBoundary.size = _boundary.size;
             _cameraBoundary.isTrigger = true;
             

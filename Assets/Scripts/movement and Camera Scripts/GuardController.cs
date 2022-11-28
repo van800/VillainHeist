@@ -16,6 +16,9 @@ namespace movement_and_Camera_Scripts
         private int _index;
         private bool _forwards = true;
         private bool _moving;
+        private GameObject player;
+        private PlayerController playerController;
+        
         [SerializeField] private float speed;
         [SerializeField] private float viewAngle;
         [SerializeField] private float range;
@@ -25,6 +28,9 @@ namespace movement_and_Camera_Scripts
         private bool pauseOnAll;
         [Header("Freezing")]
         private bool isFrozen = false;
+
+        // Guard can taze player if true. Set to false after tazing player, then true after a cooldown.
+        private bool canTaze;
         
         // Start is called before the first frame update
         void Start()
@@ -43,6 +49,9 @@ namespace movement_and_Camera_Scripts
                 Rotate();
             }
             
+            player = GameObject.FindWithTag("Player");
+            playerController = player.GetComponent<PlayerController>();
+
         }
 
         // Update is called once per frame
@@ -56,22 +65,55 @@ namespace movement_and_Camera_Scripts
         }
         
         private void AttackPlayer()
-        { 
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
+        {
             Vector3 toTarget = player.transform.position - transform.position;
             if (Vector3.Angle(transform.forward, toTarget) <= viewAngle)
             {
-                Debug.DrawRay(transform.position + Vector3.up, toTarget.normalized * range, Color.green);
-                if (Physics.Raycast(transform.position + Vector3.up, toTarget, out RaycastHit hit, range))
+                // Guard behavior when player is in top down
+                if (playerController.isFirstPov == false)
                 {
-                    if (hit.transform == player.transform)
-                    {
-                        Debug.Log("HIT");
-                        PlayerController playerController = player.GetComponent<PlayerController>();
-                        playerController.Respawn();
-                    }
+                    topDownAttack(toTarget);
+                }
+
+                // Guard behavior when player is in first person
+                else
+                {
+                    firstPersonAttack(toTarget);
                 }
             }
+        }
+
+        private void topDownAttack(Vector3 toTarget)
+        {
+            Debug.DrawRay(transform.position + Vector3.up, toTarget.normalized * range, Color.green);
+            if (Physics.Raycast(transform.position + Vector3.up, toTarget, out RaycastHit hit, range))
+            {
+                if (hit.transform == player.transform)
+                {
+                    Debug.Log("HIT");
+                    playerController.Respawn();
+                }
+            }
+        }
+        
+        private void firstPersonAttack(Vector3 toTarget)
+        {
+            Debug.DrawRay(transform.position + Vector3.up, toTarget.normalized * range, Color.green);
+            if (Physics.Raycast(transform.position + Vector3.up, toTarget, out RaycastHit hit, range))
+            {
+                if (hit.transform == player.transform)
+                {
+                    Debug.Log("HIT");
+                    playerController.Tazed();
+                    canTaze = false;
+                    Invoke("EnableTaze", 5f);
+                }
+            }
+        }
+
+        private void EnableTaze()
+        {
+            canTaze = true;
         }
 
         private void Move()

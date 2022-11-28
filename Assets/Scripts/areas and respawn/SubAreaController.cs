@@ -9,7 +9,7 @@ namespace areas_and_respawn
     {
         private SubAreaController[] _subAreas;
 
-        private List<InteractableData> _intractables = new();
+        private List<Interactable> _intractables = new();
         
         private void Start()
         {
@@ -18,7 +18,7 @@ namespace areas_and_respawn
             {
                 if (t.CompareTag($"Interactable"))
                 {
-                    _intractables.Add(t.gameObject.GetComponent<InteractableData>());
+                    _intractables.Add(t.gameObject.GetComponent<Interactable>());
                 }
                 else if (t.gameObject.TryGetComponent(out SubAreaController subArea))
                 {
@@ -29,12 +29,12 @@ namespace areas_and_respawn
 
         public void Save()
         {
-            foreach (InteractableData i in _intractables) i.Save();
+            foreach (Interactable i in _intractables) i.Save();
         }
 
         public void Reset()
         {
-            foreach (InteractableData i in _intractables) i.Reset();
+            foreach (Interactable i in _intractables) i.Reset();
             for (int i = 1; i < _subAreas.Length; i++) // call on sub areas, exclude own area
             {
                 _subAreas[i].Reset();

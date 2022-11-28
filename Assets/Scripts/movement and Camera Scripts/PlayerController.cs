@@ -1,5 +1,7 @@
 using System;
+using AbilitySystem;
 using areas_and_respawn;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace movement_and_Camera_Scripts
@@ -26,10 +28,22 @@ namespace movement_and_Camera_Scripts
         private bool _hasJumped;
         private const float GroundCastDist = 0.15f;
 
-        public GameObject pickedUpItem;
+        public Interactable pickedUpItem;
         [Tooltip("Distance to interact with items")]
-        public float interactDistance = 2f;
+        public float interactDistance = 1f;
         public CheckPointController checkpoint;
+
+        // If false, player is frozen
+        private bool canMove;
+
+        // AS1 is for Taze sound
+        [SerializeField] private AudioClip tazedSound;
+        private AudioSource playerAS1;
+        
+        [SerializeField]
+        private ParticleSystem tazeFlash;
+        private Transform playerTransform;
+        private Vector3 position;
 
 
         // Start is called before the first frame update
@@ -37,6 +51,11 @@ namespace movement_and_Camera_Scripts
         {
             _characterController = GetComponent<CharacterController>();
             _cameraController = FindObjectOfType<CameraController>();
+            canMove = true;
+            playerAS1 = GetComponents<AudioSource>()[0];
+            playerAS1.volume = 1f;
+            playerAS1.spatialBlend = 0f;
+            playerAS1.maxDistance = 5f;
         }
         
 
@@ -44,13 +63,21 @@ namespace movement_and_Camera_Scripts
         void Update()
         {
             // Transform Fields
-            Transform playerTransform = transform;
+            playerTransform = transform;
             
-            Vector3 position = playerTransform.position + Vector3.up * 0.01f;
+            position = playerTransform.position + Vector3.up * 0.01f;
 
             // Movement Inputs
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
+            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+            {
+                x = 0;
+            }
+            if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
+            {
+                z = 0;
+            }
             Vector3 movement;
 
             // Gravity
@@ -65,8 +92,15 @@ namespace movement_and_Camera_Scripts
             {
                 Transform cameraTransform = _cameraController.GetCameraTransform();
 
-                // Position movement
-                movement = ((playerTransform.forward * z) + (playerTransform.right * x)).normalized;
+                if (canMove)
+                {
+                    // Position movement
+                    movement = ((playerTransform.forward * z) + (playerTransform.right * x)).normalized;
+                }
+                else
+                {
+                    movement = Vector3.zero;
+                }
 
                 // Rotation movement
                 playerTransform.rotation = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up);
@@ -86,6 +120,7 @@ namespace movement_and_Camera_Scripts
             {
                 // Position movement
                 movement = ((Vector3.forward * z) + (Vector3.right * x)).normalized;
+                
 
                 if (movement.magnitude > 0)
                 {
@@ -113,13 +148,21 @@ namespace movement_and_Camera_Scripts
                 _characterController.Move(movement * (speed * Time.deltaTime));
             }
             
-            // Pickup Item
+            // Interact with objects
             if (Input.GetKeyDown(KeyCode.E))
             {
-                /*
-                 * TODO: all abilities should go through this using the "Interactable" tag
-                 * "Interactable might be combined with "Selectable" if possible, unsure what selectable is used for
-                */
+                if (Physics.Raycast(transform.position + Vector3.up / 2, transform.forward, 
+                        out RaycastHit hit, interactDistance))
+                {
+                    if (hit.transform.TryGetComponent(out Interactable interactable))
+                    {
+                        interactable.Interact();
+                    }
+                }
+                else if (pickedUpItem is not null)
+                {
+                    pickedUpItem.Interact();
+                }
             }
             
             // Respawn on R key press
@@ -171,6 +214,26 @@ namespace movement_and_Camera_Scripts
             {
                 Cursor.lockState = CursorLockMode.None;
             }
+        }
+
+        // Freeze player
+        public void Tazed()
+        {
+            canMove = false;
+            PlayTazeSound();
+            Instantiate(tazeFlash, position, Quaternion.identity);
+            Invoke("Unfreeze", 2f);
+        }
+
+        private void Unfreeze()
+        {
+            canMove = true;
+        }
+
+        void PlayTazeSound()
+        {
+            playerAS1.clip = tazedSound;
+            playerAS1.Play();
         }
     }
 }

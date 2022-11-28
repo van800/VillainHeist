@@ -15,7 +15,7 @@ TagManager:
   - Water
   - UI
   - AbilitySystemRaycast
-  - Mirror
+  - DontShowInMirror
   - MirrorHiddenObj
   - 
   - 

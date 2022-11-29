@@ -124,7 +124,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8006417370521998182}
   - component: {fileID: 8006417370521998177}
-  - component: {fileID: 8006417370521998176}
   - component: {fileID: 8006417370521998183}
   m_Layer: 0
   m_Name: MirrorCameraFP
@@ -191,14 +190,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &8006417370521998176
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8006417370521998181}
-  m_Enabled: 1
 --- !u!114 &8006417370521998183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,7 +233,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8006417371142526500}
   - component: {fileID: 8006417371142526503}
-  - component: {fileID: 8006417371142526502}
   - component: {fileID: 8006417371142526501}
   m_Layer: 0
   m_Name: MirrorCameraTopDown
@@ -309,14 +299,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &8006417371142526502
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8006417371142526507}
-  m_Enabled: 1
 --- !u!114 &8006417371142526501
 MonoBehaviour:
   m_ObjectHideFlags: 0

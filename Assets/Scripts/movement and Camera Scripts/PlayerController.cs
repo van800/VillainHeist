@@ -33,10 +33,16 @@ namespace movement_and_Camera_Scripts
 
         // If false, player is frozen
         private bool canMove;
-
-        // AS1 is for Taze sound
+        
         [SerializeField] private AudioClip tazedSound;
+        [SerializeField] private AudioClip topDownMusic;
+        [SerializeField] private AudioClip firstPersonMusic;
+        
+        // AS1 is for Taze sound
         private AudioSource playerAS1;
+        
+        //AS2 is for Music
+        private AudioSource playerAS2;
         
         [SerializeField]
         private ParticleSystem tazeFlash;
@@ -53,7 +59,13 @@ namespace movement_and_Camera_Scripts
             playerAS1 = GetComponents<AudioSource>()[0];
             playerAS1.volume = 1f;
             playerAS1.spatialBlend = 0f;
-            playerAS1.maxDistance = 5f;
+
+            playerAS2 = GetComponents<AudioSource>()[1];
+            playerAS2.volume = 2f;
+            playerAS2.spatialBlend = 0f;
+
+            SetMusic(isFirstPov);
+            playerAS2.Play();
         }
         
 
@@ -193,6 +205,7 @@ namespace movement_and_Camera_Scripts
         {
             isFirstPov = toFirst;
             _cameraController.SetPerspective(toFirst);
+            SetMusic(isFirstPov);
         }
         
         // Hide mouse
@@ -227,5 +240,11 @@ namespace movement_and_Camera_Scripts
             playerAS1.clip = tazedSound;
             playerAS1.Play();
         }
+
+        private void SetMusic(bool firstPerson)
+        {
+            playerAS2.clip = firstPerson ? firstPersonMusic : topDownMusic;
+            playerAS2.Play();
+        } 
     }
 }

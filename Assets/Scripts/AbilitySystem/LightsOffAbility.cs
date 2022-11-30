@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Lighting_Scripts;
 using UnityEngine;
 
 public class LightsOffAbility : SelectableObjectAbility

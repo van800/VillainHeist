@@ -11,36 +11,35 @@ namespace AbilitySystem
 
         private float originalY;
 
-        [SerializeField]
-        [Tooltip("Normal Material")]
-        private Material regular;
-    
-        [SerializeField]
-        [Tooltip("Interactivity Material / Can be picked up material")]
-        private Material selectable;
+        // [SerializeField]
+        // [Tooltip("Normal Material")]
+        // private Material regular;
 
         private bool _isPickedUp;
-
+        
         // public float playerYRot;
         
-        [SerializeField] private Renderer rend;
+        // [SerializeField] private Renderer rend;
     
         // Start is called before the first frame update
         void Start()
         {
-            rend.enabled = true;
-            rend.material = regular;
+            // rend = GetComponent<MeshRenderer>();
+            // regular = Renderer.material;
+            // rend.enabled = true;
             _isPickedUp = false;
             this.originalY = this.transform.position.y;
             _player = FindObjectOfType<PlayerController>();
-            Save();
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | 
+                                                    RigidbodyConstraints.FreezePositionZ |
+                                                    RigidbodyConstraints.FreezeRotation;
         }
         
 
         void PickUp()
         {
             this.transform.position = this._player.transform.position + new Vector3(0.0f, 20.0f, 0.0f);
-            rend.enabled = false;
+            Renderer.enabled = false;
             this._isPickedUp = true;
         }
 
@@ -48,7 +47,7 @@ namespace AbilitySystem
         {
             float pickUpDistance = _player.interactDistance;
             Transform playerTransform = this._player.transform;
-            rend.enabled = true;
+            Renderer.enabled = true;
             this.transform.position = playerTransform.position + playerTransform.forward * pickUpDistance +
                                       new Vector3(0, -playerTransform.position.y + originalY, 0);
             this._isPickedUp = false;
@@ -103,26 +102,6 @@ namespace AbilitySystem
         // Update is called once per frame
         void Update()
         {
-            // if (Input.GetKeyDown("y") && CurrentState)
-            // {
-            //     this.PutDown();
-            // }
-            //
-            // playerYRot = _player.transform.rotation.eulerAngles.y;
-            //
-            // if ( Vector3.Distance(_player.transform.position, this.transform.position) < _distance
-            //      && !CurrentState)
-            // {
-            //     rend.material = selectable;
-            //     if (Input.GetKeyDown("t"))
-            //     {
-            //         this.PickUp();
-            //     }
-            // }
-            // else
-            // {
-            //     rend.material = regular;
-            // }
         }
     }
 }

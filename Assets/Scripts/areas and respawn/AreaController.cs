@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using JetBrains.Annotations;
+using movement_and_Camera_Scripts;
 using UnityEngine;
 
 namespace areas_and_respawn
@@ -26,6 +27,12 @@ namespace areas_and_respawn
             _cameraBoundary.isTrigger = true;
             
             _subAreas = GetComponentsInChildren<SubAreaController>();
+            
+            if (CompareTag($"Start Room"))
+            {
+                FindObjectOfType<CameraController>().SetRoom(this);
+                FindObjectOfType<PlayerController>().checkpoint = spawnPoint;
+            }
             
             Save();
         }

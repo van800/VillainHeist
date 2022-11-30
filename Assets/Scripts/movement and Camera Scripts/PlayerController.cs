@@ -34,7 +34,7 @@ namespace movement_and_Camera_Scripts
         // If false, player is frozen
         private bool canMove;
         
-        [SerializeField] private AudioClip tazedSound;
+        [SerializeField] private AudioClip tasedSound;
         [SerializeField] private AudioClip topDownMusic;
         [SerializeField] private AudioClip firstPersonMusic;
         
@@ -78,16 +78,8 @@ namespace movement_and_Camera_Scripts
             position = playerTransform.position + Vector3.up * 0.01f;
 
             // Movement Inputs
-            float x = Input.GetAxis("Horizontal");
-            float z = Input.GetAxis("Vertical");
-            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
-            {
-                x = 0;
-            }
-            if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S))
-            {
-                z = 0;
-            }
+            float x = Input.GetAxisRaw("Horizontal");
+            float z = Input.GetAxisRaw("Vertical");
             Vector3 movement;
 
             // Gravity
@@ -153,15 +145,23 @@ namespace movement_and_Camera_Scripts
             
             
             // Interact with objects
+            Interactable interactable = null;
+
+            if (Physics.Raycast(transform.position + Vector3.up / 2, transform.forward,
+                    out RaycastHit hit, interactDistance))
+            {
+                if (hit.transform.TryGetComponent(out Interactable inRange))
+                {
+                    interactable = inRange;
+                    interactable.InRange();
+                }
+            }
+
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (Physics.Raycast(transform.position + Vector3.up / 2, transform.forward, 
-                        out RaycastHit hit, interactDistance))
+                if (interactable is not null)
                 {
-                    if (hit.transform.TryGetComponent(out Interactable interactable))
-                    {
-                        interactable.Interact();
-                    }
+                    interactable.Interact();
                 }
                 else if (pickedUpItem is not null)
                 {
@@ -222,12 +222,12 @@ namespace movement_and_Camera_Scripts
         }
 
         // Freeze player
-        public void Tazed()
+        public void Tased()
         {
             canMove = false;
-            PlayTazeSound();
+            PlayTaseSound();
             Instantiate(tazeFlash, position, Quaternion.identity);
-            Invoke("Unfreeze", 2f);
+            Invoke(nameof(Unfreeze), 2f);
         }
 
         private void Unfreeze()
@@ -235,9 +235,9 @@ namespace movement_and_Camera_Scripts
             canMove = true;
         }
 
-        void PlayTazeSound()
+        private void PlayTaseSound()
         {
-            playerAS1.clip = tazedSound;
+            playerAS1.clip = tasedSound;
             playerAS1.Play();
         }
 

@@ -13,6 +13,7 @@ namespace movement_and_Camera_Scripts
 
         private Camera _mainCamera;
         private CameraMode _cameraMode;
+        private CinemachineConfiner _roomBoundary;
 
         // Start is called before the first frame update
         void Start()
@@ -22,31 +23,13 @@ namespace movement_and_Camera_Scripts
             _povCam = cmCameras[1];
             _tdCam = cmCameras[0];
             SetPerspective(FindObjectOfType<PlayerController>().isFirstPov);
-            
-
-            foreach (AreaController area in FindObjectsOfType<AreaController>())
-            {
-                if (area.CompareTag($"Start Room"))
-                {
-                    SetRoom(area);
-                    FindObjectOfType<PlayerController>().checkpoint = area.spawnPoint;
-                    break;
-                }
-            }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            
         }
 
         //Set the current room to the player's current room
         public void SetRoom(AreaController area)
         {
-            
-            CinemachineConfiner roomBoundary = GetComponentInChildren<CinemachineConfiner>();
-            roomBoundary.m_BoundingVolume = area.GetCameraBoundary();
+            _roomBoundary = GetComponentInChildren<CinemachineConfiner>();
+            _roomBoundary.m_BoundingVolume = area.GetCameraBoundary();
         }
 
         public void SetPerspective(bool isFirstPov)

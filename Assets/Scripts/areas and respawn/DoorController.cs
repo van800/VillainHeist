@@ -17,6 +17,8 @@ namespace areas_and_respawn
 
         private BoxCollider _collider;
 
+        private bool _isLocked;
+
         private void Start()
         {
             _enterPosition = GetComponentsInChildren<Transform>()[1];
@@ -34,12 +36,6 @@ namespace areas_and_respawn
             }
         }
 
-        private void OnCollisionEnter(Collision collision)
-        {
-            //TODO update to match in game message system
-            Debug.Log("You cannot leave while carrying a block");
-        }
-
         private void Teleport()
         {
             if (_player.isFirstPov) return; // Turn off teleporting for 1st person
@@ -50,6 +46,11 @@ namespace areas_and_respawn
         private void Update()
         {
             _collider.isTrigger = _player.pickedUpItem is null;
+        }
+
+        public void Lock(bool locked)
+        {
+            _collider.isTrigger = !locked;
         }
     }
 }

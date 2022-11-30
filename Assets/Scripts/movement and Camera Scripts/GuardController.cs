@@ -104,7 +104,7 @@ namespace movement_and_Camera_Scripts
                 if (hit.transform == player.transform)
                 {
                     Debug.Log("HIT");
-                    playerController.Tazed();
+                    playerController.Tased();
                     canTaze = false;
                     Invoke("EnableTaze", 5f);
                 }

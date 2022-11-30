@@ -9,7 +9,7 @@ namespace areas_and_respawn
     {
         private SubAreaController[] _subAreas;
 
-        private List<Interactable> _intractables = new();
+        private readonly List<Interactable> _intractables = new();
         
         private void Start()
         {

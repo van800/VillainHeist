@@ -4751,6 +4751,7 @@ MonoBehaviour:
   - {fileID: 1639068669}
   triggers:
   - {fileID: 179290595}
+  - {fileID: 601071290}
 --- !u!1 &1277950144
 GameObject:
   m_ObjectHideFlags: 0
@@ -6754,8 +6755,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2070773806}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 4.5, y: 0, z: 3.470899}
-  m_LocalScale: {x: 1.0718459, y: 1, z: 1}
+  m_LocalPosition: {x: 4.5, y: 0, z: 3.7419}
+  m_LocalScale: {x: 1.1260813, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 282664844}

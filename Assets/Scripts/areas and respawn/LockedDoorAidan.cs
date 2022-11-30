@@ -7,6 +7,9 @@ namespace areas_and_respawn
     public class LockedDoorAidan : Interactable
     {
         private bool _isLocked = true;
+        
+        [SerializeField] [Tooltip("Invert the state for when block is placed.")]
+        private bool inverted;
 
         [SerializeField] private DoorController[] doors;
 
@@ -21,6 +24,7 @@ namespace areas_and_respawn
             {
                 trigger.SetDoor(this);
             }
+            TryUnlock();
         }
 
         public void TryUnlock()
@@ -30,7 +34,7 @@ namespace areas_and_respawn
             {
                 checkTriggers &= trigger.IsTriggered();
             }
-            _isLocked = !checkTriggers;
+            _isLocked = !checkTriggers ^ inverted;
             gameObject.SetActive(_isLocked);
             foreach (DoorController door in doors)
             {

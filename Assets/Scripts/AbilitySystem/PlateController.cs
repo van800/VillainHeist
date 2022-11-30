@@ -32,7 +32,6 @@ namespace AbilitySystem
                 if (grabbable == key)
                 {
                     _triggered = true ^ inverted;
-                    _lock.TryUnlock();
                 }
             }
         }
@@ -40,13 +39,12 @@ namespace AbilitySystem
         private void OnCollisionExit(Collision collision)
         {
             _triggered = false ^ inverted;
-            _lock.TryUnlock();
         }
 
         // Update is called once per frame
         void Update()
         {
-            
+            _lock.TryUnlock();
         }
 
         public void SetDoor(LockedDoorAidan lockedDoor)

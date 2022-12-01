@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/MovableWall.cs.meta
 guid: fa4f5f61f6a5f114186d84b43b3e62a9
+========
+guid: 8f4eca7cfb33c43599fefeb00ebc77b8
+>>>>>>>> 486c941b (Floor 3 and final room are pretty much done):Assets/Scripts/AbilitySystem/Ability.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

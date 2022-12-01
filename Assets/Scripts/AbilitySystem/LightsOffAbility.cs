@@ -1,63 +1,61 @@
-using Lighting_Scripts;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace AbilitySystem
+public class LightsOffAbility : SelectableObjectAbility
 {
-    public class LightsOffAbility : SelectableObjectAbility
+    [SerializeField] private string name = "Lights Off Ability";
+    [SerializeField] private Sprite icon;
+    [SerializeField] private string tag = "Selectable";
+
+    public override AbilityInputs.AbilityType abilityType1stPerson()
     {
-        [SerializeField] private string name = "Lights Off Ability";
-        [SerializeField] private Sprite icon;
-        [SerializeField] private string tag = "Selectable";
+        return AbilityInputs.AbilityType.Shootable;
+    }
 
-        public override AbilityInputs.AbilityType abilityType1stPerson()
+    public override AbilityInputs.AbilityType abilityType3rdPerson()
+    {
+        return AbilityInputs.AbilityType.Clickable;
+    }
+
+    public override string appliedToTag()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void ApplyTo(GameObject spot)
+    {
+        OvalLightController spotsLight;
+        if (spot.TryGetComponent(out spotsLight))
         {
-            return AbilityInputs.AbilityType.Shootable;
+            spotsLight.ToggleLight();
         }
+    }
 
-        public override AbilityInputs.AbilityType abilityType3rdPerson()
-        {
-            return AbilityInputs.AbilityType.Clickable;
-        }
+    public override Sprite GetIcon()
+    {
+        return icon;
+    }
 
-        public string appliedToTag()
-        {
-            throw new System.NotImplementedException();
-        }
+    public override string GetName()
+    {
+        return name;
+    }
 
-        public override void ApplyTo(GameObject spot)
-        {
-            OvalLightController spotsLight;
-            if (spot.TryGetComponent(out spotsLight))
-            {
-                spotsLight.ToggleLight();
-            }
-        }
+    public override string selectableTag()
+    {
+        return tag;
+    }
 
-        public override Sprite GetIcon()
-        {
-            return icon;
-        }
-
-        public override string GetName()
-        {
-            return name;
-        }
-
-        public override string selectableTag()
-        {
-            return tag;
-        }
-
-        // Start is called before the first frame update
-        void Start()
-        {
+    // Start is called before the first frame update
+    void Start()
+    {
         
-        }
+    }
 
-        // Update is called once per frame
-        void Update()
-        {
+    // Update is called once per frame
+    void Update()
+    {
         
-        }
     }
 }

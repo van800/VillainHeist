@@ -11,7 +11,7 @@ namespace areas_and_respawn
 
         private Transform _enterPosition;
 
-        private AreaController _area;
+        private RoomController _room;
 
         private PlayerController _player;
 
@@ -22,7 +22,7 @@ namespace areas_and_respawn
         private void Start()
         {
             _enterPosition = GetComponentsInChildren<Transform>()[1];
-            _area = GetComponentInParent<AreaController>();
+            _room = GetComponentInParent<RoomController>();
             _player = FindObjectOfType<PlayerController>();
             _collider = GetComponent<BoxCollider>();
         }
@@ -31,7 +31,7 @@ namespace areas_and_respawn
         {
             if (other.CompareTag("Player"))
             {
-                _area.Save();
+                _room.Save();
                 otherDoor.Teleport();
             }
         }
@@ -40,7 +40,7 @@ namespace areas_and_respawn
         {
             if (_player.isFirstPov) return; // Turn off teleporting for 1st person
             _player.transform.position = _enterPosition.position;
-            _player.SetRoom(_area);
+            _player.SetRoom(_room);
         }
 
         private void Update()

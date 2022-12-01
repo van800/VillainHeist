@@ -46,6 +46,7 @@ namespace areas_and_respawn
 
         public override void Save()
         {
+            print("SAVED");
             SavedState = _isLocked;
         }
 

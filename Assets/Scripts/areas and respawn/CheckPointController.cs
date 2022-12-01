@@ -8,7 +8,7 @@ namespace areas_and_respawn
     {
         private Transform _spawnPoint;
         
-        private SubAreaController _subArea;
+        private RoomController _room;
 
         private AreaController _area;
 
@@ -18,22 +18,22 @@ namespace areas_and_respawn
         void Start()
         {
             _spawnPoint = transform;
-            _subArea = GetComponentInParent<SubAreaController>();
+            _room = GetComponentInParent<RoomController>();
             _area = GetComponentInParent<AreaController>();
-            _isSpawn = _subArea is null;
+            _isSpawn = _room is null;
         }
 
         public void Respawn(PlayerController player)
         {
             player.transform.position = _spawnPoint.position;
-            player.SetRoom(_area);
+            player.SetRoom(_room);
             if (_isSpawn)
             {
                 _area.Reset();
             }
             else
             {
-                _subArea.Reset();
+                _room.Reset();
             }
         }
 
@@ -45,7 +45,7 @@ namespace areas_and_respawn
                 if (player.checkpoint != this)
                 {
                     player.SetCheckpoint(this);
-                    _subArea.Save();
+                    _room.Save();
                 }
             }
         }

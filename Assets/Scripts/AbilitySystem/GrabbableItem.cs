@@ -16,6 +16,8 @@ namespace AbilitySystem
         // private Material regular;
 
         private bool _isPickedUp;
+
+        private Rigidbody _rigidbody;
         
         // public float playerYRot;
         
@@ -30,9 +32,11 @@ namespace AbilitySystem
             _isPickedUp = false;
             this.originalY = this.transform.position.y;
             _player = FindObjectOfType<PlayerController>();
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | 
-                                                    RigidbodyConstraints.FreezePositionZ |
-                                                    RigidbodyConstraints.FreezeRotation;
+            _rigidbody = GetComponent<Rigidbody>();
+            
+            _rigidbody.constraints = RigidbodyConstraints.FreezePositionX | 
+                                     RigidbodyConstraints.FreezePositionZ |
+                                     RigidbodyConstraints.FreezeRotation;
         }
         
 
@@ -41,6 +45,7 @@ namespace AbilitySystem
             this.transform.position = this._player.transform.position + new Vector3(0.0f, 20.0f, 0.0f);
             Renderer.enabled = false;
             this._isPickedUp = true;
+            _rigidbody.isKinematic = true;
         }
 
         void PutDown()
@@ -49,9 +54,9 @@ namespace AbilitySystem
             Transform playerTransform = this._player.transform;
             Renderer.enabled = true;
             this.transform.position = playerTransform.position + playerTransform.forward * pickUpDistance +
-                                      new Vector3(0, -playerTransform.position.y + originalY, 0);
+                                      new Vector3(0, -playerTransform.position.y + originalY + 0.5f, 0);
             this._isPickedUp = false;
-            
+            _rigidbody.isKinematic = false;
         }
 
         public override void Interact()

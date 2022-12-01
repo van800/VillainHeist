@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace AbilitySystem
 {
-    public class PlateController : MonoBehaviour
+    public class PlateController : Interactable
     {
         [SerializeField] [Tooltip("Block to trigger event when placed.")]
         private GrabbableItem key;
@@ -15,13 +15,10 @@ namespace AbilitySystem
         private bool inverted;
 
         private bool _triggered;
-
-        private Collider _collider;
         
         // Start is called before the first frame update
         void Start()
-        {
-            _collider = GetComponent<Collider>();
+        { 
             _triggered = inverted;
         }
 
@@ -55,6 +52,18 @@ namespace AbilitySystem
         public bool IsTriggered()
         {
             return _triggered;
+        }
+
+        public override void Interact() {} // No interaction
+
+        public override void Save()
+        {
+            SavedState = _triggered;
+        }
+
+        public override void Reset()
+        {
+            _triggered = SavedState;
         }
     }
 }

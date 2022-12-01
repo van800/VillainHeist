@@ -8,54 +8,33 @@ namespace areas_and_respawn
 {
     public class AreaController : MonoBehaviour
     {
-        private BoxCollider _boundary;
-
-        private BoxCollider _cameraBoundary;
-        
-        private SubAreaController[] _subAreas;
+        private RoomController[] _subRooms;
 
         public CheckPointController spawnPoint;
 
         private void Start()
         {
-            _boundary = GetComponent<BoxCollider>();
-            _boundary.isTrigger = true;
-            
-            _cameraBoundary = gameObject.AddComponent<BoxCollider>();
-            _cameraBoundary.center = _boundary.center - new Vector3(0, 0, 4.67f);
-            _cameraBoundary.size = _boundary.size;
-            _cameraBoundary.isTrigger = true;
-            
-            _subAreas = GetComponentsInChildren<SubAreaController>();
-            
-            if (CompareTag($"Start Room"))
+            _subRooms = GetComponentsInChildren<RoomController>();
+            foreach (RoomController room in _subRooms)
             {
-                FindObjectOfType<CameraController>().SetRoom(this);
+                if (!room.CompareTag($"Start Room")) continue;
+                FindObjectOfType<CameraController>().SetRoom(room);
                 FindObjectOfType<PlayerController>().checkpoint = spawnPoint;
+                FindObjectOfType<PlayerController>().Respawn();
             }
-            
-            Save();
-        }
 
-        public void Reset()
-        {
-           foreach (SubAreaController subArea in _subAreas) // call on sub areas
-           {
-               subArea.Reset();
-           }
-        }
-
-        public void Save()
-        {
-            foreach (SubAreaController subArea in _subAreas) // call on sub areas
+            foreach (RoomController subArea in _subRooms) // call on sub areas
             {
                 subArea.Save();
             }
         }
 
-        public BoxCollider GetCameraBoundary()
+        public void Reset()
         {
-            return _cameraBoundary;
+           foreach (RoomController subArea in _subRooms) // call on sub areas
+           {
+               subArea.Reset();
+           }
         }
     }
 }

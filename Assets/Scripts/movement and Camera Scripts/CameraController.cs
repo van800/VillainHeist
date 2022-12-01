@@ -26,10 +26,10 @@ namespace movement_and_Camera_Scripts
         }
 
         //Set the current room to the player's current room
-        public void SetRoom(AreaController area)
+        public void SetRoom(RoomController room)
         {
             _roomBoundary = GetComponentInChildren<CinemachineConfiner>();
-            _roomBoundary.m_BoundingVolume = area.GetCameraBoundary();
+            _roomBoundary.m_BoundingVolume = room.GetCameraBoundary();
         }
 
         public void SetPerspective(bool isFirstPov)

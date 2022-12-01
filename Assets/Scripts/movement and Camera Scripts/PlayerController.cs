@@ -188,10 +188,9 @@ namespace movement_and_Camera_Scripts
         }
 
         // Set the player and camera's room
-        public void SetRoom(AreaController area)
+        public void SetRoom(RoomController room)
         {
-            _cameraController.SetRoom(area); 
-            checkpoint = area.spawnPoint;
+            _cameraController.SetRoom(room); 
         }
         
         // Set the player's checkpoint

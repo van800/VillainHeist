@@ -152,13 +152,12 @@ namespace movement_and_Camera_Scripts
             
             // Interact with objects
             Interactable interactable = null;
-
             if (Physics.Raycast(transform.position + Vector3.up / 2, transform.forward,
                     out RaycastHit hit, interactDistance))
             {
-                if (hit.transform.TryGetComponent(out Interactable inRange))
+                interactable = hit.transform.GetComponentInChildren<Interactable>();
+                if (interactable is not null)
                 {
-                    interactable = inRange;
                     interactable.InRange();
                 }
             }

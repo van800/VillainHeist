@@ -38,5 +38,13 @@ namespace areas_and_respawn
                subArea.Reset();
            }
         }
+
+        public void Save()
+        {
+            foreach (RoomController subRoom in _subRooms) // call on sub areas
+            {
+                subRoom.Save();
+            }
+        }
     }
 }

@@ -46,7 +46,7 @@ namespace areas_and_respawn
                 if (player.checkpoint != this)
                 {
                     player.SetCheckpoint(this);
-                    _room.Save();
+                    _area.Save();
                 }
             }
         }

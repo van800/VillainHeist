@@ -19,7 +19,7 @@ namespace movement_and_Camera_Scripts
         // Start is called before the first frame update
         void Start()
         {
-            _mainCamera = GetComponentInChildren<Camera>();
+            _mainCamera = Camera.main;
             CinemachineVirtualCamera[] cmCameras = FindObjectsOfType<CinemachineVirtualCamera>();
             _povCam = cmCameras[1];
             _tdCam = cmCameras[0];

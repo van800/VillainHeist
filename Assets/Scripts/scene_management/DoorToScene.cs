@@ -8,6 +8,7 @@ public class DoorToScene : MonoBehaviour
 {
     public string nextScene;
     private PlayerController player;
+    [SerializeField] private bool onlyInTopDown;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +23,7 @@ public class DoorToScene : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && player.isFirstPov == !onlyInTopDown)
         {
             SceneManager.LoadScene(nextScene);
         }

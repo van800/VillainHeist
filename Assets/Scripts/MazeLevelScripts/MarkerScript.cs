@@ -10,6 +10,8 @@ public class MarkerScript : MonoBehaviour
 {
     public bool canFlip;
     public GameObject player;
+    private PlayerController _playerController;
+    private bool hasPickedUp;
     
     [SerializeField]
     private float pickUpDistance;
@@ -19,6 +21,7 @@ public class MarkerScript : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+        _playerController = player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -28,6 +31,11 @@ public class MarkerScript : MonoBehaviour
         {
             canFlip = true;
             GetComponent<Renderer>().enabled = false;
+            if (!hasPickedUp)
+            {
+                _playerController.PlayPickupSound();
+                hasPickedUp = true;
+            }
         }
     }
 

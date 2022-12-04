@@ -61,6 +61,7 @@ namespace movement_and_Camera_Scripts
         private Transform playerTransform;
         private Vector3 position;
 
+        [SerializeField]
         private GameObject listenerChild;
 
 
@@ -78,15 +79,13 @@ namespace movement_and_Camera_Scripts
             playerAS1.spatialBlend = 0f;
 
             _animator = GetComponent<Animator>();
-            
+
             playerAS2 = GetComponents<AudioSource>()[1];
             playerAS2.volume = 2f;
             playerAS2.spatialBlend = 0f;
 
             SetMusic(isFirstPov);
             playerAS2.Play();
-
-            listenerChild = GameObject.Find("Listener");
         }
         
 
@@ -222,6 +221,11 @@ namespace movement_and_Camera_Scripts
             {
                 ToPov();
             }
+
+            if (playerTransform.up.magnitude < -100)
+            {
+                Respawn();
+            }
         }
 
         public void Respawn()
@@ -231,6 +235,7 @@ namespace movement_and_Camera_Scripts
             if (pickedUp is not null) pickedUp.Reset();
             _currentRoom.Reset();
             checkpoint.Respawn(this);
+            RechargeBattery();
         }
 
         // Set the player and camera's room
@@ -240,9 +245,27 @@ namespace movement_and_Camera_Scripts
             _cameraController.SetRoom(room); 
         }
 
+        public void AddMaxBattery(int amount)
+        {
+            currentBattery += amount;
+            maxBattery += amount;
+            UpdateBatteryUI();
+        }
+        
+        public void RechargeBattery(int amount)
+        {
+            currentBattery = Math.Min(currentBattery + amount, maxBattery);
+            UpdateBatteryUI();
+        }
+        
         public void RechargeBattery()
         {
             currentBattery = maxBattery;
+            UpdateBatteryUI();
+        }
+
+        private void UpdateBatteryUI()
+        {
             _gameUI.SetBattery(currentBattery, maxBattery);
         }
         
@@ -250,7 +273,10 @@ namespace movement_and_Camera_Scripts
         public void SetCheckpoint(CheckPointController cp)
         {
             RechargeBattery();
-            checkpoint.DeselectCheckpoint();
+            if (checkpoint != null)
+            {
+                checkpoint.DeselectCheckpoint();
+            }
             checkpoint = cp;
         }
         

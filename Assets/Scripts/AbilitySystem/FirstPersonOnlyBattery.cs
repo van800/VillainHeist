@@ -18,12 +18,11 @@ public class FirstPersonOnlyBattery : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Villain_Player");
+        player = GameObject.FindWithTag("Player");
         rend = GetComponent<Renderer>();
         mainScript = GetComponent<BatteryPickupItem>();
         realDistance = mainScript.killDistance;
         mainScript.killDistance = 0;
-        mainScript.killGuy = player;
     }
 
     // Update is called once per frame

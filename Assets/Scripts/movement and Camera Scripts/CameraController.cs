@@ -12,6 +12,7 @@ namespace movement_and_Camera_Scripts
         private CinemachineVirtualCamera _tdCam;
 
         private Camera _mainCamera;
+        [SerializeField] private Camera uiCamera;
         private CameraMode _cameraMode;
         private CinemachineConfiner _roomBoundary;
 
@@ -35,6 +36,7 @@ namespace movement_and_Camera_Scripts
         public void SetPerspective(bool isFirstPov)
         {
             _mainCamera.orthographic = !isFirstPov;
+            uiCamera.orthographic = !isFirstPov;
             if (isFirstPov)
             {
                 _povCam.Priority = 1;

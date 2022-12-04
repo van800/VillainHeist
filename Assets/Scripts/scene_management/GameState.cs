@@ -32,9 +32,17 @@ public class GameState : MonoBehaviour
         StartCoroutine(changeFirstPerson());
     }
 
+    public void resetToTopDown()
+    {
+        isInFirstPerson = false;
+        StopAllCoroutines();
+        StartCoroutine(changeFirstPerson());
+    }
+
     private IEnumerator changeFirstPerson()
     {
         yield return new WaitUntil(() => player.isFirstPov);
         isInFirstPerson = player.isFirstPov;
     }
+
 }

@@ -51,6 +51,7 @@ namespace movement_and_Camera_Scripts
         private bool canTaze;
 
         private bool canAlert;
+
         
         public override string getInteractionName()
         {
@@ -88,6 +89,7 @@ namespace movement_and_Camera_Scripts
         {
             if (_moving)
             {
+                
                 Move();
             }
 

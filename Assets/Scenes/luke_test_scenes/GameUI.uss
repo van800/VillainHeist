@@ -24,3 +24,63 @@
 .battery-next.last {
     margin-right: -15px;
 }
+
+#TimerContainer {
+    translate: 0 -214px;
+    scale: 0.75;
+    opacity: 0;
+    transition-property: opacity, scale, translate;
+    transition-duration: 2s;
+}
+
+#TimerContainer.show {
+    scale: 1;
+    opacity: 1;
+    translate: 0 0px;
+}
+
+#TimerContainer.hidden {
+    display: none;
+}
+
+.ability-tip {
+    scale: 0.75;
+    opacity: 0;
+    transition-property: opacity, scale;
+    transition-duration: 0.25s;
+}
+
+.ability-tip.show {
+    scale: 1;
+    opacity: 1;
+}
+
+.ability-tip.hidden {
+    display: none;
+}
+
+.modal {
+    scale: 0.75;
+    opacity: 0;
+    transition-property: opacity, scale;
+    transition-duration: 0.25s;
+}
+
+.modal.show {
+    scale: 1;
+    opacity: 1;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.lower-left {
+    transition-property: translate, scale;
+    transition-duration: 0.25s;
+}
+
+.lower-left.hidden {
+    translate: -700px 0;
+    scale: 0;
+}

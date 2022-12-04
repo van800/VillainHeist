@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using movement_and_Camera_Scripts;
 
 public class EscapeTimer : MonoBehaviour
 {
+    public static EscapeTimer Instance;
     private static bool exists = false;
     private PlayerController player;
-    private float totalSecondsRemaining;
+    public float totalSecondsRemaining;
     [SerializeField] private float totalTime = 60;
     private bool useTimer = false;
     [Header("UI")]
@@ -36,26 +38,55 @@ public class EscapeTimer : MonoBehaviour
         if (exists)
         {
             Destroy(gameObject);
+            return;
         }
         else
         {
             DontDestroyOnLoad(gameObject);
+            Instance = this;
             exists = true;
         }
-        this.player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
         totalSecondsRemaining = totalTime;
-        StartCoroutine(waitUntilEscape());
+        //StartCoroutine(waitUntilEscape());
         VisualElement root = timerUi.rootVisualElement;
         timerText = root.Q<Label>(timerName);
         showTimer(false);
     }
 
-    private IEnumerator waitUntilEscape()
+    /*private IEnumerator waitUntilEscape()
     {
+        this.player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
+        Debug.Log("begin start timer");
+        yield return new WaitUntil(() => !player.isFirstPov);
+        Debug.Log("begin start timer 2");
         yield return new WaitUntil(() => player.isFirstPov);
+        Debug.Log("start timer");
         useTimer = true;
         showTimer(true);
         StartCoroutine(timerUI());
+    }*/
+
+    public void startTimer()
+    {
+        useTimer = true;
+        showTimer(true);
+        StartCoroutine(timerUI());
+    }
+
+    private void reset()
+    {
+        this.player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<PlayerController>();
+
+        //player.ToPov(false);
+        GameState.Instance.resetToTopDown();
+
+        SceneManager.LoadScene("FinalRoom");
+        useTimer = false;
+        Debug.Log("reset timer");
+        showTimer(false);
+        StopAllCoroutines();
+        totalSecondsRemaining = totalTime;
+        //StartCoroutine(waitUntilEscape());
     }
 
     private void showTimer(bool show)
@@ -138,8 +169,9 @@ public class EscapeTimer : MonoBehaviour
         if (totalSecondsRemaining <= 0)
         {
             // Failure Script
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
             // To be implemented
+            reset();
         }
     }
 }

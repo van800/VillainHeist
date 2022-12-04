@@ -26,6 +26,8 @@ public class WallMoveable : Interactable
     [SerializeField] [Tooltip("Name of Marker")]
     private string markName;
     // Start is called before the first frame update
+
+    private AudioSource _movableWallAs1;
     void Start()
     {
         thisMuch = 3;
@@ -33,6 +35,8 @@ public class WallMoveable : Interactable
         movingUp = 0;
         topLimit = transform.position.y + thisMuch;
         marker = GameObject.Find(markName);
+
+        _movableWallAs1 = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -56,13 +60,13 @@ public class WallMoveable : Interactable
     void WallMove()
     {
         if (!atTopLimit)
-            {
-                movingUp = 1;
-            }
-            else
-            {
-                movingUp = -1;
-            }
+        {
+            movingUp = 1;
+        }
+        else
+        {
+            movingUp = -1;
+        }
 
         if ((transform.position.y > topLimit && !atTopLimit)
             || (transform.position.y < (topLimit - thisMuch) && atTopLimit) )
@@ -95,6 +99,7 @@ public class WallMoveable : Interactable
     {
         if (active)
         {
+            _movableWallAs1.Play();
             moveDummy = true;
         }
     }

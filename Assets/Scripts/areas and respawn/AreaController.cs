@@ -11,22 +11,38 @@ namespace areas_and_respawn
     {
         private RoomController[] _subRooms;
 
-        public CheckPointController spawnPoint;
+        public CheckPointController tdSpawnPoint;
+        
+        public CheckPointController fpSpawnPoint;
 
         private void Start()
         {
             _subRooms = GetComponentsInChildren<RoomController>();
             print(_subRooms.Length);
+            PlayerController player = GameObject.FindWithTag("PLayer").GetComponent<PlayerController>();
             foreach (RoomController subRoom in _subRooms) // call on sub areas
             {
                 subRoom.SetUp();
                 subRoom.Save();
-                if (subRoom.CompareTag($"Start Room"))
+                if (player.isFirstPov)
                 {
-                    PlayerController playerController = FindObjectOfType<PlayerController>();
-                    playerController.SetRoom(subRoom);
-                    playerController.checkpoint = spawnPoint;
-                    FindObjectOfType<PlayerController>().transform.position = spawnPoint.transform.position;
+                    if (subRoom.CompareTag($"Start Room"))
+                    {
+                        PlayerController playerController = FindObjectOfType<PlayerController>();
+                        playerController.SetRoom(subRoom);
+                        playerController.checkpoint = tdSpawnPoint;
+                        FindObjectOfType<PlayerController>().transform.position = tdSpawnPoint.transform.position;
+                    }
+                }
+                else
+                {
+                    if (subRoom.CompareTag($"End Room"))
+                    {
+                        PlayerController playerController = FindObjectOfType<PlayerController>();
+                        playerController.SetRoom(subRoom);
+                        playerController.checkpoint = fpSpawnPoint;
+                        FindObjectOfType<PlayerController>().transform.position = fpSpawnPoint.transform.position;
+                    }
                 }
             }
         }

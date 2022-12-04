@@ -58,7 +58,7 @@ namespace areas_and_respawn
             }
         }
 
-        protected void SetRegularMaterials()
+        private void SetRegularMaterials()
         {
             foreach (Renderer rend in Renderers)
             {
@@ -67,7 +67,7 @@ namespace areas_and_respawn
             }
         }
 
-        protected void SetSelectedMaterials()
+        private void SetSelectedMaterials()
         {
             foreach (Renderer rend in Renderers)
             {

@@ -10,6 +10,8 @@ namespace movement_and_Camera_Scripts
     { 
         private CharacterController _characterController;
 
+        private RoomController _currentRoom;
+
         private CameraController _cameraController;
         [SerializeField][Tooltip("Is First Person Mode")]
         public bool isFirstPov;
@@ -196,6 +198,7 @@ namespace movement_and_Camera_Scripts
         // Set the player and camera's room
         public void SetRoom(RoomController room)
         {
+            _currentRoom = room;
             _cameraController.SetRoom(room); 
         }
         

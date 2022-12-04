@@ -38,6 +38,7 @@ namespace Lighting_Scripts
         public override void Save()
         {
             SavedState = _lightOn;
+            ShowHide();
         }
 
         public override void Reset()
@@ -53,6 +54,11 @@ namespace Lighting_Scripts
             _lightOn = !_lightOn;
             _lightComponent.enabled = _lightOn;
 
+            ShowHide();
+        }
+
+        private void ShowHide()
+        {
             if (_lightOn)
             {
                 foreach (GameObject obj in hideWhenOn)
@@ -76,6 +82,7 @@ namespace Lighting_Scripts
                 }
                 foreach (GameObject obj in hideWhenOff)
                 {
+                    print(obj.name);
                     obj.GetComponentInChildren<Renderer>().enabled = false;
                 }
                 foreach (GuardController guard in _guards)
@@ -84,6 +91,5 @@ namespace Lighting_Scripts
                 }
             }
         }
-        
     }
 }

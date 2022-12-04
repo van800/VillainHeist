@@ -95,7 +95,7 @@ namespace movement_and_Camera_Scripts
             if (Vector3.Angle(transform.forward, toTarget) <= viewAngle && !isFrozen)
             {
                 // Guard behavior when player is in top down
-                if (playerController.isFirstPov == false)
+                if (!playerController.isFirstPov)
                 {
                     if (canAlert)
                     {
@@ -120,9 +120,10 @@ namespace movement_and_Camera_Scripts
             {
                 if (hit.transform == player.transform)
                 {
+                    _moving = false;
                     _animator.SetTrigger("Alert");
-                    Debug.Log("HIT");
-                    playerController.Respawn();
+                    Invoke(nameof(RespawnPlayer), 1f);
+                    Invoke(nameof(StartMoving), .9f);
                 }
             }
         }
@@ -136,12 +137,18 @@ namespace movement_and_Camera_Scripts
                 _animator.SetTrigger("Alert");
                 if (hit.transform == player.transform)
                 {
-                    Debug.Log("HIT");
                     playerController.Tased();
                     canTaze = false;
-                    Invoke("EnableTaze", 5f);
+                    _moving = false;
+                    Invoke(nameof(StartMoving), 3f);
+                    Invoke(nameof(EnableTaze), 5f);
                 }
             }
+        }
+
+        private void RespawnPlayer()
+        {
+            playerController.Respawn();
         }
 
         private void EnableTaze()

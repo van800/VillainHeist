@@ -128,10 +128,5 @@ namespace AbilitySystem
             grabbableAS1.clip = dropSound;
             grabbableAS1.Play();
         }
-
-        // Update is called once per frame
-        void Update()
-        {
-        }
     }
 }

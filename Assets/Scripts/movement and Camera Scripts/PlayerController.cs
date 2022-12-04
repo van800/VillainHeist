@@ -207,6 +207,7 @@ namespace movement_and_Camera_Scripts
         // Set the player's checkpoint
         public void SetCheckpoint(CheckPointController cp)
         {
+            checkpoint.DeselectCheckpoint();
             checkpoint = cp;
         }
         

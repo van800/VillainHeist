@@ -14,14 +14,47 @@ namespace areas_and_respawn
 
         private bool _isSpawn;
 
+        private bool _hasRender;
+
+        private Renderer _rend;
+        
+        private Material _currentCheckpoint;
+
+        [SerializeField] private Material openCheckpoint;
+        
+        [SerializeField] private Material closedCheckpoint;
+        
+
         // Start is called before the first frame update
-        void Awake()
+        void Start()
         {
             _spawnPoint = transform;
             _room = GetComponentInParent<RoomController>();
             _area = GetComponentInParent<AreaController>();
+            _rend = GetComponentInChildren<Renderer>();
             _isSpawn = _room is null;
-            if (_isSpawn) _room = GameObject.FindWithTag("Start Room").GetComponent<RoomController>();
+            PlayerController player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            if (player.isFirstPov)
+            {
+                if (_isSpawn)
+                {
+                    _room = GameObject.FindWithTag("End Room").GetComponent<RoomController>();
+                    _currentCheckpoint = _rend.materials[2];
+                }
+                else
+                {
+                    _rend.materials[2] = closedCheckpoint;
+                }
+            }
+            else if (_isSpawn)
+            {
+                _room = GameObject.FindWithTag("Start Room").GetComponent<RoomController>();
+            }
+            else
+            {
+                _currentCheckpoint = _rend.materials[2];
+                DeselectCheckpoint();
+            }
         }
 
         public void Respawn(PlayerController player)
@@ -43,12 +76,21 @@ namespace areas_and_respawn
             if (other.gameObject.CompareTag("Player"))
             {
                 PlayerController player = other.gameObject.GetComponent<PlayerController>();
-                if (player.checkpoint != this)
+                if (player.checkpoint != this && !player.isFirstPov)
                 {
                     player.SetCheckpoint(this);
                     _area.Save();
+                    if (!_isSpawn)
+                    {
+                        _rend.materials[2] = _currentCheckpoint;
+                    }
                 }
             }
+        }
+
+        public void DeselectCheckpoint()
+        {
+            _rend.materials[2] = openCheckpoint;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace areas_and_respawn
         {
             _subRooms = GetComponentsInChildren<RoomController>();
             print(_subRooms.Length);
-            PlayerController player = GameObject.FindWithTag("PLayer").GetComponent<PlayerController>();
+            PlayerController player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             foreach (RoomController subRoom in _subRooms) // call on sub areas
             {
                 subRoom.SetUp();
@@ -28,20 +28,18 @@ namespace areas_and_respawn
                 {
                     if (subRoom.CompareTag($"Start Room"))
                     {
-                        PlayerController playerController = FindObjectOfType<PlayerController>();
-                        playerController.SetRoom(subRoom);
-                        playerController.checkpoint = tdSpawnPoint;
-                        FindObjectOfType<PlayerController>().transform.position = tdSpawnPoint.transform.position;
+                        player.SetRoom(subRoom);
+                        player.checkpoint = tdSpawnPoint;
+                        player.transform.position = tdSpawnPoint.transform.position;
                     }
                 }
                 else
                 {
                     if (subRoom.CompareTag($"End Room"))
                     {
-                        PlayerController playerController = FindObjectOfType<PlayerController>();
-                        playerController.SetRoom(subRoom);
-                        playerController.checkpoint = fpSpawnPoint;
-                        FindObjectOfType<PlayerController>().transform.position = fpSpawnPoint.transform.position;
+                        player.SetRoom(subRoom);
+                        player.checkpoint = fpSpawnPoint;
+                        player.transform.position = fpSpawnPoint.transform.position;
                     }
                 }
             }

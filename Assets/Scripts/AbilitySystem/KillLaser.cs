@@ -30,7 +30,7 @@ public class KillLaser : MonoBehaviour
     {
         canKill = player.GetComponent<PlayerController>().isFirstPov;
         
-        if (Input.GetKeyDown("v") && canKill)
+        if (Input.GetMouseButtonDown(0) && canKill)
         {
             
             var ray = new Ray(buddy.transform.position,

@@ -79,8 +79,8 @@ public class GameUI : MonoBehaviour
     public void SetTimer(int timeInSeconds)
     {
         _uiDocument.rootVisualElement.Q<Label>("Timer").text = FormatTime(timeInSeconds);
-        // _uiDocument.rootVisualElement.Q<Label>("Timer").RemoveFromClassList("hidden");
-        // _uiDocument.rootVisualElement.Q<Label>("Timer").AddToClassList("show");
+        _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").RemoveFromClassList("hidden");
+        _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").AddToClassList("show");
     }
     
     private string ModalToId(Modals modal)

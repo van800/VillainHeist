@@ -122,7 +122,7 @@ namespace movement_and_Camera_Scripts
                 {
                     _moving = false;
                     _animator.SetTrigger("Alert");
-                    Invoke(nameof(RespawnPlayer), 1f);
+                    Invoke(nameof(RespawnPlayer), 2f);
                     Invoke(nameof(StartMoving), .9f);
                 }
             }

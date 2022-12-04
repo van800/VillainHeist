@@ -9,6 +9,7 @@ public class WallMoveable : Interactable
 {
     public int movingUp;
     private float topLimit;
+    [SerializeField]
     private bool atTopLimit;
     private float thisMuch;
     [SerializeField]
@@ -19,6 +20,7 @@ public class WallMoveable : Interactable
     [SerializeField]
     private GameObject marker;
 
+    [SerializeField]
     private bool moveDummy;
 
     [SerializeField] [Tooltip("Name of Marker")]
@@ -26,6 +28,10 @@ public class WallMoveable : Interactable
     // Start is called before the first frame update
     void Start()
     {
+        thisMuch = 3;
+        atTopLimit = false;
+        movingUp = 0;
+        topLimit = transform.position.y + thisMuch;
         marker = GameObject.Find(markName);
     }
 

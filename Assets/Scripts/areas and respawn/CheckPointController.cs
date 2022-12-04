@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using movement_and_Camera_Scripts;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace areas_and_respawn
 
         private Renderer _rend;
         
-        private Material _currentCheckpoint;
+        [SerializeField] private Material currentCheckpoint;
 
         [SerializeField] private Material openCheckpoint;
         
@@ -28,32 +29,30 @@ namespace areas_and_respawn
         // Start is called before the first frame update
         void Start()
         {
+            PlayerController player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             _spawnPoint = transform;
             _room = GetComponentInParent<RoomController>();
             _area = GetComponentInParent<AreaController>();
-            _rend = GetComponentInChildren<Renderer>();
             _isSpawn = _room is null;
-            PlayerController player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-            if (player.isFirstPov)
+            if (!_isSpawn)
             {
-                if (_isSpawn)
+                _rend = GetComponentInChildren<Renderer>();
+                DeselectCheckpoint();
+                if (player.isFirstPov)
                 {
-                    _room = GameObject.FindWithTag("End Room").GetComponent<RoomController>();
-                    _currentCheckpoint = _rend.materials[2];
+                    SetLightMaterial(closedCheckpoint); 
                 }
-                else
-                {
-                    _rend.materials[2] = closedCheckpoint;
-                }
-            }
-            else if (_isSpawn)
-            {
-                _room = GameObject.FindWithTag("Start Room").GetComponent<RoomController>();
             }
             else
             {
-                _currentCheckpoint = _rend.materials[2];
-                DeselectCheckpoint();
+                if (player.isFirstPov)
+                {
+                    _room = GameObject.FindWithTag("End Room").GetComponent<RoomController>();
+                }
+                else
+                {
+                    _room = GameObject.FindWithTag("Start Room").GetComponent<RoomController>();
+                }
             }
         }
 
@@ -82,7 +81,7 @@ namespace areas_and_respawn
                     _area.Save();
                     if (!_isSpawn)
                     {
-                        _rend.materials[2] = _currentCheckpoint;
+                        SetLightMaterial(currentCheckpoint); 
                     }
                 }
             }
@@ -90,7 +89,17 @@ namespace areas_and_respawn
 
         public void DeselectCheckpoint()
         {
-            _rend.materials[2] = openCheckpoint;
+            if (!_isSpawn)
+            {
+               SetLightMaterial(openCheckpoint); 
+            }
+        }
+
+        private void SetLightMaterial(Material mat)
+        {
+            Material[] mats = _rend.materials;
+            mats[2] = mat;
+            _rend.materials = mats;
         }
     }
 }

@@ -214,8 +214,10 @@ namespace movement_and_Camera_Scripts
         public void ToPov(bool toFirst = true)
         {
             isFirstPov = toFirst;
+            GameState.Instance.isInFirstPerson = toFirst;
             _cameraController.SetPerspective(toFirst);
             SetMusic(isFirstPov);
+            EscapeTimer.Instance.startTimer();
         }
         
         // Hide mouse

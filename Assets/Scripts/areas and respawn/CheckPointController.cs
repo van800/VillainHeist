@@ -14,6 +14,8 @@ namespace areas_and_respawn
 
         private bool _isSpawn;
 
+        private AudioSource checkPointAS;
+
         // Start is called before the first frame update
         void Awake()
         {
@@ -22,6 +24,7 @@ namespace areas_and_respawn
             _area = GetComponentInParent<AreaController>();
             _isSpawn = _room is null;
             if (_isSpawn) _room = GameObject.FindWithTag("Start Room").GetComponent<RoomController>();
+            checkPointAS = GetComponent<AudioSource>();
         }
 
         public void Respawn(PlayerController player)
@@ -45,8 +48,10 @@ namespace areas_and_respawn
                 PlayerController player = other.gameObject.GetComponent<PlayerController>();
                 if (player.checkpoint != this)
                 {
+                    checkPointAS.Play();
                     player.SetCheckpoint(this);
                     _area.Save();
+                    
                 }
             }
         }

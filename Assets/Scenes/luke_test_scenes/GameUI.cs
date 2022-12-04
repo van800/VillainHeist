@@ -107,15 +107,16 @@ public class GameUI : MonoBehaviour
         };
     }
 
-    private void HideAllAbilityPrompts()
+    public void HideAllAbilityPrompts()
     {
         foreach (var abilityPrompt in ALL_ABILITY_PROMPTS)
         {
             _uiDocument.rootVisualElement.Q<VisualElement>(AbilityToId(abilityPrompt)).AddToClassList("hidden");
+            _uiDocument.rootVisualElement.Q<VisualElement>(AbilityToId(abilityPrompt)).RemoveFromClassList("show");
         }
     }
     
-    private void ShowAbilityPrompts(AbilityPrompts targetPrompt)
+    public void ShowAbilityPrompts(AbilityPrompts targetPrompt)
     {
         foreach (var abilityPrompt in ALL_ABILITY_PROMPTS)
         {
@@ -132,7 +133,7 @@ public class GameUI : MonoBehaviour
         }
     }
     
-    private void HideAllModals()
+    public void HideAllModals()
     {
         foreach (var modal in ALL_MODALS)
         {

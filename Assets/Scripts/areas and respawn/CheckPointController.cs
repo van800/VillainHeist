@@ -13,6 +13,8 @@ namespace areas_and_respawn
 
         private AreaController _area;
 
+        private GameUI _gameUI;
+        
         private bool _isSpawn;
         
         private bool _hasRender;
@@ -31,6 +33,7 @@ namespace areas_and_respawn
         void Start()
         {
             PlayerController player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            _gameUI = FindObjectOfType<GameUI>();
             _spawnPoint = transform;
             _room = GetComponentInParent<RoomController>();
             _area = GetComponentInParent<AreaController>();
@@ -79,6 +82,7 @@ namespace areas_and_respawn
                 PlayerController player = other.gameObject.GetComponent<PlayerController>();
                 if (player.checkpoint != this && !player.isFirstPov)
                 {
+                    _gameUI.ShowCheckpoint();
                     checkPointAS.Play();
                     player.SetCheckpoint(this);
                     _area.Save();

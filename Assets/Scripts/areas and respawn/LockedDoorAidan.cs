@@ -22,7 +22,16 @@ namespace areas_and_respawn
         
         private bool _displaying;
 
-
+        public override int GetCost()
+        {
+            return 0;
+        }
+        
+        public override string getInteractionName()
+        {
+            return "";
+        }
+        
         protected override void Initialize()
         {
             foreach (PlateController trigger in triggers)

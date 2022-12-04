@@ -50,7 +50,10 @@ namespace movement_and_Camera_Scripts
 
         private bool canAlert;
         
-        
+        public override string getInteractionName()
+        {
+            return "Freeze";
+        }
         
         // Start is called before the first frame update
         void Start()

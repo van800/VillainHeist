@@ -71,6 +71,11 @@ public class WallMoveable : Interactable
         transform.position = posn;
     }
 
+    public override string getInteractionName()
+    {
+        return "MoveWall";
+    }
+
     protected override void Initialize()
     {
         thisMuch = 3;

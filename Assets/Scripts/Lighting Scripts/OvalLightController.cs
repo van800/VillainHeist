@@ -35,6 +35,11 @@ namespace Lighting_Scripts
             ToggleLight();
         }
 
+        public override string getInteractionName()
+        {
+            return "Light";
+        }
+        
         public override void Save()
         {
             SavedState = _lightOn;

@@ -121,8 +121,10 @@ namespace movement_and_Camera_Scripts
                 if (hit.transform == player.transform)
                 {
                     _moving = false;
+                    canTaze = false;
                     _animator.SetTrigger("Alert");
-                    Invoke(nameof(RespawnPlayer), 2f);
+                    Invoke(nameof(RespawnPlayer), 1f);
+                    Invoke(nameof(EnableAttack), 2f);
                     Invoke(nameof(StartMoving), .9f);
                 }
             }
@@ -141,7 +143,7 @@ namespace movement_and_Camera_Scripts
                     canTaze = false;
                     _moving = false;
                     Invoke(nameof(StartMoving), 3f);
-                    Invoke(nameof(EnableTaze), 5f);
+                    Invoke(nameof(EnableAttack), 5f);
                 }
             }
         }
@@ -151,7 +153,7 @@ namespace movement_and_Camera_Scripts
             playerController.Respawn();
         }
 
-        private void EnableTaze()
+        private void EnableAttack()
         {
             canTaze = true;
         }

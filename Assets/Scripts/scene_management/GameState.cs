@@ -7,6 +7,7 @@ public class GameState : MonoBehaviour
 {
     public static GameState Instance { get; private set; }
     public bool isInFirstPerson;
+    public int totalBattery = -1;
     private PlayerController player;
     private static GameObject gameObj;
 

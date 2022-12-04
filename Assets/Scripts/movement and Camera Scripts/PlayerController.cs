@@ -68,6 +68,15 @@ namespace movement_and_Camera_Scripts
         // Start is called before the first frame update
         void Start()
         {
+            if (GameState.Instance.totalBattery < 1)
+            {
+                GameState.Instance.totalBattery = maxBattery;
+            }
+            else
+            {
+                maxBattery = GameState.Instance.totalBattery;
+            }
+
             isFirstPov = GameState.Instance.isInFirstPerson;
 
             _characterController = GetComponent<CharacterController>();

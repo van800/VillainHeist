@@ -23806,6 +23806,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInFirstPerson: 0
+  totalBattery: 20
 --- !u!4 &364491567
 Transform:
   m_ObjectHideFlags: 0

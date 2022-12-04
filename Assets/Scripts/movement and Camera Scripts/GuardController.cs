@@ -52,6 +52,9 @@ namespace movement_and_Camera_Scripts
 
         private bool canAlert;
 
+        [SerializeField] private GameObject fovPrefab;
+
+        private GameObject _fov;
         
         public override string getInteractionName()
         {
@@ -82,6 +85,8 @@ namespace movement_and_Camera_Scripts
 
             guardAS1 = GetComponents<AudioSource>()[0];
             guardAS2 = GetComponents<AudioSource>()[1];
+
+            _fov = Instantiate(fovPrefab, transform);
         }
 
         // Update is called once per frame
@@ -89,69 +94,51 @@ namespace movement_and_Camera_Scripts
         {
             if (_moving)
             {
-                
                 Move();
             }
-
-            AttackPlayer();
         }
         
-        private void AttackPlayer()
+        public void AttackPlayer()
         {
+            SetRegularMaterials();
+            
             Transform t = transform;
 
             Vector3 toTarget = player.transform.position - t.position;
-            if (Vector3.Angle(transform.forward, toTarget) <= viewAngle && !isFrozen)
-            {
-                // Guard behavior when player is in top down
-                if (!playerController.isFirstPov)
-                {
-                    if (canAlert)
-                    {
-                        PlayAlertSound();
-                        topDownAttack(toTarget);
-                    }
-                }
+            
+            _moving = false;
 
-                // Guard behavior when player is in first person
-                else
+            _animator.SetTrigger("Alert");
+            
+            // Guard behavior when player is in top down
+            if (!playerController.isFirstPov)
+            {
+                if (canAlert)
                 {
-                    firstPersonAttack(toTarget);
+                    topDownAttack(toTarget);
                 }
+            }
+            // Guard behavior when player is in first person
+            else if (canTaze)
+            {
+                firstPersonAttack(toTarget);
             }
         }
 
         private void topDownAttack(Vector3 toTarget)
         {
-            Debug.DrawRay(transform.position + Vector3.up, toTarget.normalized * range, Color.green);
-            if (Physics.Raycast(transform.position + Vector3.up, toTarget, out RaycastHit hit, range))
-            {
-                if (hit.transform == player.transform)
-                {
-                    _moving = false;
-                    _animator.SetTrigger("Alert");
-                    Invoke(nameof(RespawnPlayer), 1f);
-                    Invoke(nameof(StartMoving), .9f);
-                }
-            }
+            PlayAlertSound();
+            Invoke(nameof(RespawnPlayer), 1f);
+            Invoke(nameof(StartMoving), .9f);
         }
         
         
         private void firstPersonAttack(Vector3 toTarget)
         {
-            Debug.DrawRay(transform.position + Vector3.up, toTarget.normalized * range, Color.green);
-            if (Physics.Raycast(transform.position + Vector3.up, toTarget, out RaycastHit hit, range))
-            {
-                _animator.SetTrigger("Alert");
-                if (hit.transform == player.transform)
-                {
-                    playerController.Tased();
-                    canTaze = false;
-                    _moving = false;
-                    Invoke(nameof(StartMoving), 3f);
-                    Invoke(nameof(EnableAttack), 5f);
-                }
-            }
+            playerController.Tased();
+            canTaze = false;
+            Invoke(nameof(StartMoving), 3f);
+            Invoke(nameof(EnableAttack), 5f);
         }
 
         private void RespawnPlayer()

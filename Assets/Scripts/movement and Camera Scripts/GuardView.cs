@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Transactions;
 using UnityEngine;
 
-public class GuardView : MonoBehaviour
+namespace movement_and_Camera_Scripts
 {
-    // Start is called before the first frame update
-    void Start()
+    public class GuardView : MonoBehaviour
     {
+        private GuardController _guardController;
         
-    }
+        private void Start()
+        {
+            _guardController = GetComponentInParent<GuardController>();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                _guardController.AttackPlayer();
+            }
+        }
     }
 }

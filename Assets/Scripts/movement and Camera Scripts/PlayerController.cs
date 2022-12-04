@@ -198,7 +198,6 @@ namespace movement_and_Camera_Scripts
             {
                 if (interactable is not null)
                 {
-                    print(interactable.name);
                     if (interactable.GetCost() <= currentBattery)
                     {
                         interactable.Interact();

@@ -65,7 +65,7 @@ namespace areas_and_respawn
             }
         }
 
-        private void SetRegularMaterials()
+        protected void SetRegularMaterials()
         {
             foreach (Renderer rend in Renderers)
             {
@@ -78,6 +78,7 @@ namespace areas_and_respawn
         {
             foreach (Renderer rend in Renderers)
             {
+                if (rend is SpriteRenderer) continue;
                 int matLen = rend.materials.Length;
                 Material[] mats = new Material[matLen];
                 Array.Fill(mats, selectedMaterial);
@@ -89,6 +90,7 @@ namespace areas_and_respawn
         {
             foreach (Renderer rend in Renderers)
             {
+                if (rend is SpriteRenderer) continue;
                 rend.enabled = isEnabled;
             }
         }

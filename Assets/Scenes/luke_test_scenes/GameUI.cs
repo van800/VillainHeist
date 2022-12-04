@@ -53,10 +53,10 @@ public class GameUI : MonoBehaviour
         
     public void SetModal(Modals targetModal)
     {
-        for (var modal in )
-        {
-            
-        }
+        // for (var modal in )
+        // {
+        //     
+        // }
         // foreach (var modal in )
         // {
         //     _uiDocument.rootVisualElement.Q<VisualElement>(ModalToId(modal));

@@ -72,7 +72,7 @@ namespace movement_and_Camera_Scripts
         private void AttackPlayer()
         {
             Vector3 toTarget = player.transform.position - transform.position;
-            if (Vector3.Angle(transform.forward, toTarget) <= viewAngle)
+            if (Vector3.Angle(transform.forward, toTarget) <= viewAngle && !isFrozen)
             {
                 // Guard behavior when player is in top down
                 if (playerController.isFirstPov == false)
@@ -214,8 +214,7 @@ namespace movement_and_Camera_Scripts
 
         protected override void Initialize()
         {
-            // NOTHING
-            print("INITIALIZING ROBOT");
+            //Do Nothing
         }
 
         public override void Interact()
@@ -238,10 +237,6 @@ namespace movement_and_Camera_Scripts
                 t.position = SavedPosition;
                 isFrozen = false;
                 ToggleFreeze();
-            }
-            else
-            {
-                Initialize();
             }
         }
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AbilitySystem;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace areas_and_respawn
@@ -21,6 +22,7 @@ namespace areas_and_respawn
         
         private bool _displaying;
 
+
         protected override void Initialize()
         {
             foreach (PlateController trigger in triggers)
@@ -32,6 +34,7 @@ namespace areas_and_respawn
 
         public void TryUnlock()
         {
+            
             bool checkTriggers = true;
             foreach (PlateController trigger in triggers)
             {
@@ -84,5 +87,7 @@ namespace areas_and_respawn
         {
             _displaying = false;
         }
+
+     
     }
 }

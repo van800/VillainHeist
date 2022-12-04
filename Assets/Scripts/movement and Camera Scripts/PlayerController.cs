@@ -28,6 +28,12 @@ namespace movement_and_Camera_Scripts
         private bool _hasJumped;
         private const float GroundCastDist = 0.15f;
 
+        public int maxBattery = 6;
+        public int currentBattery = 6;
+
+        private GameUI _gameUI;
+        
+        
         public GrabbableItem pickedUpItem;
         [Tooltip("Distance to interact with items")]
         public float interactDistance = 1f;
@@ -65,6 +71,7 @@ namespace movement_and_Camera_Scripts
 
             _characterController = GetComponent<CharacterController>();
             _cameraController = FindObjectOfType<CameraController>();
+            _gameUI = FindObjectOfType<GameUI>();
             canMove = true;
             playerAS1 = GetComponents<AudioSource>()[0];
             playerAS1.volume = 1f;
@@ -167,19 +174,36 @@ namespace movement_and_Camera_Scripts
             
             // Interact with objects
             Interactable interactable = GetNearestInteractableObj();
-            // if (Physics.Raycast(transform.position + Vector3.up / 2, transform.forward,
-            //         out RaycastHit hit, interactDistance))
-            // interactable = hit.transform.GetComponentInChildren<Interactable>();
             if (interactable is not null)
             {
                 interactable.InRange();
+                GameUI.AbilityPrompts? prompt = interactable.getInteractionName() switch
+                {
+                    "Freeze" => GameUI.AbilityPrompts.Freeze,
+                    "Pickup" => GameUI.AbilityPrompts.Pickup,
+                    "MoveWall" => GameUI.AbilityPrompts.MoveWall,
+                    "Light" => GameUI.AbilityPrompts.Light,
+                    _ => null
+                };
+                if (prompt.HasValue)
+                {
+                    _gameUI.ShowAbilityPrompts(prompt.Value);
+                }
+            }
+            else
+            {
+                _gameUI.HideAllAbilityPrompts();
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (interactable is not null)
                 {
-                    print(interactable.name);
-                    interactable.Interact();
+                    if (interactable.GetCost() <= currentBattery)
+                    {
+                        interactable.Interact();
+                        currentBattery -= interactable.GetCost();
+                        _gameUI.SetBattery(currentBattery, maxBattery);
+                    }
                 }
                 else if (pickedUpItem is not null)
                 {
@@ -214,10 +238,17 @@ namespace movement_and_Camera_Scripts
             _currentRoom = room;
             _cameraController.SetRoom(room); 
         }
+
+        public void RechargeBattery()
+        {
+            currentBattery = maxBattery;
+            _gameUI.SetBattery(currentBattery, maxBattery);
+        }
         
         // Set the player's checkpoint
         public void SetCheckpoint(CheckPointController cp)
         {
+            RechargeBattery();
             checkpoint.DeselectCheckpoint();
             checkpoint = cp;
         }

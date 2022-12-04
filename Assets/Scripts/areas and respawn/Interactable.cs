@@ -8,9 +8,9 @@ namespace areas_and_respawn
 {
     public abstract class Interactable : MonoBehaviour
     {
-        public Vector3 SavedPosition;
-        public Quaternion SavedRotation;
-        public bool SavedState;  // for toggleable object like lights, gates, or moving platforms
+        protected Vector3 SavedPosition;
+        protected Quaternion SavedRotation;
+        protected bool SavedState;  // for toggleable object like lights, gates, or moving platforms
 
         protected List<Renderer> Renderers = new();
         // [SerializeField] [Tooltip("Default/Starting Material")]
@@ -32,6 +32,13 @@ namespace areas_and_respawn
             Initialize();
         }
 
+        public abstract string getInteractionName();
+        
+        public virtual int GetCost()
+        {
+            return 1;
+        }
+        
         protected abstract void Initialize();
 
         public abstract void Interact();
@@ -58,7 +65,7 @@ namespace areas_and_respawn
             }
         }
 
-        private void SetRegularMaterials()
+        protected void SetRegularMaterials()
         {
             foreach (Renderer rend in Renderers)
             {
@@ -71,6 +78,7 @@ namespace areas_and_respawn
         {
             foreach (Renderer rend in Renderers)
             {
+                if (rend is SpriteRenderer) continue;
                 int matLen = rend.materials.Length;
                 Material[] mats = new Material[matLen];
                 Array.Fill(mats, selectedMaterial);
@@ -82,6 +90,7 @@ namespace areas_and_respawn
         {
             foreach (Renderer rend in Renderers)
             {
+                if (rend is SpriteRenderer) continue;
                 rend.enabled = isEnabled;
             }
         }

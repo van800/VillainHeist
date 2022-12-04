@@ -34,6 +34,16 @@ namespace AbilitySystem
             grabbableAS1 = GetComponent<AudioSource>();
         }
 
+        public override string getInteractionName()
+        {
+            return "Pickup";
+        }
+        
+        public override int GetCost()
+        {
+            return 0;
+        }
+        
         protected override void Initialize()
         {
             // rend = GetComponent<MeshRenderer>();

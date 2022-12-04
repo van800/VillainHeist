@@ -9,10 +9,10 @@ public class GameUI : MonoBehaviour
 {
     
     private UIDocument _uiDocument;
-
-    public int current = 0;
-    public int total = 10;
-
+    [SerializeField]
+    private bool showUI = true;
+    
+    
     public enum Modals
     {
         Welcome,
@@ -46,6 +46,7 @@ public class GameUI : MonoBehaviour
         _uiDocument = GetComponent<UIDocument>();
         HideAllModals();
         HideAllAbilityPrompts();
+        if (!showUI) HideBattery();
 
         SetBattery(6, 6);
         // ShowAbilityPrompts(AbilityPrompts.Freeze);
@@ -65,6 +66,18 @@ public class GameUI : MonoBehaviour
         // SetTimer((int)Time.realtimeSinceStartup);
     }
 
+    public void HideBattery()
+    {
+        _uiDocument.rootVisualElement.Q<VisualElement>("BatteryFace").AddToClassList("hidden");
+        _uiDocument.rootVisualElement.Q<VisualElement>("BatteryBGCont").AddToClassList("hidden");
+    }
+    
+    public void ShowBattery()
+    {
+        _uiDocument.rootVisualElement.Q<VisualElement>("BatteryFace").RemoveFromClassList("hidden");
+        _uiDocument.rootVisualElement.Q<VisualElement>("BatteryBGCont").RemoveFromClassList("hidden");
+    }
+    
     public void HideTimer()
     {
         _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").AddToClassList("hidden");
@@ -79,8 +92,8 @@ public class GameUI : MonoBehaviour
     public void SetTimer(int timeInSeconds)
     {
         _uiDocument.rootVisualElement.Q<Label>("Timer").text = FormatTime(timeInSeconds);
-        // _uiDocument.rootVisualElement.Q<Label>("Timer").RemoveFromClassList("hidden");
-        // _uiDocument.rootVisualElement.Q<Label>("Timer").AddToClassList("show");
+        _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").RemoveFromClassList("hidden");
+        _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").AddToClassList("show");
     }
     
     private string ModalToId(Modals modal)
@@ -107,15 +120,16 @@ public class GameUI : MonoBehaviour
         };
     }
 
-    private void HideAllAbilityPrompts()
+    public void HideAllAbilityPrompts()
     {
         foreach (var abilityPrompt in ALL_ABILITY_PROMPTS)
         {
             _uiDocument.rootVisualElement.Q<VisualElement>(AbilityToId(abilityPrompt)).AddToClassList("hidden");
+            _uiDocument.rootVisualElement.Q<VisualElement>(AbilityToId(abilityPrompt)).RemoveFromClassList("show");
         }
     }
     
-    private void ShowAbilityPrompts(AbilityPrompts targetPrompt)
+    public void ShowAbilityPrompts(AbilityPrompts targetPrompt)
     {
         foreach (var abilityPrompt in ALL_ABILITY_PROMPTS)
         {
@@ -132,7 +146,7 @@ public class GameUI : MonoBehaviour
         }
     }
     
-    private void HideAllModals()
+    public void HideAllModals()
     {
         foreach (var modal in ALL_MODALS)
         {
@@ -142,7 +156,12 @@ public class GameUI : MonoBehaviour
 
     public void ShowCutsceneText()
     {
-        ShowForSeconds("CutsceneText", 5);
+        _uiDocument.rootVisualElement.Q<VisualElement>("CutsceneText").RemoveFromClassList("hidden");
+    }
+    
+    public void HideCutsceneText()
+    {
+        _uiDocument.rootVisualElement.Q<VisualElement>("CutsceneText").AddToClassList("hidden");
     }
 
     private void ShowForSeconds(string id, float time)

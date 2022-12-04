@@ -71,6 +71,11 @@ public class WallMoveable : Interactable
         transform.position = posn;
     }
 
+    public override string getInteractionName()
+    {
+        return "MoveWall";
+    }
+
     protected override void Initialize()
     {
         thisMuch = 3;
@@ -98,5 +103,13 @@ public class WallMoveable : Interactable
     {
         atTopLimit = SavedState;
         transform.position = SavedPosition;
+    }
+
+    public override void InRange()
+    {
+        if (active)
+        {
+            base.InRange();
+        }
     }
 }

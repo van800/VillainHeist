@@ -61,5 +61,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d45caabf25bf5b446b8d908a27d11b99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  current: 6
-  total: 6
+  showUI: 1

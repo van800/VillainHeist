@@ -25,6 +25,14 @@
     margin-right: -15px;
 }
 
+#BatteryFace.hidden {
+    display: none;
+}
+
+#BatteryBGCont.hidden {
+    display: none;
+}
+
 #TimerContainer {
     translate: 0 -214px;
     scale: 0.75;
@@ -75,6 +83,9 @@
     display: none;
 }
 
+
+
+
 .lower-left {
     transition-property: translate, scale;
     transition-duration: 0.25s;
@@ -83,4 +94,9 @@
 .lower-left.hidden {
     translate: -700px 0;
     scale: 0;
+}
+
+#CutsceneText {
+    transition-property: translate, scale;
+    transition-duration: 1s;
 }

@@ -11,22 +11,35 @@ namespace areas_and_respawn
     {
         private RoomController[] _subRooms;
 
-        public CheckPointController spawnPoint;
+        public CheckPointController tdSpawnPoint;
+        
+        public CheckPointController fpSpawnPoint;
 
         private void Start()
         {
             _subRooms = GetComponentsInChildren<RoomController>();
-            print(_subRooms.Length);
+            PlayerController player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
             foreach (RoomController subRoom in _subRooms) // call on sub areas
             {
                 subRoom.SetUp();
                 subRoom.Save();
-                if (subRoom.CompareTag($"Start Room"))
+                if (player.isFirstPov)
                 {
-                    PlayerController playerController = FindObjectOfType<PlayerController>();
-                    playerController.SetRoom(subRoom);
-                    playerController.checkpoint = spawnPoint;
-                    FindObjectOfType<PlayerController>().transform.position = spawnPoint.transform.position;
+                    if (subRoom.CompareTag($"End Room"))
+                    {
+                        player.SetRoom(subRoom);
+                        player.checkpoint = fpSpawnPoint;
+                        player.transform.position = fpSpawnPoint.transform.position;
+                    }
+                }
+                else
+                {
+                    if (subRoom.CompareTag($"Start Room"))
+                    {
+                        player.SetRoom(subRoom);
+                        player.checkpoint = tdSpawnPoint;
+                        player.transform.position = tdSpawnPoint.transform.position;
+                    }
                 }
             }
         }

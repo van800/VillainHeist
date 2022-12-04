@@ -200,6 +200,11 @@ namespace MovingPlatformsCode
             // NOTHING
         }
 
+        public override string getInteractionName()
+        {
+            return "Freeze";
+        }
+        
         public override void Interact()
         {
             ToggleFreeze();

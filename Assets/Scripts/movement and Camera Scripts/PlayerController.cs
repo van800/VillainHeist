@@ -7,8 +7,10 @@ using UnityEngine;
 namespace movement_and_Camera_Scripts
 {
     public class PlayerController : MonoBehaviour
-    { 
+    {
         private CharacterController _characterController;
+
+        private RoomController _currentRoom;
 
         private CameraController _cameraController;
         [SerializeField][Tooltip("Is First Person Mode")]
@@ -26,6 +28,12 @@ namespace movement_and_Camera_Scripts
         private bool _hasJumped;
         private const float GroundCastDist = 0.15f;
 
+        public int maxBattery = 6;
+        public int currentBattery = 6;
+
+        private GameUI _gameUI;
+        
+        
         public GrabbableItem pickedUpItem;
         [Tooltip("Distance to interact with items")]
         public float interactDistance = 1f;
@@ -35,14 +43,16 @@ namespace movement_and_Camera_Scripts
         private bool canMove;
         
         [SerializeField] private AudioClip tasedSound;
+        [SerializeField] private AudioClip pickupSound;
         [SerializeField] private AudioClip topDownMusic;
         [SerializeField] private AudioClip firstPersonMusic;
         
-        // AS1 is for Taze sound
+        // AS1 is for sound Effects
         private AudioSource playerAS1;
         
         //AS2 is for Music
         private AudioSource playerAS2;
+
 
         private Animator _animator;
         
@@ -51,12 +61,17 @@ namespace movement_and_Camera_Scripts
         private Transform playerTransform;
         private Vector3 position;
 
+        private GameObject listenerChild;
+
 
         // Start is called before the first frame update
         void Start()
         {
+            isFirstPov = GameState.Instance.isInFirstPerson;
+
             _characterController = GetComponent<CharacterController>();
             _cameraController = FindObjectOfType<CameraController>();
+            _gameUI = FindObjectOfType<GameUI>();
             canMove = true;
             playerAS1 = GetComponents<AudioSource>()[0];
             playerAS1.volume = 1f;
@@ -70,6 +85,8 @@ namespace movement_and_Camera_Scripts
 
             SetMusic(isFirstPov);
             playerAS2.Play();
+
+            listenerChild = GameObject.Find("Listener");
         }
         
 
@@ -97,6 +114,8 @@ namespace movement_and_Camera_Scripts
             if (isFirstPov)
             {
                 Transform cameraTransform = _cameraController.GetCameraTransform();
+
+                listenerChild.transform.rotation = transform.rotation;
 
                 if (canMove)
                 {
@@ -127,6 +146,9 @@ namespace movement_and_Camera_Scripts
                 // Position movement
                 movement = ((Vector3.forward * z) + (Vector3.right * x)).normalized;
                 
+                
+                listenerChild.transform.rotation = new Quaternion(0.707106829f,0,0,0.707106829f);
+                
 
                 if (movement.magnitude > 0)
                 {
@@ -152,19 +174,36 @@ namespace movement_and_Camera_Scripts
             
             // Interact with objects
             Interactable interactable = GetNearestInteractableObj();
-            // if (Physics.Raycast(transform.position + Vector3.up / 2, transform.forward,
-            //         out RaycastHit hit, interactDistance))
-            // interactable = hit.transform.GetComponentInChildren<Interactable>();
             if (interactable is not null)
             {
                 interactable.InRange();
+                GameUI.AbilityPrompts? prompt = interactable.getInteractionName() switch
+                {
+                    "Freeze" => GameUI.AbilityPrompts.Freeze,
+                    "Pickup" => GameUI.AbilityPrompts.Pickup,
+                    "MoveWall" => GameUI.AbilityPrompts.MoveWall,
+                    "Light" => GameUI.AbilityPrompts.Light,
+                    _ => null
+                };
+                if (prompt.HasValue)
+                {
+                    _gameUI.ShowAbilityPrompts(prompt.Value);
+                }
+            }
+            else
+            {
+                _gameUI.HideAllAbilityPrompts();
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (interactable is not null)
                 {
-                    print(interactable.name);
-                    interactable.Interact();
+                    if (interactable.GetCost() <= currentBattery)
+                    {
+                        interactable.Interact();
+                        currentBattery -= interactable.GetCost();
+                        _gameUI.SetBattery(currentBattery, maxBattery);
+                    }
                 }
                 else if (pickedUpItem is not null)
                 {
@@ -196,12 +235,21 @@ namespace movement_and_Camera_Scripts
         // Set the player and camera's room
         public void SetRoom(RoomController room)
         {
+            _currentRoom = room;
             _cameraController.SetRoom(room); 
+        }
+
+        public void RechargeBattery()
+        {
+            currentBattery = maxBattery;
+            _gameUI.SetBattery(currentBattery, maxBattery);
         }
         
         // Set the player's checkpoint
         public void SetCheckpoint(CheckPointController cp)
         {
+            RechargeBattery();
+            checkpoint.DeselectCheckpoint();
             checkpoint = cp;
         }
         
@@ -209,8 +257,10 @@ namespace movement_and_Camera_Scripts
         public void ToPov(bool toFirst = true)
         {
             isFirstPov = toFirst;
+            GameState.Instance.isInFirstPerson = toFirst;
             _cameraController.SetPerspective(toFirst);
             SetMusic(isFirstPov);
+            EscapeTimer.Instance.startTimer();
         }
         
         // Hide mouse
@@ -243,6 +293,12 @@ namespace movement_and_Camera_Scripts
         private void PlayTaseSound()
         {
             playerAS1.clip = tasedSound;
+            playerAS1.Play();
+        }
+        
+        public void PlayPickupSound()
+        {
+            playerAS1.clip = pickupSound;
             playerAS1.Play();
         }
 

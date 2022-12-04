@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AbilitySystem;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace areas_and_respawn
@@ -21,16 +22,28 @@ namespace areas_and_respawn
         
         private bool _displaying;
 
+        public override int GetCost()
+        {
+            return 0;
+        }
+        
+        public override string getInteractionName()
+        {
+            return "";
+        }
+        
         protected override void Initialize()
         {
             foreach (PlateController trigger in triggers)
             {
                 trigger.AddDoor(this);
+                _triggerStates.Add(trigger, false);
             }
         }
 
         public void TryUnlock()
         {
+            
             bool checkTriggers = true;
             foreach (PlateController trigger in triggers)
             {
@@ -83,5 +96,7 @@ namespace areas_and_respawn
         {
             _displaying = false;
         }
+
+     
     }
 }

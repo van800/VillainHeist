@@ -3,6 +3,8 @@ using System.Linq;
 using AbilitySystem;
 using areas_and_respawn;
 using Unity.Mathematics;
+using UnityEditor;
+using UnityEditor.TerrainTools;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
@@ -21,22 +23,43 @@ namespace movement_and_Camera_Scripts
         private bool _moving;
         private GameObject player;
         private PlayerController playerController;
+        // Guard AS1 is for idle sound
+        private AudioSource guardAS1;
+        // Guard AS2 is for alert sound
+        private AudioSource guardAS2;
         
         [SerializeField]
         private Animator _animator;
         
         [SerializeField] private float speed;
-        [SerializeField] private float viewAngle;
-        [SerializeField] private float range;
+        public float viewAngle;
+        public float range;
         [SerializeField] private float pauseTime;
-        [SerializeField] [Tooltip("If true guard will freeze for pauseTime Seconds" +
-                                  "at each point in points[], if False, guard will pause only at the ends")] 
+
+        [SerializeField]
+        [Tooltip("If true guard will freeze for pauseTime Seconds" +
+                 "at each point in points[], if False, guard will pause only at the ends")]
+        
         private bool pauseOnAll;
         [Header("Freezing")]
         private bool isFrozen = false;
+        
+        [SerializeField]
+        private AudioClip alertSound;
 
         // Guard can taze player if true. Set to false after tazing player, then true after a cooldown.
         private bool canTaze;
+
+        private bool canAlert;
+
+        [SerializeField] private GameObject fovPrefab;
+
+        private GameObject _fov;
+        
+        public override string getInteractionName()
+        {
+            return "Freeze";
+        }
         
         // Start is called before the first frame update
         void Start()
@@ -53,10 +76,17 @@ namespace movement_and_Camera_Scripts
                 _prev = _vertices[0];
                 _moving = true;
                 Rotate();
+
+                canAlert = true;
             }
             
             player = GameObject.FindWithTag("Player");
             playerController = player.GetComponent<PlayerController>();
+
+            guardAS1 = GetComponents<AudioSource>()[0];
+            guardAS2 = GetComponents<AudioSource>()[1];
+
+            _fov = Instantiate(fovPrefab, transform);
         }
 
         // Update is called once per frame
@@ -66,59 +96,58 @@ namespace movement_and_Camera_Scripts
             {
                 Move();
             }
-            AttackPlayer();
         }
         
-        private void AttackPlayer()
+        public void AttackPlayer()
         {
-            Vector3 toTarget = player.transform.position - transform.position;
-            if (Vector3.Angle(transform.forward, toTarget) <= viewAngle && !isFrozen)
+            SetRegularMaterials();
+            
+            Transform t = transform;
+
+            Vector3 toTarget = player.transform.position - t.position;
+            
+            _moving = false;
+
+            _animator.SetTrigger("Alert");
+            
+            // Guard behavior when player is in top down
+            if (!playerController.isFirstPov)
             {
-                // Guard behavior when player is in top down
-                if (playerController.isFirstPov == false)
+                if (canAlert)
                 {
                     topDownAttack(toTarget);
                 }
-
-                // Guard behavior when player is in first person
-                else
-                {
-                    firstPersonAttack(toTarget);
-                }
+            }
+            // Guard behavior when player is in first person
+            else if (canTaze)
+            {
+                firstPersonAttack(toTarget);
             }
         }
 
         private void topDownAttack(Vector3 toTarget)
         {
-            Debug.DrawRay(transform.position + Vector3.up, toTarget.normalized * range, Color.green);
-            if (Physics.Raycast(transform.position + Vector3.up, toTarget, out RaycastHit hit, range))
-            {
-                if (hit.transform == player.transform)
-                {
-                    _animator.SetTrigger("Alert");
-                    Debug.Log("HIT");
-                    playerController.Respawn();
-                }
-            }
+            PlayAlertSound();
+            Invoke(nameof(RespawnPlayer), 1f);
+            Invoke(nameof(StartMoving), .9f);
         }
+        
         
         private void firstPersonAttack(Vector3 toTarget)
         {
-            Debug.DrawRay(transform.position + Vector3.up, toTarget.normalized * range, Color.green);
-            if (Physics.Raycast(transform.position + Vector3.up, toTarget, out RaycastHit hit, range))
-            {
-                _animator.SetTrigger("Alert");
-                if (hit.transform == player.transform)
-                {
-                    Debug.Log("HIT");
-                    playerController.Tased();
-                    canTaze = false;
-                    Invoke("EnableTaze", 5f);
-                }
-            }
+            playerController.Tased();
+            canTaze = false;
+            Invoke(nameof(StartMoving), 3f);
+            Invoke(nameof(EnableAttack), 5f);
         }
 
-        private void EnableTaze()
+        private void RespawnPlayer()
+        {
+            playerController.Respawn();
+            Unfreeze();
+        }
+
+        private void EnableAttack()
         {
             canTaze = true;
         }
@@ -201,15 +230,27 @@ namespace movement_and_Camera_Scripts
             isFrozen = !isFrozen;
             if (isFrozen)
             {
-                _animator.SetBool("Sleeping", true);
-                CancelInvoke(nameof(StartMoving));
-                _moving = false;
+               Freeze();
             }
             else
             {
-                _animator.SetBool("Sleeping", false);
-                _moving = true;
+                Unfreeze();
             }
+        }
+
+        public void Freeze()
+        {
+            isFrozen = true;
+            _animator.SetBool("Sleeping", true);
+            CancelInvoke(nameof(StartMoving));
+            _moving = false;
+        }
+
+        public void Unfreeze()
+        {
+            isFrozen = false;
+            _animator.SetBool("Sleeping", false);
+            _moving = true;
         }
 
         protected override void Initialize()
@@ -238,6 +279,19 @@ namespace movement_and_Camera_Scripts
                 isFrozen = false;
                 ToggleFreeze();
             }
+        }
+
+        private void PlayAlertSound()
+        {
+            canAlert = false;
+            guardAS2.clip = alertSound;
+            guardAS2.Play();
+            Invoke("EnableCanAlert", 3f);
+        }
+        
+        private void EnableCanAlert()
+        {
+            canAlert = true;
         }
     }
 }

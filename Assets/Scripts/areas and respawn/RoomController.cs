@@ -15,7 +15,7 @@ namespace areas_and_respawn
         private BoxCollider _boundary;
 
         private BoxCollider _cameraBoundary;
-
+        
         public void SetUp()
         {
             _boundary = GetComponent<BoxCollider>();
@@ -33,13 +33,8 @@ namespace areas_and_respawn
                 {
                     Interactable interactable = t.gameObject.GetComponentInChildren<Interactable>();
                     if (interactable is not null){
-                        print("YES" + interactable.name);
                         interactable.SetUp();
                         _intractables.Add(interactable);
-                    }
-                    else
-                    {
-                        print("NO" + t.name);
                     }
                 }
             }

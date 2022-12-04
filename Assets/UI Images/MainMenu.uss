@@ -1,0 +1,19 @@
+.quit:hover {
+    background-image: url('project://database/Assets/UI%20Images/home.quit.selected.png?fileID=2800000&guid=d610fc8c72ccffd4aaf96daf01d8361f&type=3#home.quit.selected');
+}
+
+.quit {
+    background-image: url('project://database/Assets/UI%20Images/home.quit.png?fileID=2800000&guid=eb66e14c26629fd4fb9653b5317f6dee&type=3#home.quit');
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.button {
+    transition-property: scale, translate;
+    transition-duration: 0.25s;
+    transform-origin: left;
+}
+
+.button:hover {
+    scale: 1.1 1.1;
+    /*translate: 10px 0;*/
+}

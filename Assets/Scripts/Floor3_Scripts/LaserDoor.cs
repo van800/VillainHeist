@@ -13,6 +13,8 @@ public class LaserDoor : MonoBehaviour
     private Collider closedCollider;
     private PlayerController player;
 
+    private AudioSource LaserDoorAS1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,8 @@ public class LaserDoor : MonoBehaviour
             StartCoroutine(changeInFirstPerson());
         }
         setOpen(isOpen);
+
+        LaserDoorAS1 = gameObject.GetComponent<AudioSource>();
     }
 
     private IEnumerator changeInFirstPerson()
@@ -53,5 +57,10 @@ public class LaserDoor : MonoBehaviour
     public bool open()
     {
         return isOpen;
+    }
+
+    private void PlayOpenSound()
+    {
+        LaserDoorAS1.Play();
     }
 }

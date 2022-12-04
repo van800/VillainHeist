@@ -12,13 +12,14 @@ namespace movement_and_Camera_Scripts
         private CinemachineVirtualCamera _tdCam;
 
         private Camera _mainCamera;
+        [SerializeField] private Camera uiCamera;
         private CameraMode _cameraMode;
         private CinemachineConfiner _roomBoundary;
 
         // Start is called before the first frame update
         void Start()
         {
-            _mainCamera = GetComponentInChildren<Camera>();
+            _mainCamera = Camera.main;
             CinemachineVirtualCamera[] cmCameras = FindObjectsOfType<CinemachineVirtualCamera>();
             _povCam = cmCameras[1];
             _tdCam = cmCameras[0];
@@ -35,6 +36,7 @@ namespace movement_and_Camera_Scripts
         public void SetPerspective(bool isFirstPov)
         {
             _mainCamera.orthographic = !isFirstPov;
+            uiCamera.orthographic = !isFirstPov;
             if (isFirstPov)
             {
                 _povCam.Priority = 1;

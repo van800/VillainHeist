@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Random = UnityEngine.Random;
 
 public class GameUI : MonoBehaviour
 {
@@ -47,14 +48,41 @@ public class GameUI : MonoBehaviour
         HideAllAbilityPrompts();
 
         SetBattery(6, 6);
+        // ShowAbilityPrompts(AbilityPrompts.Freeze);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     // _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").ToggleInClassList("hidden");
+        //     // _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").ToggleInClassList("show");
+        //     int modal = (int)Math.Round(Random.value * 3);
+        //     ShowAbilityPrompts((AbilityPrompts) modal);
+        // }
+        //
+        // SetTimer((int)Time.realtimeSinceStartup);
     }
 
+    public void HideTimer()
+    {
+        _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").AddToClassList("hidden");
+        _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").RemoveFromClassList("show");
+    }
+
+    private string FormatTime(int timeInSeconds)
+    {
+        return $"{timeInSeconds / 60}:{(timeInSeconds % 60).ToString().PadLeft(2, '0')}";
+    }
+    
+    public void SetTimer(int timeInSeconds)
+    {
+        _uiDocument.rootVisualElement.Q<Label>("Timer").text = FormatTime(timeInSeconds);
+        // _uiDocument.rootVisualElement.Q<Label>("Timer").RemoveFromClassList("hidden");
+        // _uiDocument.rootVisualElement.Q<Label>("Timer").AddToClassList("show");
+    }
+    
     private string ModalToId(Modals modal)
     {
         return modal switch
@@ -94,10 +122,12 @@ public class GameUI : MonoBehaviour
             if (targetPrompt == abilityPrompt)
             {
                 _uiDocument.rootVisualElement.Q<VisualElement>(AbilityToId(abilityPrompt)).RemoveFromClassList("hidden");
+                _uiDocument.rootVisualElement.Q<VisualElement>(AbilityToId(abilityPrompt)).AddToClassList("show");
             }
             else
             {
                 _uiDocument.rootVisualElement.Q<VisualElement>(AbilityToId(abilityPrompt)).AddToClassList("hidden");
+                _uiDocument.rootVisualElement.Q<VisualElement>(AbilityToId(abilityPrompt)).RemoveFromClassList("show");
             }
         }
     }
@@ -112,7 +142,7 @@ public class GameUI : MonoBehaviour
 
     public void ShowCutsceneText()
     {
-        ShowForSeconds("CutsceneText", 2);
+        ShowForSeconds("CutsceneText", 5);
     }
 
     private void ShowForSeconds(string id, float time)
@@ -137,17 +167,19 @@ public class GameUI : MonoBehaviour
         _uiDocument.rootVisualElement.Q<VisualElement>(ModalToId(modal)).RemoveFromClassList("hidden");
     }
         
-    public void SetModal(Modals targetModal)
+    public void ShowModal(Modals targetModal)
     {
         foreach (var modal in ALL_MODALS)
         {
             if (modal == targetModal)
             {
                 _uiDocument.rootVisualElement.Q<VisualElement>(ModalToId(modal)).RemoveFromClassList("hidden");
+                _uiDocument.rootVisualElement.Q<VisualElement>(ModalToId(modal)).AddToClassList("show");
             }
             else
             {
                 _uiDocument.rootVisualElement.Q<VisualElement>(ModalToId(modal)).AddToClassList("hidden");
+                _uiDocument.rootVisualElement.Q<VisualElement>(ModalToId(modal)).RemoveFromClassList("show");
             }
         }
     }

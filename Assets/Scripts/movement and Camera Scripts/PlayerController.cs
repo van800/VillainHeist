@@ -57,6 +57,8 @@ namespace movement_and_Camera_Scripts
         // Start is called before the first frame update
         void Start()
         {
+            isFirstPov = GameState.Instance.isInFirstPerson;
+
             _characterController = GetComponent<CharacterController>();
             _cameraController = FindObjectOfType<CameraController>();
             canMove = true;

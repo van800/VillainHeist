@@ -43,6 +43,7 @@ namespace areas_and_respawn
         public virtual void InRange()
         {
             SetSelectedMaterials();
+            CancelInvoke(nameof(OutOfRange));
             Invoke(nameof(OutOfRange), 1f);
         }
 
@@ -57,7 +58,7 @@ namespace areas_and_respawn
             }
         }
 
-        protected void SetRegularMaterials()
+        private void SetRegularMaterials()
         {
             foreach (Renderer rend in Renderers)
             {
@@ -66,7 +67,7 @@ namespace areas_and_respawn
             }
         }
 
-        protected void SetSelectedMaterials()
+        private void SetSelectedMaterials()
         {
             foreach (Renderer rend in Renderers)
             {

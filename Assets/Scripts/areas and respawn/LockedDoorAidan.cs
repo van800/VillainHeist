@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using AbilitySystem;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace areas_and_respawn
@@ -15,20 +17,24 @@ namespace areas_and_respawn
 
         [SerializeField] [Tooltip("Plates that need to be active to unlock.")] 
         private PlateController[] triggers;
+
+        private Dictionary<PlateController, bool> _triggerStates = new();
         
         private bool _displaying;
+
 
         protected override void Initialize()
         {
             foreach (PlateController trigger in triggers)
             {
                 trigger.AddDoor(this);
-                trigger.SetUp();
+                _triggerStates.Add(trigger, false);
             }
         }
 
         public void TryUnlock()
         {
+            
             bool checkTriggers = true;
             foreach (PlateController trigger in triggers)
             {
@@ -47,6 +53,10 @@ namespace areas_and_respawn
         public override void Save()
         {
             SavedState = _isLocked;
+            foreach (PlateController plate in triggers)
+            {
+                _triggerStates[plate] = plate.IsTriggered();
+            }
         }
 
         public override void Reset()
@@ -55,6 +65,10 @@ namespace areas_and_respawn
             foreach (DoorController door in doors)
             {
                 door.Lock(_isLocked);
+            }
+            foreach (PlateController plate in triggers)
+            {
+                plate.SetTriggered(_triggerStates[plate]);
             }
         }
 
@@ -73,5 +87,7 @@ namespace areas_and_respawn
         {
             _displaying = false;
         }
+
+     
     }
 }

@@ -7,8 +7,10 @@ using UnityEngine;
 namespace movement_and_Camera_Scripts
 {
     public class PlayerController : MonoBehaviour
-    { 
+    {
         private CharacterController _characterController;
+
+        private RoomController _currentRoom;
 
         private CameraController _cameraController;
         [SerializeField][Tooltip("Is First Person Mode")]
@@ -35,14 +37,16 @@ namespace movement_and_Camera_Scripts
         private bool canMove;
         
         [SerializeField] private AudioClip tasedSound;
+        [SerializeField] private AudioClip pickupSound;
         [SerializeField] private AudioClip topDownMusic;
         [SerializeField] private AudioClip firstPersonMusic;
         
-        // AS1 is for Taze sound
+        // AS1 is for sound Effects
         private AudioSource playerAS1;
         
         //AS2 is for Music
         private AudioSource playerAS2;
+
 
         private Animator _animator;
         
@@ -50,6 +54,8 @@ namespace movement_and_Camera_Scripts
         private ParticleSystem tazeFlash;
         private Transform playerTransform;
         private Vector3 position;
+
+        private GameObject listenerChild;
 
 
         // Start is called before the first frame update
@@ -72,6 +78,8 @@ namespace movement_and_Camera_Scripts
 
             SetMusic(isFirstPov);
             playerAS2.Play();
+
+            listenerChild = GameObject.Find("Listener");
         }
         
 
@@ -99,6 +107,8 @@ namespace movement_and_Camera_Scripts
             if (isFirstPov)
             {
                 Transform cameraTransform = _cameraController.GetCameraTransform();
+
+                listenerChild.transform.rotation = transform.rotation;
 
                 if (canMove)
                 {
@@ -129,6 +139,9 @@ namespace movement_and_Camera_Scripts
                 // Position movement
                 movement = ((Vector3.forward * z) + (Vector3.right * x)).normalized;
                 
+                
+                listenerChild.transform.rotation = new Quaternion(0.707106829f,0,0,0.707106829f);
+                
 
                 if (movement.magnitude > 0)
                 {
@@ -153,17 +166,14 @@ namespace movement_and_Camera_Scripts
             
             
             // Interact with objects
-            Interactable interactable = null;
-            if (Physics.Raycast(transform.position + Vector3.up / 2, transform.forward,
-                    out RaycastHit hit, interactDistance))
+            Interactable interactable = GetNearestInteractableObj();
+            // if (Physics.Raycast(transform.position + Vector3.up / 2, transform.forward,
+            //         out RaycastHit hit, interactDistance))
+            // interactable = hit.transform.GetComponentInChildren<Interactable>();
+            if (interactable is not null)
             {
-                interactable = hit.transform.GetComponentInChildren<Interactable>();
-                if (interactable is not null)
-                {
-                    interactable.InRange();
-                }
+                interactable.InRange();
             }
-
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (interactable is not null)
@@ -201,12 +211,14 @@ namespace movement_and_Camera_Scripts
         // Set the player and camera's room
         public void SetRoom(RoomController room)
         {
+            _currentRoom = room;
             _cameraController.SetRoom(room); 
         }
         
         // Set the player's checkpoint
         public void SetCheckpoint(CheckPointController cp)
         {
+            checkpoint.DeselectCheckpoint();
             checkpoint = cp;
         }
         
@@ -252,11 +264,43 @@ namespace movement_and_Camera_Scripts
             playerAS1.clip = tasedSound;
             playerAS1.Play();
         }
+        
+        public void PlayPickupSound()
+        {
+            playerAS1.clip = pickupSound;
+            playerAS1.Play();
+        }
 
         private void SetMusic(bool firstPerson)
         {
             playerAS2.clip = firstPerson ? firstPersonMusic : topDownMusic;
             playerAS2.Play();
+        }
+        
+        private Interactable GetNearestInteractableObj()
+        {
+            Vector3 playerPos = transform.position;
+            Collider[] nearestColliders = Physics.OverlapSphere(playerPos, interactDistance);
+            Collider closest = null;
+            foreach (Collider c in nearestColliders)
+            {
+                //Debug.Log("c = " + c.name);
+                if (closest is null && c.CompareTag("Interactable"))
+                {
+                    closest = c;
+                }
+                else if (c.CompareTag("Interactable") && 
+                         (c.transform.position - playerPos).magnitude < 
+                         (closest.transform.position - playerPos).magnitude)
+                {
+                    closest = c;
+                }
+            }
+            if (closest is not null)
+            {
+                return closest.GetComponentInChildren<Interactable>();
+            }
+            return null;
         }
     }
 }

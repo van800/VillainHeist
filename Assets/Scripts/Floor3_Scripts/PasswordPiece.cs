@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using movement_and_Camera_Scripts;
 using UnityEngine;
 
 public class PasswordPiece : MonoBehaviour
@@ -34,6 +35,9 @@ public class PasswordPiece : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             piecesFound.Add(pieceNum);
+            GameObject villain = GameObject.Find("villain-prime");
+            PlayerController pc = villain.GetComponent<PlayerController>();
+            pc.PlayPickupSound();
             Debug.Log("Found " + pieceNum + " star piece");
             Destroy(gameObject);
         }

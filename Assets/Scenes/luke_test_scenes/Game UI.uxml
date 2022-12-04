@@ -1,0 +1,35 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scenes/luke_test_scenes/GameUI.uss?fileID=7433441132597879392&amp;guid=c24bfd0781f9aa241b7e1238751f07d8&amp;type=3#GameUI" />
+    <ui:VisualElement name="BatteryFace" style="background-image: url(&apos;project://database/Assets/UI%20Images/battery.face.png?fileID=2800000&amp;guid=91039be0f5f6ddc4fa9b64de98a9b478&amp;type=3#battery.face&apos;); width: 99px; height: 129px; position: absolute; top: 26px; left: 20px;" />
+    <ui:VisualElement name="BatteryBGCont" style="position: absolute; height: 71px; width: 230px; top: 51px; left: 126px; justify-content: flex-end; flex-direction: row-reverse; flex-shrink: 0;">
+        <ui:VisualElement name="BGEnd" style="background-image: url(&apos;project://database/Assets/UI%20Images/battery.bg.end.png?fileID=2800000&amp;guid=65a1e60b4bf0d2e44940ad9f62d69fe2&amp;type=3#battery.bg.end&apos;); width: 51px; height: 64px; margin-left: -25px; flex-shrink: 0; flex-direction: column;" />
+        <ui:VisualElement name="BGStart" style="background-image: url(&apos;project://database/Assets/UI%20Images/battery.bg.start.png?fileID=2800000&amp;guid=7303ae973b3e14f459bc4d736c22f68b&amp;type=3#battery.bg.start&apos;); width: auto; height: 64px; justify-content: flex-start; align-items: center; flex-shrink: 0; flex-direction: row;">
+            <ui:VisualElement name="BatteryStart" class="battery-start" style="margin-right: -1px;" />
+            <ui:VisualElement name="BatteryNext" class="battery-next" />
+            <ui:VisualElement name="BatteryNext" style="background-image: url(&apos;project://database/Assets/UI%20Images/battery.next.on.png?fileID=2800000&amp;guid=2912e2516b640d240992e0c4816a6151&amp;type=3#battery.next.on&apos;); width: 71px; height: 62px; margin-left: -30px;" />
+            <ui:VisualElement name="BatteryNext" style="background-image: url(&apos;project://database/Assets/UI%20Images/battery.next.on.png?fileID=2800000&amp;guid=2912e2516b640d240992e0c4816a6151&amp;type=3#battery.next.on&apos;); width: 71px; height: 62px; margin-left: -30px;" />
+            <ui:VisualElement name="BatteryNext" style="background-image: url(&apos;project://database/Assets/UI%20Images/battery.next.off.png?fileID=2800000&amp;guid=0ff850d1d93feec47adb895a39ca96c8&amp;type=3#battery.next.off&apos;); width: 71px; height: 62px; margin-left: -30px; margin-right: -15px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="AbilityTips" style="position: absolute; width: 100%; left: 0; bottom: 0; height: 152px; flex-direction: row; justify-content: center;">
+        <ui:VisualElement name="Freeze" style="background-image: url(&apos;project://database/Assets/UI%20Images/ability.freeze.png?fileID=2800000&amp;guid=d3dafcfc67b0fcd4383bf03c0264c7b9&amp;type=3#ability.freeze&apos;); width: 324px; height: 82.5px;" />
+        <ui:VisualElement name="Light" style="background-image: url(&apos;project://database/Assets/UI%20Images/ability.light.png?fileID=2800000&amp;guid=bb7a6ab017156b94793db893962c37dd&amp;type=3#ability.light&apos;); width: 291.75px; height: 82.5px; visibility: visible; display: none;" />
+        <ui:VisualElement name="MoveWall" style="background-image: url(&apos;project://database/Assets/UI%20Images/ability.move-wall.png?fileID=2800000&amp;guid=a4bb4da5f52f39842832e2f45b74c75b&amp;type=3#ability.move-wall&apos;); width: 399px; height: 82.5px; display: none;" />
+        <ui:VisualElement name="Pickup" style="background-image: url(&apos;project://database/Assets/UI%20Images/ability.pickup.png?fileID=2800000&amp;guid=978d9b7755713c647b460c2e56a2722d&amp;type=3#ability.pickup&apos;); width: 258px; height: 82.5px; display: none;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="LowerLeft" style="position: absolute; width: 100%; left: -2px; bottom: 43px; height: 172px; flex-direction: row; justify-content: flex-start; margin-left: 30px; align-items: flex-end;">
+        <ui:VisualElement name="Checkpoint" style="background-image: url(&apos;project://database/Assets/UI%20Images/tips.checkpoint.png?fileID=2800000&amp;guid=7e10dcdd0783d154ab1ac546477486f7&amp;type=3#tips.checkpoint&apos;); width: 583.5px; height: 138px;" />
+        <ui:VisualElement name="CutsceneText" style="background-image: url(&apos;project://database/Assets/UI%20Images/end.cutscene-intro.png?fileID=2800000&amp;guid=68200f99bf5d1cc4c84e1847ba98c454&amp;type=3#end.cutscene-intro&apos;); width: 423px; height: 138px; display: none;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="ModalContainer" style="height: 100%; width: 100%; justify-content: center; align-items: center; margin-top: -50px;">
+        <ui:VisualElement name="Welcome" style="background-image: url(&apos;project://database/Assets/UI%20Images/tips.welcome.png?fileID=2800000&amp;guid=d60ef07915807894aa790c02aaf32962&amp;type=3#tips.welcome&apos;); width: 1031px; height: 276px; margin-top: 0; display: none;" />
+        <ui:VisualElement name="Controls" style="background-image: url(&apos;project://database/Assets/UI%20Images/tips.controls.png?fileID=2800000&amp;guid=e387299f30ed94641a7d1ebfbf76d246&amp;type=3#tips.controls&apos;); width: 980px; height: 276px; margin-top: 30px; display: none;" />
+        <ui:VisualElement name="TimesUp" style="background-image: url(&apos;project://database/Assets/UI%20Images/end.time-up.png?fileID=2800000&amp;guid=efe65e2402dbb0b44bfbf82af886cf68&amp;type=3#end.time-up&apos;); width: 1031px; height: 446px; display: none;">
+            <ui:VisualElement name="CaughtRetry" style="background-image: url(&apos;project://database/Assets/UI%20Images/end.retry.png?fileID=2800000&amp;guid=277f383c275c7e846a52a12693c96767&amp;type=3#end.retry&apos;); width: 218px; height: 107px; position: absolute; top: 281px; left: 53px;" />
+            <ui:VisualElement name="CaughtQuit" style="background-image: url(&apos;project://database/Assets/UI%20Images/end.quit.png?fileID=2800000&amp;guid=e925d20f5b387c249af8c94c61c7496e&amp;type=3#end.quit&apos;); width: 194px; height: 110px; position: absolute; top: 280px; left: 262px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Escaped" style="background-image: url(&apos;project://database/Assets/UI%20Images/end.escaped.png?fileID=2800000&amp;guid=9fc01e39b75bb8b4380f0323e6f23feb&amp;type=3#end.escaped&apos;); width: 1031px; height: 446px; display: flex;">
+            <ui:VisualElement name="EscapedContinue" style="background-image: url(&apos;project://database/Assets/UI%20Images/end.continue.png?fileID=2800000&amp;guid=b1fae8fe3a21d0b40a8392f004de5b27&amp;type=3#end.continue&apos;); width: 284px; height: 107px; position: absolute; top: 281px; left: 53px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

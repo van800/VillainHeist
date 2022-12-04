@@ -1,3 +1,4 @@
+using System;
 using areas_and_respawn;
 using movement_and_Camera_Scripts;
 using Unity.Mathematics;
@@ -18,11 +19,21 @@ namespace AbilitySystem
         private bool _isPickedUp;
 
         private Rigidbody _rigidbody;
+
+        private AudioSource grabbableAS1;
+
+        [SerializeField] private AudioClip pickupSound;
+        [SerializeField] private AudioClip dropSound;
         
         // public float playerYRot;
         
         // [SerializeField] private Renderer rend;
-        
+
+        private void Start()
+        {
+            grabbableAS1 = GetComponent<AudioSource>();
+        }
+
         protected override void Initialize()
         {
             // rend = GetComponent<MeshRenderer>();
@@ -40,10 +51,12 @@ namespace AbilitySystem
 
         void PickUp()
         {
+            PlayPickup();
             this.transform.position = this._playerController.transform.position + new Vector3(0.0f, 20.0f, 0.0f);
             SetRenderers(false);
             this._isPickedUp = true;
             _rigidbody.isKinematic = true;
+
         }
 
         void PutDown()
@@ -56,6 +69,7 @@ namespace AbilitySystem
                                       new Vector3(0, -position.y + originalY + 0.5f, 0);
             this._isPickedUp = false;
             _rigidbody.isKinematic = false;
+            PlayDrop();
         }
 
         public override void Interact()
@@ -101,6 +115,18 @@ namespace AbilitySystem
                 t.position = SavedPosition;
                 t.rotation = SavedRotation;
             }
+        }
+
+        private void PlayPickup()
+        {
+            grabbableAS1.clip = pickupSound;
+            grabbableAS1.Play();
+        }
+        
+        private void PlayDrop()
+        {
+            grabbableAS1.clip = dropSound;
+            grabbableAS1.Play();
         }
 
         // Update is called once per frame

@@ -1,0 +1,26 @@
+.battery-start {
+    background-image: url('project://database/Assets/UI%20Images/battery.start.on.png?fileID=2800000&guid=17c3bcdc736f307469abf7385d2dad9f&type=3#battery.start.on');
+    width: 71px;
+    height: 62px;
+    margin-left: -3px;
+    margin-right: -1px;
+}
+
+.battery-start.off {
+    background-image: url('project://database/Assets/UI%20Images/battery.start.off.png?fileID=2800000&guid=baee5d963b0c0644eafb3df93f2128b5&type=3#battery.start.off');
+}
+
+.battery-next {
+    background-image: url('project://database/Assets/UI%20Images/battery.next.on.png?fileID=2800000&guid=2912e2516b640d240992e0c4816a6151&type=3#battery.next.on');
+    width: 71px;
+    height: 62px;
+    margin-left: -30px;
+}
+
+.battery-next.off {
+    background-image: url('project://database/Assets/UI%20Images/battery.next.off.png?fileID=2800000&guid=0ff850d1d93feec47adb895a39ca96c8&type=3#battery.next.off');
+}
+
+.battery-next.last {
+    margin-right: -15px;
+}

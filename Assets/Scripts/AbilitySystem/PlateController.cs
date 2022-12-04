@@ -7,8 +7,15 @@ using UnityEngine;
 
 namespace AbilitySystem
 {
-    public class PlateController : Interactable
+    public class PlateController : MonoBehaviour
     {
+        [SerializeField] [Tooltip("Material when pressed.")]
+        private Material pressedMaterial;
+
+        private Renderer _renderer;
+
+        private Material _defaultMaterial;
+        
         [SerializeField] [Tooltip("Block to trigger event when placed.")]
         private GrabbableItem key;
         
@@ -19,9 +26,11 @@ namespace AbilitySystem
 
         private bool _triggered;
 
-        protected override void Initialize()
+        private void Start()
         {
             _triggered = inverted;
+            _renderer = GetComponent<Renderer>();
+            _defaultMaterial = _renderer.material;
         }
 
         private void OnCollisionStay(Collision collision)
@@ -31,17 +40,21 @@ namespace AbilitySystem
                 if (grabbable == key)
                 {
                     _triggered = true ^ inverted;
-                    SetSelectedMaterials();
+                    _renderer.material = pressedMaterial;
                 }
             }
+            
         }
         
         private void OnCollisionExit(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Interactable"))
+            if (collision.transform.TryGetComponent(out GrabbableItem grabbable))
             {
-                _triggered = false ^ inverted;
-                SetRegularMaterials();
+                if (grabbable == key)
+                {
+                    _triggered = false ^ inverted;
+                    _renderer.material = _defaultMaterial;
+                }
             }
         }
 
@@ -64,16 +77,9 @@ namespace AbilitySystem
             return _triggered;
         }
 
-        public override void Interact() {} // No interaction
-
-        public override void Save()
+        public void SetTriggered(bool triggered)
         {
-            SavedState = _triggered;
-        }
-
-        public override void Reset()
-        {
-            _triggered = SavedState;
+            _triggered = triggered;
         }
     }
 }

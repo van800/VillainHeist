@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Schema;
 using areas_and_respawn;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class WallMoveable : Interactable
@@ -13,12 +14,12 @@ public class WallMoveable : Interactable
     [SerializeField]
     private float moveSpeed;
 
-    private string activationKey;
-
     [SerializeField]
     private bool active;
     [SerializeField]
     private GameObject marker;
+
+    private bool moveDummy;
 
     [SerializeField] [Tooltip("Name of Marker")]
     private string markName;
@@ -26,7 +27,7 @@ public class WallMoveable : Interactable
     void Start()
     {
         marker = GameObject.Find(markName);
-    } 
+    }
 
     // Update is called once per frame
     void Update()
@@ -35,7 +36,13 @@ public class WallMoveable : Interactable
         if (!active)
         {
             active = marker.GetComponent<MarkerScript>().canFlip;
-            activationKey = marker.GetComponent<MarkerScript>().keyActivator;
+        }
+        else
+        {
+            if (moveDummy)
+            {
+                WallMove();
+            }
         }
 
     }
@@ -49,7 +56,6 @@ public class WallMoveable : Interactable
             else
             {
                 movingUp = -1;
-
             }
 
         if ((transform.position.y > topLimit && !atTopLimit)
@@ -57,6 +63,7 @@ public class WallMoveable : Interactable
         {
             movingUp = 0;
             atTopLimit = !atTopLimit;
+            moveDummy = false;
         }
 
         Vector3 posn = transform.position;
@@ -77,7 +84,7 @@ public class WallMoveable : Interactable
     {
         if (active)
         {
-            WallMove();
+            moveDummy = true;
         }
     }
     

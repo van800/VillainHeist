@@ -1,5 +1,45 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &746364589830094995
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1054237366480241952}
+  - component: {fileID: 4043584376814087713}
+  m_Layer: 0
+  m_Name: Listener
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1054237366480241952
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746364589830094995}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1830296318727365800}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &4043584376814087713
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746364589830094995}
+  m_Enabled: 1
 --- !u!1 &4617427249543433860
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,7 +114,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8049182945256807300, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000019073486
+      value: 1.8300018
       objectReference: {fileID: 0}
     - target: {fileID: 8049182945256807300, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_LocalPosition.y
@@ -82,7 +122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8049182945256807300, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5
+      value: -3.56
       objectReference: {fileID: 0}
     - target: {fileID: 8049182946041779351, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_BindingMode
@@ -183,6 +223,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8049182946384879466, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
     - {fileID: 8049182946384879471, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
+    - {fileID: 8049182945256807298, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
 --- !u!4 &8455659022200009004 stripped
@@ -355,6 +396,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4cb0e75fd16abd4478eb9d49fdfc4df7, type: 3}
       insertIndex: 1
       addedObject: {fileID: 4084243071551821611}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4cb0e75fd16abd4478eb9d49fdfc4df7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1054237366480241952}
   m_SourcePrefab: {fileID: 100100000, guid: 4cb0e75fd16abd4478eb9d49fdfc4df7, type: 3}
 --- !u!1 &1309795844064771602 stripped
 GameObject:
@@ -610,7 +654,8 @@ MonoBehaviour:
   pickedUpItem: {fileID: 0}
   interactDistance: 1
   checkpoint: {fileID: 0}
-  tasedSound: {fileID: 0}
+  tasedSound: {fileID: 8300000, guid: a6c8e7ef7f6cf47498f81dc9149fc39b, type: 3}
+  pickupSound: {fileID: 8300000, guid: 8e5b1ab7602fff74dbfe0cb870b59717, type: 3}
   topDownMusic: {fileID: 8300000, guid: 604c5a5f0a177034aa48187d9ad7ca10, type: 3}
   firstPersonMusic: {fileID: 8300000, guid: d6e73fa60d78c484fbeede7f614f6e3c, type: 3}
   tazeFlash: {fileID: 3402457473712796712, guid: 6bfe280950bb45c4a8d67f6d2c518f54, type: 3}

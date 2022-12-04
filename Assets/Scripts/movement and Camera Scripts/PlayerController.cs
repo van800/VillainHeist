@@ -7,7 +7,7 @@ using UnityEngine;
 namespace movement_and_Camera_Scripts
 {
     public class PlayerController : MonoBehaviour
-    { 
+    {
         private CharacterController _characterController;
 
         private RoomController _currentRoom;
@@ -37,14 +37,16 @@ namespace movement_and_Camera_Scripts
         private bool canMove;
         
         [SerializeField] private AudioClip tasedSound;
+        [SerializeField] private AudioClip pickupSound;
         [SerializeField] private AudioClip topDownMusic;
         [SerializeField] private AudioClip firstPersonMusic;
         
-        // AS1 is for Taze sound
+        // AS1 is for sound Effects
         private AudioSource playerAS1;
         
         //AS2 is for Music
         private AudioSource playerAS2;
+
 
         private Animator _animator;
         
@@ -52,6 +54,8 @@ namespace movement_and_Camera_Scripts
         private ParticleSystem tazeFlash;
         private Transform playerTransform;
         private Vector3 position;
+
+        private GameObject listenerChild;
 
 
         // Start is called before the first frame update
@@ -74,6 +78,8 @@ namespace movement_and_Camera_Scripts
 
             SetMusic(isFirstPov);
             playerAS2.Play();
+
+            listenerChild = GameObject.Find("Listener");
         }
         
 
@@ -101,6 +107,8 @@ namespace movement_and_Camera_Scripts
             if (isFirstPov)
             {
                 Transform cameraTransform = _cameraController.GetCameraTransform();
+
+                listenerChild.transform.rotation = transform.rotation;
 
                 if (canMove)
                 {
@@ -130,6 +138,9 @@ namespace movement_and_Camera_Scripts
             {
                 // Position movement
                 movement = ((Vector3.forward * z) + (Vector3.right * x)).normalized;
+                
+                
+                listenerChild.transform.rotation = new Quaternion(0.707106829f,0,0,0.707106829f);
                 
 
                 if (movement.magnitude > 0)
@@ -249,6 +260,12 @@ namespace movement_and_Camera_Scripts
         private void PlayTaseSound()
         {
             playerAS1.clip = tasedSound;
+            playerAS1.Play();
+        }
+        
+        public void PlayPickupSound()
+        {
+            playerAS1.clip = pickupSound;
             playerAS1.Play();
         }
 

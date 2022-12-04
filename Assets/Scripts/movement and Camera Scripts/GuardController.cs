@@ -21,6 +21,10 @@ namespace movement_and_Camera_Scripts
         private bool _moving;
         private GameObject player;
         private PlayerController playerController;
+        // Guard AS1 is for idle sound
+        private AudioSource guardAS1;
+        // Guard AS2 is for alert sound
+        private AudioSource guardAS2;
         
         [SerializeField]
         private Animator _animator;
@@ -29,14 +33,24 @@ namespace movement_and_Camera_Scripts
         [SerializeField] private float viewAngle;
         [SerializeField] private float range;
         [SerializeField] private float pauseTime;
-        [SerializeField] [Tooltip("If true guard will freeze for pauseTime Seconds" +
-                                  "at each point in points[], if False, guard will pause only at the ends")] 
+
+        [SerializeField]
+        [Tooltip("If true guard will freeze for pauseTime Seconds" +
+                 "at each point in points[], if False, guard will pause only at the ends")]
+        
         private bool pauseOnAll;
         [Header("Freezing")]
         private bool isFrozen = false;
+        
+        [SerializeField]
+        private AudioClip alertSound;
 
         // Guard can taze player if true. Set to false after tazing player, then true after a cooldown.
         private bool canTaze;
+
+        private bool canAlert;
+        
+        
         
         // Start is called before the first frame update
         void Start()
@@ -53,10 +67,16 @@ namespace movement_and_Camera_Scripts
                 _prev = _vertices[0];
                 _moving = true;
                 Rotate();
+
+                canAlert = true;
+
             }
             
             player = GameObject.FindWithTag("Player");
             playerController = player.GetComponent<PlayerController>();
+
+            guardAS1 = GetComponents<AudioSource>()[0];
+            guardAS2 = GetComponents<AudioSource>()[1];
         }
 
         // Update is called once per frame
@@ -77,6 +97,11 @@ namespace movement_and_Camera_Scripts
                 // Guard behavior when player is in top down
                 if (playerController.isFirstPov == false)
                 {
+                    if (canAlert)
+                    {
+                        PlayAlertSound();
+                    }
+
                     topDownAttack(toTarget);
                 }
 
@@ -101,6 +126,7 @@ namespace movement_and_Camera_Scripts
                 }
             }
         }
+        
         
         private void firstPersonAttack(Vector3 toTarget)
         {
@@ -238,6 +264,19 @@ namespace movement_and_Camera_Scripts
                 isFrozen = false;
                 ToggleFreeze();
             }
+        }
+
+        private void PlayAlertSound()
+        {
+            canAlert = false;
+            guardAS2.clip = alertSound;
+            guardAS2.Play();
+            Invoke("EnableCanAlert", 3f);
+        }
+        
+        private void EnableCanAlert()
+        {
+            canAlert = true;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace areas_and_respawn
         private AreaController _area;
 
         private bool _isSpawn;
-
+        
         private bool _hasRender;
 
         private Renderer _rend;
@@ -25,6 +25,7 @@ namespace areas_and_respawn
         
         [SerializeField] private Material closedCheckpoint;
         
+        private AudioSource checkPointAS;
 
         // Start is called before the first frame update
         void Start()
@@ -54,6 +55,7 @@ namespace areas_and_respawn
                     _room = GameObject.FindWithTag("Start Room").GetComponent<RoomController>();
                 }
             }
+            checkPointAS = GetComponent<AudioSource>();
         }
 
         public void Respawn(PlayerController player)
@@ -77,6 +79,7 @@ namespace areas_and_respawn
                 PlayerController player = other.gameObject.GetComponent<PlayerController>();
                 if (player.checkpoint != this && !player.isFirstPov)
                 {
+                    checkPointAS.Play();
                     player.SetCheckpoint(this);
                     _area.Save();
                     if (!_isSpawn)

@@ -17,11 +17,12 @@ namespace areas_and_respawn
         private AudioSource checkPointAS;
 
         // Start is called before the first frame update
-        void Awake()
+        void Start()
         {
             _spawnPoint = transform;
             _room = GetComponentInParent<RoomController>();
             _area = GetComponentInParent<AreaController>();
+            _rend = GetComponentInChildren<Renderer>();
             _isSpawn = _room is null;
             if (_isSpawn) _room = GameObject.FindWithTag("Start Room").GetComponent<RoomController>();
             checkPointAS = GetComponent<AudioSource>();
@@ -46,7 +47,7 @@ namespace areas_and_respawn
             if (other.gameObject.CompareTag("Player"))
             {
                 PlayerController player = other.gameObject.GetComponent<PlayerController>();
-                if (player.checkpoint != this)
+                if (player.checkpoint != this && !player.isFirstPov)
                 {
                     checkPointAS.Play();
                     player.SetCheckpoint(this);
@@ -54,6 +55,11 @@ namespace areas_and_respawn
                     
                 }
             }
+        }
+
+        public void DeselectCheckpoint()
+        {
+            _rend.materials[2] = openCheckpoint;
         }
     }
 }

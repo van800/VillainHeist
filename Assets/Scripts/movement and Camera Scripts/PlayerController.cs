@@ -10,6 +10,8 @@ namespace movement_and_Camera_Scripts
     {
         private CharacterController _characterController;
 
+        private RoomController _currentRoom;
+
         private CameraController _cameraController;
         [SerializeField][Tooltip("Is First Person Mode")]
         public bool isFirstPov;
@@ -59,6 +61,8 @@ namespace movement_and_Camera_Scripts
         // Start is called before the first frame update
         void Start()
         {
+            isFirstPov = GameState.Instance.isInFirstPerson;
+
             _characterController = GetComponent<CharacterController>();
             _cameraController = FindObjectOfType<CameraController>();
             canMove = true;
@@ -162,17 +166,14 @@ namespace movement_and_Camera_Scripts
             
             
             // Interact with objects
-            Interactable interactable = null;
-            if (Physics.Raycast(transform.position + Vector3.up / 2, transform.forward,
-                    out RaycastHit hit, interactDistance))
+            Interactable interactable = GetNearestInteractableObj();
+            // if (Physics.Raycast(transform.position + Vector3.up / 2, transform.forward,
+            //         out RaycastHit hit, interactDistance))
+            // interactable = hit.transform.GetComponentInChildren<Interactable>();
+            if (interactable is not null)
             {
-                interactable = hit.transform.GetComponentInChildren<Interactable>();
-                if (interactable is not null)
-                {
-                    interactable.InRange();
-                }
+                interactable.InRange();
             }
-
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (interactable is not null)
@@ -210,12 +211,14 @@ namespace movement_and_Camera_Scripts
         // Set the player and camera's room
         public void SetRoom(RoomController room)
         {
+            _currentRoom = room;
             _cameraController.SetRoom(room); 
         }
         
         // Set the player's checkpoint
         public void SetCheckpoint(CheckPointController cp)
         {
+            checkpoint.DeselectCheckpoint();
             checkpoint = cp;
         }
         
@@ -270,6 +273,32 @@ namespace movement_and_Camera_Scripts
         {
             playerAS2.clip = firstPerson ? firstPersonMusic : topDownMusic;
             playerAS2.Play();
+        }
+        
+        private Interactable GetNearestInteractableObj()
+        {
+            Vector3 playerPos = transform.position;
+            Collider[] nearestColliders = Physics.OverlapSphere(playerPos, interactDistance);
+            Collider closest = null;
+            foreach (Collider c in nearestColliders)
+            {
+                //Debug.Log("c = " + c.name);
+                if (closest is null && c.CompareTag("Interactable"))
+                {
+                    closest = c;
+                }
+                else if (c.CompareTag("Interactable") && 
+                         (c.transform.position - playerPos).magnitude < 
+                         (closest.transform.position - playerPos).magnitude)
+                {
+                    closest = c;
+                }
+            }
+            if (closest is not null)
+            {
+                return closest.GetComponentInChildren<Interactable>();
+            }
+            return null;
         }
     }
 }

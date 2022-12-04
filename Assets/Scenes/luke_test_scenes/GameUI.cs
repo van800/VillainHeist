@@ -54,15 +54,15 @@ public class GameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").ToggleInClassList("hidden");
-            _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").ToggleInClassList("show");
-            // int modal = (int)Math.Round(Random.value * 3);
-            // ShowAbilityPrompts((AbilityPrompts) modal);
-        }
-
-        SetTimer((int)Time.realtimeSinceStartup);
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     // _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").ToggleInClassList("hidden");
+        //     // _uiDocument.rootVisualElement.Q<VisualElement>("TimerContainer").ToggleInClassList("show");
+        //     int modal = (int)Math.Round(Random.value * 3);
+        //     ShowAbilityPrompts((AbilityPrompts) modal);
+        // }
+        //
+        // SetTimer((int)Time.realtimeSinceStartup);
     }
 
     public void HideTimer()

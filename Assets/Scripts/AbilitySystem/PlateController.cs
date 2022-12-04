@@ -43,14 +43,18 @@ namespace AbilitySystem
                     _renderer.material = pressedMaterial;
                 }
             }
+            
         }
         
         private void OnCollisionExit(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Interactable"))
+            if (collision.transform.TryGetComponent(out GrabbableItem grabbable))
             {
-                _triggered = false ^ inverted;
-                _renderer.material = _defaultMaterial;
+                if (grabbable == key)
+                {
+                    _triggered = false ^ inverted;
+                    _renderer.material = _defaultMaterial;
+                }
             }
         }
 

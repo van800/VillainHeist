@@ -26,6 +26,7 @@ namespace areas_and_respawn
             foreach (PlateController trigger in triggers)
             {
                 trigger.AddDoor(this);
+                _triggerStates.Add(trigger, false);
             }
         }
 

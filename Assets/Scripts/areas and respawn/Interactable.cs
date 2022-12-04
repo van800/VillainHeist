@@ -43,6 +43,7 @@ namespace areas_and_respawn
         public virtual void InRange()
         {
             SetSelectedMaterials();
+            CancelInvoke(nameof(OutOfRange));
             Invoke(nameof(OutOfRange), 1f);
         }
 

@@ -179,7 +179,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8049182945256807300, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0000019073486
+      value: 0.000001947072
       objectReference: {fileID: 0}
     - target: {fileID: 8049182945256807300, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_LocalPosition.y
@@ -235,7 +235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8049182946347978633, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.08250046
+      value: -0.082499996
       objectReference: {fileID: 0}
     - target: {fileID: 8049182946499880490, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_Name
@@ -726,6 +726,7 @@ MonoBehaviour:
   topDownMusic: {fileID: 8300000, guid: 604c5a5f0a177034aa48187d9ad7ca10, type: 3}
   firstPersonMusic: {fileID: 8300000, guid: d6e73fa60d78c484fbeede7f614f6e3c, type: 3}
   tazeFlash: {fileID: 3402457473712796712, guid: 6bfe280950bb45c4a8d67f6d2c518f54, type: 3}
+  listenerChild: {fileID: 746364589830094995}
 --- !u!4 &1830296318727365800 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4cb0e75fd16abd4478eb9d49fdfc4df7, type: 3}

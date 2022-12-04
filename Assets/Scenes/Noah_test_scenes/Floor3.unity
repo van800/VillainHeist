@@ -2548,9 +2548,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 624904571}
@@ -7333,9 +7330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 1001893549}
@@ -8366,9 +8360,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 423593738}
@@ -11637,9 +11628,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 1474125746}
@@ -17665,9 +17653,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 1700493871}
@@ -27377,9 +27362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 174568822}
@@ -28121,9 +28103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 958193398}
@@ -48174,9 +48153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 105172314}
@@ -51297,9 +51273,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 49829482}
@@ -72643,9 +72616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 506468335}
@@ -115164,9 +115134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 1469371533}
@@ -115350,9 +115317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 215630933}
@@ -116591,9 +116555,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d135af2b35d4c7a980fff16acb3867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   goToTransform:
   - {fileID: 1784208107}
@@ -138719,9 +138680,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094ade751582a4d649c269d34b476cde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   inverted: 0
   doors:
@@ -139022,9 +138980,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094ade751582a4d649c269d34b476cde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   inverted: 0
   doors:
@@ -139296,9 +139251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f248c1b4ea0614980f4a52e510e793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 2100000, guid: ebb25a95555a347af804cf5e212bb41a, type: 2}
   pickupSound: {fileID: 0}
   dropSound: {fileID: 0}
@@ -139805,9 +139757,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094ade751582a4d649c269d34b476cde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   inverted: 0
   doors:
@@ -140146,9 +140095,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f248c1b4ea0614980f4a52e510e793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 2100000, guid: ebb25a95555a347af804cf5e212bb41a, type: 2}
   pickupSound: {fileID: 0}
   dropSound: {fileID: 0}
@@ -140289,9 +140235,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f248c1b4ea0614980f4a52e510e793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 2100000, guid: ebb25a95555a347af804cf5e212bb41a, type: 2}
   pickupSound: {fileID: 0}
   dropSound: {fileID: 0}
@@ -140565,9 +140508,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094ade751582a4d649c269d34b476cde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 0}
   inverted: 0
   doors:
@@ -141193,9 +141133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f248c1b4ea0614980f4a52e510e793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SavedPosition: {x: 0, y: 0, z: 0}
-  SavedRotation: {x: 0, y: 0, z: 0, w: 0}
-  SavedState: 0
   selectedMaterial: {fileID: 2100000, guid: ebb25a95555a347af804cf5e212bb41a, type: 2}
   pickupSound: {fileID: 0}
   dropSound: {fileID: 0}

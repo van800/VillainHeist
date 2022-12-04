@@ -227,15 +227,27 @@ namespace movement_and_Camera_Scripts
             isFrozen = !isFrozen;
             if (isFrozen)
             {
-                _animator.SetBool("Sleeping", true);
-                CancelInvoke(nameof(StartMoving));
-                _moving = false;
+               Freeze();
             }
             else
             {
-                _animator.SetBool("Sleeping", false);
-                _moving = true;
+                Unfreeze();
             }
+        }
+
+        public void Freeze()
+        {
+            isFrozen = true;
+            _animator.SetBool("Sleeping", true);
+            CancelInvoke(nameof(StartMoving));
+            _moving = false;
+        }
+
+        public void Unfreeze()
+        {
+            isFrozen = false;
+            _animator.SetBool("Sleeping", false);
+            _moving = true;
         }
 
         protected override void Initialize()

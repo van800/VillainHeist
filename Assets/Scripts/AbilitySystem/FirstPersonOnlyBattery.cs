@@ -23,7 +23,6 @@ public class FirstPersonOnlyBattery : MonoBehaviour
         mainScript = GetComponent<BatteryPickupItem>();
         realDistance = mainScript.killDistance;
         mainScript.killDistance = 0;
-        mainScript.killGuy = player;
     }
 
     // Update is called once per frame

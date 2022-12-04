@@ -1,4 +1,5 @@
 using areas_and_respawn;
+using movement_and_Camera_Scripts;
 using UnityEngine;
 
 namespace Lighting_Scripts
@@ -12,14 +13,20 @@ namespace Lighting_Scripts
         // private MeshRenderer _materialComponent;
 
         private bool _lightOn;
+
+        [SerializeField] private GameObject[] hideWhenOff;
+        
+        [SerializeField] private GameObject[] hideWhenOn;
+
+        private GuardController[] _guards;
         
         protected override void Initialize()
         {
             _lightComponent = GetComponent<Light>();
-            // _materialComponent = GetComponent<MeshRenderer>();
-            
-            // selected = false;
             _lightOn = false;
+
+            _guards = GetComponentInParent<RoomController>().GetComponentsInParent<GuardController>();
+
             ToggleLight();
         }
 
@@ -38,39 +45,45 @@ namespace Lighting_Scripts
             _lightOn = !SavedState;
             ToggleLight();
         }
-
-        // Update is called once per frame
-        // void Update()
-        // {
-        //     if (selected)
-        //     {
-        //         _materialComponent.material = highlightMaterial;
-        //         /*if (Input.GetKeyUp("e"))
-        //     {
-        //         ToggleLight();
-        //     }*/
-        //     }
-        //     else
-        //     {
-        //         _materialComponent.material = defaultMaterial;
-        //     }
-        // }
+        
 
         // Toggle the associated LightSource
         public void ToggleLight()
         {
             _lightOn = !_lightOn;
             _lightComponent.enabled = _lightOn;
-        }
 
-        // void deselect()
-        // {
-        //     selected = false;
-        // }
-        //
-        // void select()
-        // {
-        //     selected = true;
-        // }
+            if (_lightOn)
+            {
+                foreach (GameObject obj in hideWhenOn)
+                {
+                    obj.GetComponentInChildren<Renderer>().enabled = false;
+                }
+                foreach (GameObject obj in hideWhenOff)
+                {
+                    obj.GetComponentInChildren<Renderer>().enabled = true;
+                }
+                foreach (GuardController guard in _guards)
+                {
+                    guard.Unfreeze();
+                }
+            }
+            else
+            {
+                foreach (GameObject obj in hideWhenOn)
+                {
+                    obj.GetComponentInChildren<Renderer>().enabled = true;
+                }
+                foreach (GameObject obj in hideWhenOff)
+                {
+                    obj.GetComponentInChildren<Renderer>().enabled = false;
+                }
+                foreach (GuardController guard in _guards)
+                {
+                    guard.Freeze();
+                }
+            }
+        }
+        
     }
 }

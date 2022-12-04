@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -21,17 +20,39 @@ public class GameUI : MonoBehaviour
         Victory
     }
     
+    public enum AbilityPrompts
+    {
+        Freeze,
+        Light,
+        Pickup,
+        MoveWall
+    }
+
+    private Modals[] ALL_MODALS = {
+        Modals.Controls, Modals.Welcome, Modals.Victory, Modals.TimesUp
+    };
+    
+    private AbilityPrompts[] ALL_ABILITY_PROMPTS = {
+        AbilityPrompts.Freeze,
+        AbilityPrompts.Light,
+        AbilityPrompts.Pickup,
+        AbilityPrompts.MoveWall
+    };
+    
     // Start is called before the first frame update
     void Start()
     {
         _uiDocument = GetComponent<UIDocument>();
-        SetBattery(4, 10);
+        HideAllModals();
+        HideAllAbilityPrompts();
+
+        SetBattery(6, 6);
     }
 
     // Update is called once per frame
     void Update()
     {
-        SetBattery(current, total);
+        
     }
 
     private string ModalToId(Modals modal)
@@ -45,45 +66,111 @@ public class GameUI : MonoBehaviour
             _ => throw new NotImplementedException("Invalid Enum Value!")
         };
     }
+    
+    private string AbilityToId(AbilityPrompts modal)
+    {
+        return modal switch
+        {
+            AbilityPrompts.Freeze => "Freeze",
+            AbilityPrompts.Light => "Light",
+            AbilityPrompts.Pickup => "Pickup",
+            AbilityPrompts.MoveWall => "MoveWall",
+            _ => throw new NotImplementedException("Invalid Enum Value!")
+        };
+    }
 
+    private void HideAllAbilityPrompts()
+    {
+        foreach (var abilityPrompt in ALL_ABILITY_PROMPTS)
+        {
+            _uiDocument.rootVisualElement.Q<VisualElement>(AbilityToId(abilityPrompt)).AddToClassList("hidden");
+        }
+    }
+    
+    private void ShowAbilityPrompts(AbilityPrompts targetPrompt)
+    {
+        foreach (var abilityPrompt in ALL_ABILITY_PROMPTS)
+        {
+            if (targetPrompt == abilityPrompt)
+            {
+                _uiDocument.rootVisualElement.Q<VisualElement>(AbilityToId(abilityPrompt)).RemoveFromClassList("hidden");
+            }
+            else
+            {
+                _uiDocument.rootVisualElement.Q<VisualElement>(AbilityToId(abilityPrompt)).AddToClassList("hidden");
+            }
+        }
+    }
+    
+    private void HideAllModals()
+    {
+        foreach (var modal in ALL_MODALS)
+        {
+            _uiDocument.rootVisualElement.Q<VisualElement>(ModalToId(modal)).AddToClassList("hidden");
+        }
+    }
+
+    public void ShowCutsceneText()
+    {
+        ShowForSeconds("CutsceneText", 2);
+    }
+
+    private void ShowForSeconds(string id, float time)
+    {
+        _uiDocument.rootVisualElement.Q<VisualElement>(id).RemoveFromClassList("hidden");
+        StartCoroutine(HideAfterDelay(id, time));
+    }
+    
+    public void ShowCheckpoint()
+    {
+        ShowForSeconds("Checkpoint", 2);
+    }
+
+    private IEnumerator HideAfterDelay(string id, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _uiDocument.rootVisualElement.Q<VisualElement>(id).AddToClassList("hidden");
+    }
+    
     public void HideModal(Modals modal)
     {
-        
+        _uiDocument.rootVisualElement.Q<VisualElement>(ModalToId(modal)).RemoveFromClassList("hidden");
     }
         
     public void SetModal(Modals targetModal)
     {
-        // for (var modal in )
-        // {
-        //     
-        // }
-        // foreach (var modal in )
-        // {
-        //     _uiDocument.rootVisualElement.Q<VisualElement>(ModalToId(modal));
-        // }
+        foreach (var modal in ALL_MODALS)
+        {
+            if (modal == targetModal)
+            {
+                _uiDocument.rootVisualElement.Q<VisualElement>(ModalToId(modal)).RemoveFromClassList("hidden");
+            }
+            else
+            {
+                _uiDocument.rootVisualElement.Q<VisualElement>(ModalToId(modal)).AddToClassList("hidden");
+            }
+        }
     }
     
-    public void SetBattery(int current, int total)
+    public void SetBattery(int currentBattery, int totalBattery)
     {
         VisualElement batteryContainer = _uiDocument.rootVisualElement.Q<VisualElement>("BGStart");
-        
-        print(batteryContainer);
-        
+
         while (batteryContainer.childCount > 0)
         {
             VisualElement batteryIcon = batteryContainer.Children().First();
             batteryIcon.parent.Remove(batteryIcon);
         }
 
-        for (int index = 1; index <= total; index += 1)
+        for (int index = 1; index <= totalBattery; index += 1)
         {
             VisualElement elem = new VisualElement();
             if (index == 1) elem.AddToClassList("battery-start");
             else elem.AddToClassList("battery-next");
 
-            if (index > current) elem.AddToClassList("off");
+            if (index > currentBattery) elem.AddToClassList("off");
 
-            if (index == total)
+            if (index == totalBattery)
             {
                 elem.AddToClassList("last");
             }

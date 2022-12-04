@@ -9,6 +9,7 @@ public class CutsceneScript : MonoBehaviour
 {
     private GameUI _gameUI;
     private Image _image;
+    private AudioSource _cutsceneAS1;
     private IEnumerator DoAfterDelay(Action action, int delay)
     {
         yield return new WaitForSeconds(delay);
@@ -17,11 +18,13 @@ public class CutsceneScript : MonoBehaviour
 
     private bool fadingIn = false;
     private bool fadingOut = false;
-    private float opacity = 0; 
+    private float opacity = 0;
+    private float volume = 0;
     
     // Start is called before the first frame update
     void Start()
     {
+        _cutsceneAS1 = FindObjectOfType<AudioSource>();
         _gameUI = FindObjectOfType<GameUI>();
         
         _image = GetComponentInChildren<Image>();
@@ -32,6 +35,7 @@ public class CutsceneScript : MonoBehaviour
             {
                 _gameUI.ShowCutsceneText();
                 fadingIn = true;
+                _cutsceneAS1.Play();
                 StartCoroutine(DoAfterDelay(() =>
                 {
                     fadingIn = false;
@@ -57,12 +61,16 @@ public class CutsceneScript : MonoBehaviour
         {
             opacity += Time.deltaTime / 2;
             _image.color = new Color(1, 1, 1, opacity);
+            volume += Time.deltaTime;
+            _cutsceneAS1.volume += volume;
         }
 
         if (fadingOut)
         {
             opacity -= Time.deltaTime / 2;
             _image.color = new Color(1, 1, 1, opacity);
+            volume -= Time.deltaTime;
+            _cutsceneAS1.volume = volume;
         }
     }
 }

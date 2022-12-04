@@ -99,4 +99,12 @@ public class WallMoveable : Interactable
         atTopLimit = SavedState;
         transform.position = SavedPosition;
     }
+
+    public override void InRange()
+    {
+        if (active)
+        {
+            base.InRange();
+        }
+    }
 }

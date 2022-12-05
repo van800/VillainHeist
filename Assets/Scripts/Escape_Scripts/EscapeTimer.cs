@@ -46,7 +46,19 @@ public class EscapeTimer : MonoBehaviour
         }
         totalSecondsRemaining = totalTime;
         _gameUI.HideTimer();
+        StartCoroutine(researchForGameUI());
     }
+
+    /*private IEnumerator researchForGameUI()
+    {
+        while (true)
+        {
+            yield return new WaitUntil(() => _gameUI == null);
+            Debug.Log("gameUI = " + _gameUI);
+            _gameUI = FindObjectOfType<GameUI>();
+            Debug.Log("gameUI = " + _gameUI);
+        }
+    }*/
 
     /*private IEnumerator waitUntilEscape()
     {
@@ -86,7 +98,7 @@ public class EscapeTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (useTimer)
+        if (useTimer && _gameUI != null)
         {
             updateTimer();
             _gameUI.SetTimer((int)totalSecondsRemaining);

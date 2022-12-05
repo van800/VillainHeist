@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class KillLaser : MonoBehaviour
 {
-    private GameObject player;
+    private PlayerController player;
     [SerializeField]
     private bool canKill;
     public GameObject killed;
@@ -20,7 +20,7 @@ public class KillLaser : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         buddy = GameObject.Find("1st Person");
         buddy = GameObject.Find("Eyeline");
     }
@@ -28,16 +28,16 @@ public class KillLaser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        canKill = player.GetComponent<PlayerController>().isFirstPov;
+        canKill = player.isFirstPov && player.CanShoot();
         
         if (Input.GetMouseButtonDown(0) && canKill)
         {
-            
             var ray = new Ray(buddy.transform.position,
                 player.transform.forward);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
+                
                 //killMaybe = true;
                 target = hit.transform.gameObject;
                 killed = target;
@@ -47,6 +47,7 @@ public class KillLaser : MonoBehaviour
                     bob.transform.position = target.transform.position;
                     Destroy(target);
                     Destroy(bob, 2);
+                    player.RemoveBatteryShoot();
                 }
             }
         }

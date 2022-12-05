@@ -9,17 +9,15 @@ public class GameState : MonoBehaviour
     public bool isInFirstPerson;
     public int totalBattery = -1;
     private PlayerController player;
-    private static GameObject gameObj;
 
     private GameState() { }
 
     private void Awake()
     {
-        if (gameObj == null)
+        if (Instance == null)
         {
-            gameObj = gameObject;
             Instance = this;
-            DontDestroyOnLoad(gameObj);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -31,6 +29,7 @@ public class GameState : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         StartCoroutine(changeFirstPerson());
+        StartCoroutine(waitForBug());
     }
 
     public void setPlayer(PlayerController player)
@@ -49,6 +48,17 @@ public class GameState : MonoBehaviour
     {
         yield return new WaitUntil(() => player.isFirstPov);
         isInFirstPerson = player.isFirstPov;
+    }
+
+    private IEnumerator waitForBug()
+    {
+        yield return new WaitUntil(() => isInFirstPerson);
+        Debug.Log("Working!!!");
+        while(true)
+        {
+            Debug.Log("isFP =  " + isInFirstPerson);
+            yield return new WaitForEndOfFrame();
+        }
     }
 
     public void updateTotalBat(int bat)

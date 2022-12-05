@@ -42,7 +42,13 @@ namespace areas_and_respawn
 
         public void Save()
         {
-            foreach (Interactable i in _intractables) i.Save();
+            foreach (Interactable i in _intractables)
+            {
+                if (i != null)
+                {
+                    i.Save();
+                }
+            }
         }
 
         public void Reset()

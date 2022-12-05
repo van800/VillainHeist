@@ -1,13 +1,6 @@
-using System.Collections;
 using System.Linq;
-using AbilitySystem;
 using areas_and_respawn;
-using Unity.Mathematics;
-using UnityEditor;
-using UnityEditor.TerrainTools;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 using Transform = UnityEngine.Transform;
 
 namespace movement_and_Camera_Scripts
@@ -48,7 +41,7 @@ namespace movement_and_Camera_Scripts
         private AudioClip alertSound;
 
         // Guard can taze player if true. Set to false after tazing player, then true after a cooldown.
-        private bool canTaze;
+        private bool canTaze = true;
 
         private bool canAlert;
 
@@ -109,9 +102,11 @@ namespace movement_and_Camera_Scripts
             _moving = false;
 
             _animator.SetTrigger("Alert");
-            
+
+            Debug.Log("Attack");
+
             // Guard behavior when player is in top down
-            if (!playerController.isFirstPov)
+            if (!GameState.Instance.isInFirstPerson)//playerController.isFirstPov)
             {
                 if (!isFrozen && canAlert)
                 {
@@ -121,6 +116,7 @@ namespace movement_and_Camera_Scripts
             // Guard behavior when player is in first person
             else if (canTaze)
             {
+                Debug.Log("Taze");
                 firstPersonAttack(toTarget);
             }
         }

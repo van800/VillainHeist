@@ -30,6 +30,7 @@ namespace movement_and_Camera_Scripts
 
         public int maxBattery = 6;
         public int currentBattery = 6;
+        [SerializeField] private int shootBatCost = 6;
 
         private GameUI _gameUI;
 
@@ -68,11 +69,13 @@ namespace movement_and_Camera_Scripts
         // Start is called before the first frame update
         void Start()
         {
+            Debug.Log("Player start");
             isFirstPov = GameState.Instance.isInFirstPerson;
 
             _characterController = GetComponent<CharacterController>();
             _cameraController = FindObjectOfType<CameraController>();
             _gameUI = FindObjectOfType<GameUI>();
+            _gameUI.RegisterPlayer(this);
             canMove = true;
             playerAS1 = GetComponents<AudioSource>()[0];
             playerAS1.volume = 1f;
@@ -239,7 +242,6 @@ namespace movement_and_Camera_Scripts
                     Respawn();
                     restartHoldStart = -1;
                 }
-                print(Time.time - restartHoldStart);
             }
             else
             {
@@ -249,7 +251,7 @@ namespace movement_and_Camera_Scripts
             // DEBUG change perspective
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                ToPov();
+                // ToPov();
             }
         }
 
@@ -275,7 +277,20 @@ namespace movement_and_Camera_Scripts
             maxBattery += amount;
             UpdateBatteryUI();
         }
-        
+
+        public bool CanShoot()
+        {
+            return currentBattery == shootBatCost;
+        }
+
+        public void RemoveBatteryShoot()
+        {
+            currentBattery -= shootBatCost;
+            UpdateBatteryUI();
+            //_gameUI.SetBattery(currentBattery, maxBattery);
+        }
+
+
         public void RechargeBattery(int amount)
         {
             currentBattery = Math.Min(currentBattery + amount, maxBattery);
@@ -311,7 +326,10 @@ namespace movement_and_Camera_Scripts
             GameState.Instance.isInFirstPerson = toFirst;
             _cameraController.SetPerspective(toFirst);
             SetMusic(isFirstPov);
-            EscapeTimer.Instance.startTimer();
+            if (EscapeTimer.Instance != null)
+            {
+                EscapeTimer.Instance.startTimer();
+            }
         }
         
         // Hide mouse

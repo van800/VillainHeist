@@ -46,19 +46,17 @@ public class EscapeTimer : MonoBehaviour
         }
         totalSecondsRemaining = totalTime;
         _gameUI.HideTimer();
-        //StartCoroutine(researchForGameUI());
+        StartCoroutine(researchForGameUI());
     }
 
-    /*private IEnumerator researchForGameUI()
+    private IEnumerator researchForGameUI()
     {
         while (true)
         {
             yield return new WaitUntil(() => _gameUI == null);
-            Debug.Log("gameUI = " + _gameUI);
             _gameUI = FindObjectOfType<GameUI>();
-            Debug.Log("gameUI = " + _gameUI);
         }
-    }*/
+    }
 
     /*private IEnumerator waitUntilEscape()
     {

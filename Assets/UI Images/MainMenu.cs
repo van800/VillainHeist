@@ -11,6 +11,15 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GameState.Instance && GameState.Instance.gameObject)
+        {
+            Destroy(GameState.Instance.gameObject);
+        }
+        if (EscapeTimer.Instance && EscapeTimer.Instance.gameObject)
+        {
+            Destroy(EscapeTimer.Instance.gameObject);
+        }
+        
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         _uiDocument = GetComponent<UIDocument>();
         _uiDocument.rootVisualElement.Q<Button>("Play").clicked += () => Play();

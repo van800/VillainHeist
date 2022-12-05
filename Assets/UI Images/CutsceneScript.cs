@@ -28,6 +28,9 @@ public class CutsceneScript : MonoBehaviour
         _gameUI = FindObjectOfType<GameUI>();
         
         _image = GetComponentInChildren<Image>();
+        
+        // _gameUI.ShowVictoryPopup(() =>
+        // {
         StartCoroutine(DoAfterDelay(() =>
         {
             _gameUI.ShowCutsceneText();
@@ -44,14 +47,12 @@ public class CutsceneScript : MonoBehaviour
                     StartCoroutine(DoAfterDelay(() =>
                     {
                         SceneManager.LoadScene("MainMenu");
-
+    
                     }, 5));
                 }, 15));
             }, 3));
         }, 3));
-
-        
-        
+        // });
     }
 
     // Update is called once per frame

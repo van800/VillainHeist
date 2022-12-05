@@ -75,6 +75,7 @@ namespace movement_and_Camera_Scripts
             _characterController = GetComponent<CharacterController>();
             _cameraController = FindObjectOfType<CameraController>();
             _gameUI = FindObjectOfType<GameUI>();
+            _gameUI.RegisterPlayer(this);
             canMove = true;
             playerAS1 = GetComponents<AudioSource>()[0];
             playerAS1.volume = 1f;
@@ -241,7 +242,6 @@ namespace movement_and_Camera_Scripts
                     Respawn();
                     restartHoldStart = -1;
                 }
-                print(Time.time - restartHoldStart);
             }
             else
             {
@@ -251,7 +251,7 @@ namespace movement_and_Camera_Scripts
             // DEBUG change perspective
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                ToPov();
+                // ToPov();
             }
         }
 
@@ -326,7 +326,10 @@ namespace movement_and_Camera_Scripts
             GameState.Instance.isInFirstPerson = toFirst;
             _cameraController.SetPerspective(toFirst);
             SetMusic(isFirstPov);
-            EscapeTimer.Instance.startTimer();
+            if (EscapeTimer.Instance != null)
+            {
+                EscapeTimer.Instance.startTimer();
+            }
         }
         
         // Hide mouse

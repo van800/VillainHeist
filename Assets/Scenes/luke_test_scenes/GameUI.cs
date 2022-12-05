@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Linq;
+using movement_and_Camera_Scripts;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
@@ -11,7 +13,10 @@ public class GameUI : MonoBehaviour
     private UIDocument _uiDocument;
     [SerializeField]
     private bool showUI = true;
-    
+
+    private bool _pauseMenuVisible = false;
+
+    private PlayerController _player;
     
     public enum Modals
     {
@@ -60,8 +65,33 @@ public class GameUI : MonoBehaviour
 
         SetBattery(6, 6);
         // ShowAbilityPrompts(AbilityPrompts.Freeze);
+
+        _uiDocument.rootVisualElement.Q<Button>("Respawn").clicked += () =>
+        {
+            print("Respawn");
+            if (_player != null)
+            {
+                _player.Respawn();
+            }
+        };
+        _uiDocument.rootVisualElement.Q<Button>("MainMenu").clicked += () =>
+        {
+            print("MainMenu");
+            SceneManager.LoadScene("MainMenu");
+        };
+        _uiDocument.rootVisualElement.Q<Button>("Close").clicked += () =>
+        {
+            print("Hide");
+            HidePauseMenu();
+        };
+        
     }
 
+    public void RegisterPlayer(PlayerController player)
+    {
+        _player = player;
+    }
+    
     // Update is called once per frame
     void Update()
     {
@@ -74,8 +104,55 @@ public class GameUI : MonoBehaviour
         // }
         //
         // SetTimer((int)Time.realtimeSinceStartup);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_pauseMenuVisible)
+            {
+                HidePauseMenu();
+            }
+            else
+            {
+                ShowPauseMenu();
+            }
+        }
     }
 
+    public void ShowVictoryPopup(Action callback)
+    {
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        _uiDocument.rootVisualElement.Q<VisualElement>("VictoryBG").RemoveFromClassList("hidden");
+        _uiDocument.rootVisualElement.Q<VisualElement>("VictoryBG").AddToClassList("show");
+        _uiDocument.rootVisualElement.Q<Button>("VictoryContinue").clicked += () =>
+        {
+            HideVictoryPopup();
+            callback.Invoke();
+        };
+    }
+    
+    public void HideVictoryPopup()
+    {
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        _uiDocument.rootVisualElement.Q<VisualElement>("VictoryBG").AddToClassList("hidden");
+        _uiDocument.rootVisualElement.Q<VisualElement>("VictoryBG").RemoveFromClassList("show");
+    }
+    
+    public void ShowPauseMenu()
+    {
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        _uiDocument.rootVisualElement.Q<VisualElement>("PauseBG").RemoveFromClassList("hidden");
+        _uiDocument.rootVisualElement.Q<VisualElement>("PauseBG").AddToClassList("show");
+        _pauseMenuVisible = true;
+    }
+    
+    public void HidePauseMenu()
+    {
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        _uiDocument.rootVisualElement.Q<VisualElement>("PauseBG").AddToClassList("hidden");
+        _uiDocument.rootVisualElement.Q<VisualElement>("PauseBG").RemoveFromClassList("show");
+        _pauseMenuVisible = false;
+    }
+    
     public void HideBattery()
     {
         _uiDocument.rootVisualElement.Q<VisualElement>("BatteryFace").AddToClassList("hidden");

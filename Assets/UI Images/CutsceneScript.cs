@@ -24,6 +24,9 @@ public class CutsceneScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Destroy(GameState.Instance.gameObject);
+        Destroy(EscapeTimer.Instance.gameObject);
+
         _cutsceneAS1 = FindObjectOfType<AudioSource>();
         _gameUI = FindObjectOfType<GameUI>();
         

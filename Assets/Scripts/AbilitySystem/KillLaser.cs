@@ -37,11 +37,11 @@ public class KillLaser : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                
+                Debug.Log("Hit = " + hit.transform.name);
                 //killMaybe = true;
                 target = hit.transform.gameObject;
-                killed = target;
-                if (target.TryGetComponent(out GuardController bingle))
+                
+                if (target != killed && target.TryGetComponent(out GuardController bingle))
                 {
                     GameObject bob = Instantiate(EffectsYeah);
                     bob.transform.position = target.transform.position;
@@ -49,6 +49,7 @@ public class KillLaser : MonoBehaviour
                     Destroy(bob, 2);
                     player.RemoveBatteryShoot();
                 }
+                killed = target;
             }
         }
     }

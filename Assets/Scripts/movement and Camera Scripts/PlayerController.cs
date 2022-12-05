@@ -12,6 +12,7 @@ namespace movement_and_Camera_Scripts
 
         private RoomController _currentRoom;
 
+        [SerializeField]
         private CameraController _cameraController;
         [SerializeField][Tooltip("Is First Person Mode")]
         public bool isFirstPov;

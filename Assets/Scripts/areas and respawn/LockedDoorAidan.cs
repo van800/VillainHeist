@@ -59,6 +59,10 @@ namespace areas_and_respawn
         public override void Save()
         {
             SavedState = _isLocked;
+            foreach (PlateController plate in triggers)
+            {
+                plate.Save();
+            }
         }
 
         public override void Reset()
@@ -70,7 +74,7 @@ namespace areas_and_respawn
             }
             foreach (PlateController plate in triggers)
             {
-                plate.SetTriggered(!_isLocked);
+                plate.Reset();
             }
         }
 

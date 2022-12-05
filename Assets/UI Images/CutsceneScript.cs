@@ -46,7 +46,7 @@ public class CutsceneScript : MonoBehaviour
                         SceneManager.LoadScene("MainMenu");
 
                     }, 5));
-                }, 5));
+                }, 15));
             }, 3));
         }, 3));
 
@@ -59,17 +59,17 @@ public class CutsceneScript : MonoBehaviour
     {
         if (fadingIn)
         {
-            opacity += Time.deltaTime / 2;
+            opacity = Math.Min(opacity + (Time.deltaTime / 2), 1);
             _image.color = new Color(1, 1, 1, opacity);
-            volume += Time.deltaTime;
-            _cutsceneAS1.volume += volume;
+            volume = Math.Min(volume + Time.deltaTime, 1);
+            _cutsceneAS1.volume = volume;
         }
 
         if (fadingOut)
         {
-            opacity -= Time.deltaTime / 2;
+            opacity = Math.Max(opacity - (Time.deltaTime / 2), 0);
             _image.color = new Color(1, 1, 1, opacity);
-            volume -= Time.deltaTime;
+            volume = Math.Max(volume - Time.deltaTime, 0);
             _cutsceneAS1.volume = volume;
         }
     }

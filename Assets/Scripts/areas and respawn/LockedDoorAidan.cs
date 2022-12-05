@@ -17,8 +17,6 @@ namespace areas_and_respawn
 
         [SerializeField] [Tooltip("Plates that need to be active to unlock.")] 
         private PlateController[] triggers;
-
-        private Dictionary<PlateController, bool> _triggerStates = new();
         
         private bool _displaying;
 
@@ -37,7 +35,6 @@ namespace areas_and_respawn
             foreach (PlateController trigger in triggers)
             {
                 trigger.AddDoor(this);
-                _triggerStates.Add(trigger, false);
             }
         }
 
@@ -62,10 +59,6 @@ namespace areas_and_respawn
         public override void Save()
         {
             SavedState = _isLocked;
-            foreach (PlateController plate in triggers)
-            {
-                _triggerStates[plate] = plate.IsTriggered();
-            }
         }
 
         public override void Reset()
@@ -77,7 +70,7 @@ namespace areas_and_respawn
             }
             foreach (PlateController plate in triggers)
             {
-                plate.SetTriggered(_triggerStates[plate]);
+                plate.SetTriggered(!_isLocked);
             }
         }
 

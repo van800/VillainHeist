@@ -32,8 +32,7 @@ namespace movement_and_Camera_Scripts
         public int currentBattery = 6;
 
         private GameUI _gameUI;
-        
-        
+
         public GrabbableItem pickedUpItem;
         [Tooltip("Distance to interact with items")]
         public float interactDistance = 1f;
@@ -53,7 +52,8 @@ namespace movement_and_Camera_Scripts
         //AS2 is for Music
         private AudioSource playerAS2;
 
-
+        private float restartHoldStart = -1; 
+        
         private Animator _animator;
         
         [SerializeField]
@@ -169,7 +169,11 @@ namespace movement_and_Camera_Scripts
             
             // Walk and run movement
             _characterController.Move(movement * (speed * Time.deltaTime));
-            
+
+            if (_characterController.transform.position.y < -10)
+            {
+                Respawn();
+            }
             
             // Interact with objects
             Interactable interactable = GetNearestInteractableObj();
@@ -211,20 +215,29 @@ namespace movement_and_Camera_Scripts
             }
             
             // Respawn on R key press
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKey(KeyCode.R))
             {
-                Respawn();
+                
+                if (restartHoldStart < 0)
+                {
+                    restartHoldStart = Time.time;
+                }
+                else if (Time.time - restartHoldStart > 1f)
+                {
+                    Respawn();
+                    restartHoldStart = -1;
+                }
+                print(Time.time - restartHoldStart);
+            }
+            else
+            {
+                restartHoldStart = -1;
             }
             
             // DEBUG change perspective
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 ToPov();
-            }
-
-            if (playerTransform.up.magnitude < -100)
-            {
-                Respawn();
             }
         }
 
@@ -233,7 +246,7 @@ namespace movement_and_Camera_Scripts
             GrabbableItem pickedUp = pickedUpItem;
             pickedUpItem = null;
             if (pickedUp is not null) pickedUp.Reset();
-            _currentRoom.Reset();
+            if (_currentRoom is not null) _currentRoom.Reset();
             checkpoint.Respawn(this);
             RechargeBattery();
         }

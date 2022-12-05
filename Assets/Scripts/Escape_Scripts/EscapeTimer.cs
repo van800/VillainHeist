@@ -46,7 +46,7 @@ public class EscapeTimer : MonoBehaviour
         }
         totalSecondsRemaining = totalTime;
         _gameUI.HideTimer();
-        StartCoroutine(researchForGameUI());
+        //StartCoroutine(researchForGameUI());
     }
 
     /*private IEnumerator researchForGameUI()

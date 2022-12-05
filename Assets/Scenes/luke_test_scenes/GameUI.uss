@@ -84,7 +84,21 @@
 }
 
 
+#PauseBG {
+    scale: 0.75;
+    opacity: 0;
+    transition-property: opacity, scale;
+    transition-duration: 0.25s;
+}
 
+#PauseBG.show {
+    scale: 1;
+    opacity: 1;
+}
+
+#PauseBG.hidden {
+    display: none;
+}
 
 .lower-left {
     transition-property: translate, scale;

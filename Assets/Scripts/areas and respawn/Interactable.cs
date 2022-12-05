@@ -51,7 +51,7 @@ namespace areas_and_respawn
         {
             SetSelectedMaterials();
             CancelInvoke(nameof(OutOfRange));
-            Invoke(nameof(OutOfRange), 1f);
+            Invoke(nameof(OutOfRange), 0.1f);
         }
 
         protected virtual void OutOfRange()

@@ -1,13 +1,6 @@
-using System.Collections;
 using System.Linq;
-using AbilitySystem;
 using areas_and_respawn;
-using Unity.Mathematics;
-using UnityEditor;
-using UnityEditor.TerrainTools;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 using Transform = UnityEngine.Transform;
 
 namespace movement_and_Camera_Scripts

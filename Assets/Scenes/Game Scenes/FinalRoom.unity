@@ -16757,7 +16757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalSecondsRemaining: 0
-  totalTime: 100
+  totalTime: 2
 --- !u!4 &1995301857
 Transform:
   m_ObjectHideFlags: 0

@@ -328,6 +328,7 @@ namespace movement_and_Camera_Scripts
             SetMusic(isFirstPov);
             if (EscapeTimer.Instance != null)
             {
+                Debug.Log("StartTimer");
                 EscapeTimer.Instance.startTimer();
             }
         }

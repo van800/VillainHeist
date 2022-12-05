@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 4883594303145413832}
   - component: {fileID: 5148964068140285161}
   - component: {fileID: 6449674464783388982}
+  - component: {fileID: 4635229845585719399}
   m_Layer: 0
   m_Name: Player+Camera
   m_TagString: Untagged
@@ -297,9 +298,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4590c5b727bed4e6bb1f5e650d0a06ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moreBatPassword: f
+  moreBatPassword: first
   moreBatVal: 24
   isFirstPersonCheat: 1
+--- !u!114 &4635229845585719399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4617427249543433860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4590c5b727bed4e6bb1f5e650d0a06ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moreBatPassword: impostor
+  moreBatVal: -2
+  isFirstPersonCheat: 0
 --- !u!1 &8736476890420604382
 GameObject:
   m_ObjectHideFlags: 0

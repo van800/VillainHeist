@@ -49,6 +49,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4883594303145413832}
+  - component: {fileID: 5148964068140285161}
+  - component: {fileID: 6449674464783388982}
   m_Layer: 0
   m_Name: Player+Camera
   m_TagString: Untagged
@@ -75,6 +77,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5148964068140285161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4617427249543433860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4590c5b727bed4e6bb1f5e650d0a06ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moreBatPassword: frogs
+  moreBatVal: 12
+  isFirstPersonCheat: 0
+--- !u!114 &6449674464783388982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4617427249543433860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4590c5b727bed4e6bb1f5e650d0a06ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moreBatPassword: f
+  moreBatVal: 24
+  isFirstPersonCheat: 1
 --- !u!1 &8736476890420604382
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,7 +332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8049182946347978633, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.08249998
+      value: -0.08250046
       objectReference: {fileID: 0}
     - target: {fileID: 8049182946499880490, guid: 55d46e3a75ae04537bb2086f7f368f57, type: 3}
       propertyPath: m_Name

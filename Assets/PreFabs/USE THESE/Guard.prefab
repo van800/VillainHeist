@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6122494330576895629}
   - component: {fileID: -6182296322456451713}
   - component: {fileID: 7851363357678185479}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Guard
   m_TagString: Interactable
   m_Icon: {fileID: 0}

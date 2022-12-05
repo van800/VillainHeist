@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using movement_and_Camera_Scripts;
 
 public class CheatCode : MonoBehaviour
 {
     [SerializeField] private string moreBatPassword = "frogs";
     [SerializeField] private int moreBatVal = 24;
+    [SerializeField] private bool isFirstPersonCheat;
     private bool usedCheat = false;
     private string nextChar;
     // Start is called before the first frame update
@@ -33,7 +35,14 @@ public class CheatCode : MonoBehaviour
                 if (curString.Equals(moreBatPassword))
                 {
                     usedCheat = true;
-                    GameState.Instance.updateTotalBat(moreBatVal);
+                    if (!isFirstPersonCheat)
+                    {
+                        GameState.Instance.updateTotalBat(moreBatVal);
+                    }
+                    else
+                    {
+                        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().ToPov();
+                    }
                 }
                 else if (!moreBatPassword.StartsWith(curString, System.StringComparison.CurrentCultureIgnoreCase))
                 {

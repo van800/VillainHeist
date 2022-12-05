@@ -30,6 +30,7 @@ namespace areas_and_respawn
                         player.SetRoom(subRoom);
                         player.checkpoint = fpSpawnPoint;
                         player.transform.position = fpSpawnPoint.transform.position;
+                        player.transform.rotation = fpSpawnPoint.transform.rotation;
                     }
                 }
                 else

@@ -68,6 +68,7 @@ namespace movement_and_Camera_Scripts
         // Start is called before the first frame update
         void Start()
         {
+            Debug.Log("Player start");
             isFirstPov = GameState.Instance.isInFirstPerson;
 
             _characterController = GetComponent<CharacterController>();

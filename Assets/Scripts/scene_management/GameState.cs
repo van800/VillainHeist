@@ -33,6 +33,11 @@ public class GameState : MonoBehaviour
         StartCoroutine(changeFirstPerson());
     }
 
+    public void setPlayer(PlayerController player)
+    {
+        this.player = player;
+    }
+
     public void resetToTopDown()
     {
         isInFirstPerson = false;
@@ -46,4 +51,9 @@ public class GameState : MonoBehaviour
         isInFirstPerson = player.isFirstPov;
     }
 
+    public void updateTotalBat(int bat)
+    {
+        totalBattery = bat + player.maxBattery;
+        player.AddMaxBattery(bat);
+    }
 }

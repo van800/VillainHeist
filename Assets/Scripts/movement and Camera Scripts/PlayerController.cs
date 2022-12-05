@@ -87,6 +87,8 @@ namespace movement_and_Camera_Scripts
             SetMusic(isFirstPov);
             playerAS2.Play();
 
+
+            GameState.Instance.setPlayer(this);
             if (GameState.Instance.totalBattery < 1)
             {
                 GameState.Instance.totalBattery = maxBattery;
@@ -94,7 +96,7 @@ namespace movement_and_Camera_Scripts
             else
             {
                 maxBattery = GameState.Instance.totalBattery;
-                UpdateBatteryUI();
+                RechargeBattery();
             }
         }
         

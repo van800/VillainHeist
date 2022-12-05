@@ -37,7 +37,7 @@ public class KillLaser : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                
+                Debug.Log("Hit = " + hit.transform.name);
                 //killMaybe = true;
                 target = hit.transform.gameObject;
                 killed = target;

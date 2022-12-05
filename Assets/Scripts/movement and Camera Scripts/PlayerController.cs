@@ -12,6 +12,7 @@ namespace movement_and_Camera_Scripts
 
         private RoomController _currentRoom;
 
+        [SerializeField]
         private CameraController _cameraController;
         [SerializeField][Tooltip("Is First Person Mode")]
         public bool isFirstPov;
@@ -281,12 +282,16 @@ namespace movement_and_Camera_Scripts
 
         public bool CanShoot()
         {
-            return currentBattery == shootBatCost;
+            return currentBattery >= shootBatCost || currentBattery == maxBattery;
         }
 
         public void RemoveBatteryShoot()
         {
             currentBattery -= shootBatCost;
+            if (currentBattery < 0)
+            {
+                currentBattery = 0;
+            }
             UpdateBatteryUI();
             //_gameUI.SetBattery(currentBattery, maxBattery);
         }
@@ -329,6 +334,7 @@ namespace movement_and_Camera_Scripts
             SetMusic(isFirstPov);
             if (EscapeTimer.Instance != null)
             {
+                Debug.Log("StartTimer");
                 EscapeTimer.Instance.startTimer();
             }
         }

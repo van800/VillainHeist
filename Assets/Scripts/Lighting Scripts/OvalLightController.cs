@@ -77,10 +77,10 @@ namespace Lighting_Scripts
                 {
                     obj.GetComponentInChildren<Renderer>().enabled = true;
                 }
-                foreach (GuardController guard in _guards)
+                /*foreach (GuardController guard in _guards)
                 {
                     guard.Unfreeze();
-                }
+                }*/
             }
             else
             {
@@ -93,10 +93,10 @@ namespace Lighting_Scripts
                     print(obj.name);
                     obj.GetComponentInChildren<Renderer>().enabled = false;
                 }
-                foreach (GuardController guard in _guards)
+                /*foreach (GuardController guard in _guards)
                 {
                     guard.Freeze();
-                }
+                }*/
             }
         }
     }

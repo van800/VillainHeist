@@ -41,7 +41,10 @@ public class CheatCode : MonoBehaviour
                     }
                     else
                     {
-                        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().ToPov();
+                        if (!GameState.Instance.isInFirstPerson)
+                        {
+                            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().ToPov();
+                        }
                     }
                 }
                 else if (!moreBatPassword.StartsWith(curString, System.StringComparison.CurrentCultureIgnoreCase))

@@ -61,9 +61,10 @@ public class GameUI : MonoBehaviour
         _uiDocument = GetComponent<UIDocument>();
         HideAllModals();
         HideAllAbilityPrompts();
-        if (!showUI) HideBattery();
-
         SetBattery(6, 6);
+        
+        if (!showUI) HideBattery();
+        
         // ShowAbilityPrompts(AbilityPrompts.Freeze);
 
         _uiDocument.rootVisualElement.Q<Button>("Respawn").clicked += () =>
@@ -123,8 +124,9 @@ public class GameUI : MonoBehaviour
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         _uiDocument.rootVisualElement.Q<VisualElement>("VictoryBG").RemoveFromClassList("hidden");
         _uiDocument.rootVisualElement.Q<VisualElement>("VictoryBG").AddToClassList("show");
-        _uiDocument.rootVisualElement.Q<Button>("VictoryContinue").clicked += () =>
+        _uiDocument.rootVisualElement.Q<Button>("Continue").clicked += () =>
         {
+            print("CLICKED!");
             HideVictoryPopup();
             callback.Invoke();
         };

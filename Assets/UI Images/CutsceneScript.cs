@@ -24,35 +24,45 @@ public class CutsceneScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GameState.Instance && GameState.Instance.gameObject)
+        {
+            Destroy(GameState.Instance.gameObject);
+        }
+        if (EscapeTimer.Instance && EscapeTimer.Instance.gameObject)
+        {
+            Destroy(EscapeTimer.Instance.gameObject);
+        }
+
         _cutsceneAS1 = FindObjectOfType<AudioSource>();
         _gameUI = FindObjectOfType<GameUI>();
         
         _image = GetComponentInChildren<Image>();
         
-        // _gameUI.ShowVictoryPopup(() =>
-        // {
-        StartCoroutine(DoAfterDelay(() =>
+        _gameUI.ShowVictoryPopup(() =>
         {
-            _gameUI.ShowCutsceneText();
+            print("RAN CALLBACK!");
             StartCoroutine(DoAfterDelay(() =>
             {
                 _gameUI.ShowCutsceneText();
-                fadingIn = true;
-                _cutsceneAS1.Play();
                 StartCoroutine(DoAfterDelay(() =>
                 {
-                    fadingIn = false;
-                    fadingOut = true;
-                    _gameUI.HideCutsceneText();
+                    _gameUI.ShowCutsceneText();
+                    fadingIn = true;
+                    _cutsceneAS1.Play();
                     StartCoroutine(DoAfterDelay(() =>
                     {
-                        SceneManager.LoadScene("MainMenu");
-    
-                    }, 5));
-                }, 15));
-            }, 3));
-        }, 3));
-        // });
+                        fadingIn = false;
+                        fadingOut = true;
+                        _gameUI.HideCutsceneText();
+                        StartCoroutine(DoAfterDelay(() =>
+                        {
+                            SceneManager.LoadScene("MainMenu");
+        
+                        }, 5));
+                    }, 15));
+                }, 3));
+            }, 1));
+        });
     }
 
     // Update is called once per frame

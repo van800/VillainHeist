@@ -30,6 +30,7 @@ namespace movement_and_Camera_Scripts
 
         public int maxBattery = 6;
         public int currentBattery = 6;
+        [SerializeField] private int shootBatCost = 6;
 
         private GameUI _gameUI;
 
@@ -276,7 +277,20 @@ namespace movement_and_Camera_Scripts
             maxBattery += amount;
             UpdateBatteryUI();
         }
-        
+
+        public bool CanShoot()
+        {
+            return currentBattery == shootBatCost;
+        }
+
+        public void RemoveBatteryShoot()
+        {
+            currentBattery -= shootBatCost;
+            UpdateBatteryUI();
+            //_gameUI.SetBattery(currentBattery, maxBattery);
+        }
+
+
         public void RechargeBattery(int amount)
         {
             currentBattery = Math.Min(currentBattery + amount, maxBattery);

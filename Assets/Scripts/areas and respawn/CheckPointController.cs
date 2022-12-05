@@ -50,7 +50,12 @@ namespace areas_and_respawn
             {
                 if (player.isFirstPov)
                 {
-                    _room = GameObject.FindWithTag("End Room").GetComponent<RoomController>();
+                    GameObject roomObj = GameObject.FindWithTag("End Room");
+                    if (roomObj == null)
+                    {
+                        roomObj = GameObject.FindWithTag("Start Room");
+                    }
+                    _room = roomObj.GetComponent<RoomController>();
                 }
                 else
                 {

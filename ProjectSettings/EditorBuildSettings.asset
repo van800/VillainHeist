@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Game Scenes/Tutorial.unity
     guid: 2e277276b83f040fd9ab2bc11e08a07b
   - enabled: 1
+    path: Assets/Scenes/Game Scenes/MazeLevel.unity
+    guid: b8cda64bcd9a6814bb7c523f03d61b85
+  - enabled: 1
     path: Assets/Scenes/Game Scenes/Floor3.unity
     guid: 068f731824dea446797890ec3d04c0af
   - enabled: 1

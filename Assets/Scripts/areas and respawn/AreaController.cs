@@ -15,6 +15,8 @@ namespace areas_and_respawn
         
         public CheckPointController fpSpawnPoint;
 
+        [SerializeField] private bool hasEndRoom = true;
+
         private void Start()
         {
             _subRooms = GetComponentsInChildren<RoomController>();
@@ -25,12 +27,17 @@ namespace areas_and_respawn
                 subRoom.Save();
                 if (GameState.Instance.isInFirstPerson)
                 {
-                    if (subRoom.CompareTag($"End Room"))
+                    if (hasEndRoom && subRoom.CompareTag($"End Room"))
                     {
                         player.SetRoom(subRoom);
                         player.checkpoint = fpSpawnPoint;
                         player.transform.position = fpSpawnPoint.transform.position;
-                        player.transform.rotation = fpSpawnPoint.transform.rotation;
+                    }
+                    else if (subRoom.CompareTag($"Start Room"))
+                    {
+                        player.SetRoom(subRoom);
+                        player.checkpoint = fpSpawnPoint;
+                        player.transform.position = fpSpawnPoint.transform.position;
                     }
                 }
                 else

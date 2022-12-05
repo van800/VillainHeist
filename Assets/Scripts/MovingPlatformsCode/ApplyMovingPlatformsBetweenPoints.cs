@@ -197,7 +197,7 @@ namespace MovingPlatformsCode
 
         protected override void Initialize()
         {
-            // NOTHING
+            // nothing
         }
 
         public override string getInteractionName()
@@ -228,7 +228,7 @@ namespace MovingPlatformsCode
             }
             else
             {
-                Initialize();
+                _nextPos = 0;
             }
         }
     }

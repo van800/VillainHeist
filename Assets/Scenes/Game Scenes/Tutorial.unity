@@ -41236,7 +41236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aae3e7de0ca44fddb2ede200b37adfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInFirstPerson: 0
+  isInFirstPerson: 1
+  totalBattery: -1
 --- !u!1 &1497192447
 GameObject:
   m_ObjectHideFlags: 0

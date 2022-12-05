@@ -23,7 +23,7 @@ namespace areas_and_respawn
             {
                 subRoom.SetUp();
                 subRoom.Save();
-                if (player.isFirstPov)
+                if (GameState.Instance.isInFirstPerson)
                 {
                     if (subRoom.CompareTag($"End Room"))
                     {

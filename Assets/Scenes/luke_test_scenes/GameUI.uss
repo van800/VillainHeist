@@ -44,7 +44,7 @@
 #TimerContainer.show {
     scale: 1;
     opacity: 1;
-    translate: 0 0px;
+    translate: 0 0;
 }
 
 #TimerContainer.hidden {
@@ -83,7 +83,6 @@
     display: none;
 }
 
-
 #PauseBG {
     scale: 0.75;
     opacity: 0;
@@ -97,6 +96,22 @@
 }
 
 #PauseBG.hidden {
+    display: none;
+}
+
+#VictoryBG {
+    scale: 0.75;
+    opacity: 0;
+    transition-property: opacity, scale;
+    transition-duration: 0.25s;
+}
+
+#VictoryBG.show {
+    scale: 1;
+    opacity: 1;
+}
+
+#VictoryBG.hidden {
     display: none;
 }
 

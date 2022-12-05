@@ -118,6 +118,25 @@ public class GameUI : MonoBehaviour
         }
     }
 
+    public void ShowVictoryPopup(Action callback)
+    {
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        _uiDocument.rootVisualElement.Q<VisualElement>("VictoryBG").RemoveFromClassList("hidden");
+        _uiDocument.rootVisualElement.Q<VisualElement>("VictoryBG").AddToClassList("show");
+        _uiDocument.rootVisualElement.Q<Button>("VictoryContinue").clicked += () =>
+        {
+            HideVictoryPopup();
+            callback.Invoke();
+        };
+    }
+    
+    public void HideVictoryPopup()
+    {
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        _uiDocument.rootVisualElement.Q<VisualElement>("VictoryBG").AddToClassList("hidden");
+        _uiDocument.rootVisualElement.Q<VisualElement>("VictoryBG").RemoveFromClassList("show");
+    }
+    
     public void ShowPauseMenu()
     {
         UnityEngine.Cursor.lockState = CursorLockMode.None;

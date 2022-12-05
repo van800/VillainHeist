@@ -8,7 +8,6 @@ using movement_and_Camera_Scripts;
 public class EscapeTimer : MonoBehaviour
 {
     public static EscapeTimer Instance;
-    private static bool exists = false;
     private PlayerController player;
     public float totalSecondsRemaining;
     [SerializeField] private float totalTime = 60;
@@ -32,7 +31,8 @@ public class EscapeTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (exists)
+        Debug.Log("Timer Start Method");
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
@@ -42,7 +42,6 @@ public class EscapeTimer : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             _gameUI = FindObjectOfType<GameUI>();
             Instance = this;
-            exists = true;
         }
         totalSecondsRemaining = totalTime;
         _gameUI.HideTimer();

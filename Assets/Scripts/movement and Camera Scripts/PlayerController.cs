@@ -257,6 +257,7 @@ namespace movement_and_Camera_Scripts
 
         public void Respawn()
         {
+            isFirstPov = GameState.Instance.isInFirstPerson;
             GrabbableItem pickedUp = pickedUpItem;
             pickedUpItem = null;
             if (pickedUp is not null) pickedUp.Reset();

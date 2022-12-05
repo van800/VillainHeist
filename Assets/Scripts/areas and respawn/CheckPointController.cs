@@ -15,11 +15,10 @@ namespace areas_and_respawn
 
         private GameUI _gameUI;
         
-        private bool _isSpawn;
-        
-        private bool _hasRender;
-
         private Renderer _rend;
+
+        [SerializeField]
+        private bool isSpawn;
         
         [SerializeField] private Material currentCheckpoint;
 
@@ -37,8 +36,8 @@ namespace areas_and_respawn
             _spawnPoint = transform;
             _room = GetComponentInParent<RoomController>();
             _area = GetComponentInParent<AreaController>();
-            _isSpawn = _room is null;
-            if (!_isSpawn)
+            
+            if (!isSpawn)
             {
                 _rend = GetComponentInChildren<Renderer>();
                 DeselectCheckpoint();
@@ -79,27 +78,24 @@ namespace areas_and_respawn
                     checkPointAS.Play();
                     player.SetCheckpoint(this);
                     _area.Save();
-                    if (!_isSpawn)
-                    {
-                        SetLightMaterial(currentCheckpoint); 
-                    }
+                    SetLightMaterial(currentCheckpoint); 
                 }
             }
         }
 
         public void DeselectCheckpoint()
         {
-            if (!_isSpawn)
-            {
-               SetLightMaterial(openCheckpoint); 
-            }
+            SetLightMaterial(openCheckpoint); 
         }
 
         private void SetLightMaterial(Material mat)
         {
-            Material[] mats = _rend.materials;
-            mats[2] = mat;
-            _rend.materials = mats;
+            if (!isSpawn)
+            {
+                Material[] mats = _rend.materials;
+                mats[2] = mat;
+                _rend.materials = mats;
+            }
         }
     }
 }

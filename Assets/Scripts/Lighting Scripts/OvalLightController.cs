@@ -1,3 +1,4 @@
+using System;
 using areas_and_respawn;
 using movement_and_Camera_Scripts;
 using UnityEngine;
@@ -35,6 +36,11 @@ namespace Lighting_Scripts
             ToggleLight();
         }
 
+        private void Update()
+        {
+            ShowHide();
+        }
+
         public override string getInteractionName()
         {
             return "Light";
@@ -43,7 +49,6 @@ namespace Lighting_Scripts
         public override void Save()
         {
             SavedState = _lightOn;
-            ShowHide();
         }
 
         public override void Reset()
@@ -58,8 +63,6 @@ namespace Lighting_Scripts
         {
             _lightOn = !_lightOn;
             _lightComponent.enabled = _lightOn;
-
-            ShowHide();
         }
 
         private void ShowHide()

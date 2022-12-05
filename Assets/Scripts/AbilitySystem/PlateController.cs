@@ -26,9 +26,12 @@ namespace AbilitySystem
 
         private bool _triggered;
 
+        private bool _savedTrigger;
+
         private void Start()
         {
             _triggered = inverted;
+            _savedTrigger = _triggered;
             _renderer = GetComponent<Renderer>();
             _defaultMaterial = _renderer.material;
         }
@@ -80,6 +83,16 @@ namespace AbilitySystem
         public void SetTriggered(bool triggered)
         {
             _triggered = triggered;
+        }
+
+        public void Save()
+        {
+            _savedTrigger = _triggered;
+        }
+
+        public void Reset()
+        {
+            _triggered = _savedTrigger;
         }
     }
 }

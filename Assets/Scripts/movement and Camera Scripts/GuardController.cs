@@ -113,7 +113,7 @@ namespace movement_and_Camera_Scripts
             // Guard behavior when player is in top down
             if (!playerController.isFirstPov)
             {
-                if (canAlert)
+                if (!isFrozen && canAlert)
                 {
                     topDownAttack(toTarget);
                 }
@@ -255,7 +255,7 @@ namespace movement_and_Camera_Scripts
 
         protected override void Initialize()
         {
-            //Do Nothing
+            Unfreeze();
         }
 
         public override void Interact()
@@ -278,6 +278,10 @@ namespace movement_and_Camera_Scripts
                 t.position = SavedPosition;
                 isFrozen = false;
                 ToggleFreeze();
+            }
+            else
+            {
+                Initialize();
             }
         }
 

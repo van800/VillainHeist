@@ -31,8 +31,8 @@ namespace areas_and_respawn
             {
                 if (t.CompareTag($"Interactable"))
                 {
-                    Interactable interactable = t.gameObject.GetComponentInChildren<Interactable>();
-                    if (interactable is not null){
+                    Interactable[] interactables = t.gameObject.GetComponentsInChildren<Interactable>();
+                    foreach (Interactable interactable in interactables){
                         interactable.SetUp();
                         _intractables.Add(interactable);
                     }

@@ -7,6 +7,7 @@ public class GameState : MonoBehaviour
 {
     public static GameState Instance { get; private set; }
     public bool isInFirstPerson;
+    public int totalBattery = -1;
     private PlayerController player;
     private static GameObject gameObj;
 
@@ -32,6 +33,11 @@ public class GameState : MonoBehaviour
         StartCoroutine(changeFirstPerson());
     }
 
+    public void setPlayer(PlayerController player)
+    {
+        this.player = player;
+    }
+
     public void resetToTopDown()
     {
         isInFirstPerson = false;
@@ -45,4 +51,9 @@ public class GameState : MonoBehaviour
         isInFirstPerson = player.isFirstPov;
     }
 
+    public void updateTotalBat(int bat)
+    {
+        totalBattery = bat + player.maxBattery;
+        player.AddMaxBattery(bat);
+    }
 }

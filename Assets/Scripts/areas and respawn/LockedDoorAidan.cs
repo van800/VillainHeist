@@ -19,7 +19,20 @@ namespace areas_and_respawn
         private PlateController[] triggers;
         
         private bool _displaying;
-        
+
+        private bool _hasSet;
+
+        private void Update()
+        {
+            print(GameState.Instance.isInFirstPerson);
+            // if (GameState.Instance.isInFirstPerson && !_hasSet)
+            // {
+            //     print("FIRST");
+            //     gameObject.SetActive(false);
+            //     _hasSet = true;
+            // }
+        }
+
         public override int GetCost()
         {
             return 0;
@@ -32,7 +45,6 @@ namespace areas_and_respawn
         
         protected override void Initialize()
         {
-            if (GameState.Instance.isInFirstPerson) gameObject.SetActive(false);
             foreach (PlateController trigger in triggers)
             {
                 trigger.AddDoor(this);

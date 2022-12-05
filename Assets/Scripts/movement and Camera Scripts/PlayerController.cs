@@ -246,7 +246,7 @@ namespace movement_and_Camera_Scripts
             GrabbableItem pickedUp = pickedUpItem;
             pickedUpItem = null;
             if (pickedUp is not null) pickedUp.Reset();
-            _currentRoom.Reset();
+            if (_currentRoom is not null) _currentRoom.Reset();
             checkpoint.Respawn(this);
             RechargeBattery();
         }

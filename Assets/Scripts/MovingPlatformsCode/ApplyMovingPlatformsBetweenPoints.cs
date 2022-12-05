@@ -20,6 +20,8 @@ namespace MovingPlatformsCode
         [Header("Current Movement")]
         [SerializeField]
         private float speed = .5f;
+
+        private float _speedSpeed;
         private Vector3 direction;
         private bool _running;
         private Vector3 _targetLoc;
@@ -88,11 +90,11 @@ namespace MovingPlatformsCode
         // Moves this platform to the current target pos
         private void Move()
         {
-            Vector3 localMovement = (_targetLoc - transform.localPosition).normalized/*direction.normalized*/ * speed * Time.deltaTime;
+            Vector3 localMovement = (_targetLoc - transform.localPosition).normalized/*direction.normalized*/ * _speedSpeed * Time.deltaTime;
             transform.Translate(localMovement);
             foreach (PlayerController player in players)
             {
-                player.GetComponent<CharacterController>().Move(transform.TransformVector(localMovement).normalized * speed * Time.deltaTime);
+                player.GetComponent<CharacterController>().Move(transform.TransformVector(localMovement).normalized * _speedSpeed * Time.deltaTime);
             }
             /*if (CollidingWithWall())
         {
@@ -186,17 +188,18 @@ namespace MovingPlatformsCode
             isFrozen = !isFrozen;
             if (isFrozen)
             {
-                prevSpeed = speed;
-                speed = 0;
+                prevSpeed = _speedSpeed;
+                _speedSpeed = 0;
             }
             else
             {
-                speed = prevSpeed;
+                _speedSpeed = prevSpeed;
             }
         }
 
         protected override void Initialize()
         {
+            _speedSpeed = speed;
             _nextPos = 0;
             isFrozen = false;
         }
@@ -224,8 +227,8 @@ namespace MovingPlatformsCode
             {
                 Transform t = transform;
                 t.position = SavedPosition;
-                isFrozen = false;
-                ToggleFreeze();
+                isFrozen = true;
+                _speedSpeed = 0;
             }
             else
             {

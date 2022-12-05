@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using areas_and_respawn;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -30,6 +31,10 @@ public class DoorToScene : MonoBehaviour
     {
         if (other.CompareTag("Player") && player.isFirstPov == !onlyInTopDown)
         {
+            foreach (AreaController area in FindObjectsOfType<AreaController>())
+            {
+                area.Save();
+            }
             SceneManager.LoadScene(nextScene);
         }
     }

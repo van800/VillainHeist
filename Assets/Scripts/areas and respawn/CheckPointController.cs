@@ -65,14 +65,7 @@ namespace areas_and_respawn
         {
             player.transform.position = _spawnPoint.position;
             player.SetRoom(_room);
-            if (_isSpawn)
-            {
-                _area.Reset();
-            }
-            else
-            {
-                _room.Reset();
-            }
+            _area.Reset();
         }
 
         private void OnTriggerEnter(Collider other)

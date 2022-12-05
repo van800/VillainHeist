@@ -19,7 +19,16 @@ namespace areas_and_respawn
         private PlateController[] triggers;
         
         private bool _displaying;
-        
+
+        private bool _isFirst;
+
+
+        private void Start()
+        {
+            _isFirst = GameState.Instance.isInFirstPerson;
+            gameObject.SetActive(!_isFirst);
+        }
+
         public override int GetCost()
         {
             return 0;
@@ -32,7 +41,6 @@ namespace areas_and_respawn
         
         protected override void Initialize()
         {
-            if (GameState.Instance.isInFirstPerson) gameObject.SetActive(false);
             foreach (PlateController trigger in triggers)
             {
                 trigger.AddDoor(this);
@@ -41,17 +49,20 @@ namespace areas_and_respawn
 
         public void TryUnlock()
         {
-            
-            bool checkTriggers = true;
-            foreach (PlateController trigger in triggers)
+            if (!_isFirst)
             {
-                checkTriggers &= trigger.IsTriggered() ^ inverted;
-            }
-            _isLocked = !checkTriggers;
-            gameObject.SetActive(_isLocked);
-            foreach (DoorController door in doors)
-            {
-                door.Lock(_isLocked);
+                
+                bool checkTriggers = true;
+                foreach (PlateController trigger in triggers)
+                {
+                    checkTriggers &= trigger.IsTriggered() ^ inverted;
+                }
+                _isLocked = !checkTriggers;
+                gameObject.SetActive(_isLocked);
+                foreach (DoorController door in doors)
+                {
+                    door.Lock(_isLocked);
+                }
             }
         }
 

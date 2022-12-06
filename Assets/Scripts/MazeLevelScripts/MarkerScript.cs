@@ -22,6 +22,11 @@ public class MarkerScript : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player");
         _playerController = player.GetComponent<PlayerController>();
+        if (GameState.Instance.isInFirstPerson)
+        {
+            hasPickedUp = true;
+            GetComponent<Renderer>().enabled = false;
+        }
     }
 
     // Update is called once per frame

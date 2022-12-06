@@ -62,7 +62,11 @@ public class GameUI : MonoBehaviour
         HideAllModals();
         HideAllAbilityPrompts();
         SetBattery(6, 6);
-        
+        if (_player != null)
+        {
+            SetBattery(_player.currentBattery, _player.maxBattery);
+        }
+
         if (!showUI) HideBattery();
         
         // ShowAbilityPrompts(AbilityPrompts.Freeze);

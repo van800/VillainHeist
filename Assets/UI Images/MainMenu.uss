@@ -15,13 +15,21 @@
     transition-property: scale, translate;
     transition-duration: 0.25s;
     transform-origin: left;
-    
     border-top-color: var(--main-bg-color);
     border-bottom-color: var(--main-bg-color);
     border-left-color: var(--main-bg-color);
     border-right-color: var(--main-bg-color);
-
-    -unity-font: url('/Assets/Theme/Fonts/LiberationSans-Regular.ttf');
+    -unity-font: url('project://database/Assets/Theme/Fonts/LiberationSans-Regular.ttf?fileID=12800000&guid=961c3474df288c68ea7f139243d5db7e&type=3#LiberationSans-Regular');
+    align-items: auto;
+    justify-content: center;
+    letter-spacing: 1;
+    all: initial;
+    scale: 55;
+    translate: 40px;
+    background-position: bottom 1px;
+    background-repeat: repeat-x;
+    -unity-slice-scale:1;
+    
 }
 
 .button:hover {

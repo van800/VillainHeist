@@ -55,15 +55,15 @@
     align-self: auto;
     justify-content: flex-start;
     position: absolute;
-    transition-property: all rotate;
-    transition-duration: 1s 2s;
-    transition-timing-function: linear linear;
+    transition-property: all, rotate;
+    transition-duration: 1s, 2s;
+    transition-timing-function: linear, linear;
     scale: 0 0;
-    rotate: 180;
+    rotate: 180deg;
     transform-origin: center;
 }
 
 .ActionsRoot.animate {
-   rotate: 180;
+   rotate: 180grad;
    scale: 1 1;
 }

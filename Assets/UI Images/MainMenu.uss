@@ -3,7 +3,8 @@
 }
 
 .quit:hover {
-    background-image: url('project:/Assets/UI Images/home.quit.png');
+    background-image: url('project:///Assets/UI Images/home.quit.png');
+    -unity-font: url("project:///Assets/UI Images/Fonts/Lato-Regular.ttf");
 }
 
 .quit {
@@ -19,7 +20,8 @@
     border-bottom-color: var(--main-bg-color);
     border-left-color: var(--main-bg-color);
     border-right-color: var(--main-bg-color);
-    -unity-font: url('project://database/Assets/Theme/Fonts/LiberationSans-Regular.ttf?fileID=12800000&guid=961c3474df288c68ea7f139243d5db7e&type=3#LiberationSans-Regular');
+    background-image: url('project:/Assets/UI Images/home.quit.png');
+    -unity-font: url('unity-theme://default');
     align-items: auto;
     justify-content: center;
     letter-spacing: 1;
@@ -34,6 +36,7 @@
 
 .button:hover {
     scale: 1.1 1.1;
+    -unity-font: url('project:/Packages/com.unity.ide.rider/Rider/Editor');
 }
 
 #DimZone.hidden {

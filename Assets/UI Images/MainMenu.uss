@@ -35,7 +35,6 @@
 
 .button:hover {
     scale: 1.1 1.1;
-    -unity-font: url('project:/Packages/com.unity.ide.rider/Rider/Editor');
 }
 
 #DimZone.hidden {

@@ -11,6 +11,9 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var button = new Button() { text = "保存数据" };
+        //button.AddToClassList("horizontalContainer");
+        
         if (GameState.Instance && GameState.Instance.gameObject)
         {
             Destroy(GameState.Instance.gameObject);
@@ -22,6 +25,8 @@ public class MainMenu : MonoBehaviour
         
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         _uiDocument = GetComponent<UIDocument>();
+        // _uiDocument.rootVisualElement.Q<Label>("TestLabel").text = _uiDocument.rootVisualElement.Q<Label>("TestLabel").text+ "testssss";
+        _uiDocument.rootVisualElement.Q<Label>("TestLabel").AddToClassList("testClass");
         _uiDocument.rootVisualElement.Q<Button>("Play").clicked += () => Play();
         _uiDocument.rootVisualElement.Q<Button>("Credits").clicked += () => Credits();
         _uiDocument.rootVisualElement.Q<Button>("AssetShowcase").clicked += () => AssetShowcase();

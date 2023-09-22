@@ -1,9 +1,15 @@
+@import url("/Assets/UI Toolkit/UnityThemes/test.uss");
+
+:root {
+    --main-bg-color: pink;
+}
+
 .quit:hover {
-    background-image: url('project://database/Assets/UI%20Images/home.quit.selected.png?fileID=2800000&guid=d610fc8c72ccffd4aaf96daf01d8361f&type=3#home.quit.selected');
+    background-image: url('/Assets/UI Images/home.quit.png');
+    -unity-font: url("project:///Assets/UI Images/Fonts/Lato-Regular.ttf");
 }
 
 .quit {
-    background-image: url('project://database/Assets/UI%20Images/home.quit.png?fileID=2800000&guid=eb66e14c26629fd4fb9653b5317f6dee&type=3#home.quit');
     background-color: rgba(0, 0, 0, 0);
 }
 
@@ -11,15 +17,25 @@
     transition-property: scale, translate;
     transition-duration: 0.25s;
     transform-origin: left;
-}
-
-.testClass{
-    text-shadow: aqua;
-    background-image: url('project://database/Assets/UI%20Images/home.quit.png?fileID=2800000&guid=eb66e14c26629fd4fb9653b5317f6dee&type=3#home.quit');
+    border-top-color: var(--main-bg-color);
+    border-bottom-color: var(--main-bg-color);
+    border-left-color: var(--main-bg-color);
+    border-right-color: var(--main-bg-color);
+    align-items: auto;
+    justify-content: center;
+    letter-spacing: 1;
+    all: initial;
+    scale: 55;
+    translate: 40px;
+    background-position: bottom 1px;
+    background-repeat: repeat-x;
+    -unity-slice-scale:1;
+    
 }
 
 .button:hover {
     scale: 1.1 1.1;
+    
 }
 
 #DimZone.hidden {
